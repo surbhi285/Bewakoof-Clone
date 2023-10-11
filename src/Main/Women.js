@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { FETCH_DATA } from '../Action';
 import Filter from './Filter';
 
-export default function Men() {
+export default function Women() {
   
   const getData = useSelector((store)=>{
     console.log(store.data, "store debug");
@@ -21,11 +21,11 @@ export default function Men() {
     dispatch(FETCH_DATA());
   }, []);
 
-  const menData = getData?.data?.filter((item)=>{
-    return item.gender==="Men";
+  const womenData = getData?.data?.filter((item)=>{
+    return item.gender==="Women";
    
   });
-  console.log(menData);
+  console.log(womenData);
 
   return (
     <Box>
@@ -34,14 +34,14 @@ export default function Men() {
       <Container className='heading2'>Home</Container>
       </NavLink>
       <Container className='heading2'>/</Container>
-      <Container className='heading2'>Men Clothing</Container>
+      <Container className='heading2'>Women Clothing</Container>
       </Flex>
    
 
     <Box>
       <Flex>
-     <h2 className='heading3'>Men Clothing</h2>
-     <div style={{marginLeft:"20px", fontSize:"30px", color:"gray", marginTop:"40px"}}>({menData?.length})</div>  
+     <h2 className='heading3'>Women Clothing</h2>
+     <div style={{marginLeft:"20px", fontSize:"30px", color:"gray", marginTop:"40px"}}>({womenData?.length})</div>  
      </Flex>
      <hr className='ruler'/>
     </Box>
@@ -65,7 +65,7 @@ export default function Men() {
     </Container>
 
     <Container className='dataInfo'>
-       {menData?.map((item, index)=>(
+       {womenData?.map((item, index)=>(
         <Box className='dataStyle' key={index}>
        <Link to={`/product/${item._id}`}>
         <img className='dataImage' src={item.displayImage}></img>

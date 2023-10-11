@@ -1,12 +1,13 @@
 import React from 'react'
 import logo from '../Images/logo.webp';
-import Heart from '../Images/Heart.jpg';
+// import Heart from '../Images/Heart.jpg';
 import flag from '../Images/flag.png';
 import shoppingBag from '../Images/shoppingBag.jpg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from  '@fortawesome/free-solid-svg-icons';
 import {Flex, UnorderedList, ListItem, Box, Button, Text} from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom';
+import {BsHeart} from 'react-icons/bs'
 
 
 
@@ -44,7 +45,9 @@ export default function Nav() {
             <ListItem className='navLi'><FontAwesomeIcon icon ={faSearch} style={{color:"#b9b3b3", marginTop:"12px", paddingLeft:"10px"}}/><input type="search" placeholder='Search by product, category or collection' className='inputSearch'/></ListItem>
              <ListItem style={{fontSize:"25px"}}>|</ListItem>
              <ListItem style={{marginTop:"8px"}}>Login</ListItem>
-             <ListItem><img src={Heart} alt="fav" className='favStyle'/></ListItem>
+             <ListItem>
+            <BsHeart style={{height:"20px", width:"20px", marginLeft:"5px", marginTop:"10px" }}/>
+             </ListItem>
             <ListItem><img src={shoppingBag} alt="shopping" className='bag'/> </ListItem>
             <ListItem><img src={flag} alt="flagIcon" className='flag'/></ListItem>
         </UnorderedList>
