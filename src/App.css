@@ -68,8 +68,7 @@ margin-left: 20px;
   height: 60px;
   letter-spacing: 2px;
   font-size: 15px;
-  margin-top: 0;
-  
+  margin-top: 0;  
  }
 
 .navBar-left{
@@ -320,14 +319,16 @@ list-style-type: none;
   margin-left: 20px;
  
 }
-.navLink:hover{
+.menuItem:hover{
    border-bottom: 5px solid #fdd835; 
 }
 
 .menuItem{
 margin-right: 0;
-padding: 0;
+padding-bottom: 20px;
+
 }
+
 
 .accordian{
   margin-left: 50px;
@@ -449,3 +450,58 @@ margin-left: 70px;
   height: 30px;
   margin-bottom: 10px;
 }
+
+.login{
+margin-left: 850px;
+margin-top: -470px;
+font-size: 24px;
+letter-spacing: .5px;
+margin-bottom: 22px;
+}
+.tag{
+  color: #a0a0a0;
+  margin: 0 0 70px;
+  font-size: 18px;
+  margin-left: 700px;
+  font-weight: 500;
+}
+.enterEmail{
+  margin-left: 750px;
+  height: 40px;
+  border: 1px solid #ced4da;
+  padding: 1rem;
+  font-size: 20px;
+  width: 30%;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+.LogButton{
+  margin-left: 750px;
+  height: 70px;
+  border: 1px solid #42a2a2;
+  background-color: #42a2a2;
+  color: white;
+  padding: 1rem;
+  font-size: 20px;
+  width: 33%;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.registerButton{
+text-align: right;
+margin-right: 17%;
+color: #a0a0a0;
+margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+

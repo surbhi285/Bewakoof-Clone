@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {BsHeart} from 'react-icons/bs';
 import {useDispatch, useSelector} from 'react-redux';
-import { FETCH_DATA } from '../Action';
+import { FETCH_DATA } from '../ProductStore.js/ProductDetail/Action';
 import Filter from './Filter';
 
 export default function Women() {
@@ -21,7 +21,7 @@ export default function Women() {
     dispatch(FETCH_DATA());
   }, []);
 
-  const womenData = getData?.data?.filter((item)=>{
+  const womenData = getData?.data?.data?.filter((item)=>{
     return item.gender==="Women";
    
   });

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {BsHeart} from 'react-icons/bs';
 import {useDispatch, useSelector} from 'react-redux';
-import { FETCH_DATA } from '../Action';
+import { FETCH_DATA } from '../ProductStore.js/ProductDetail/Action';
 import Filter from './Filter';
 
 export default function Men() {
@@ -13,18 +13,13 @@ export default function Men() {
     return store.data;
   })
 
-  
-
  const dispatch = useDispatch();
 
   useEffect(()=>{
     dispatch(FETCH_DATA());
   }, []);
 
-  const menData = getData?.data?.filter((item)=>{
-    return item.gender==="Men";
-   
-  });
+  const menData = getData?.data?.data?.filter((item)=> item.gender==='Men')||[];
   console.log(menData);
 
   return (

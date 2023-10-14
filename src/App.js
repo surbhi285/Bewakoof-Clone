@@ -6,6 +6,9 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Men from './Main/Men';
 import Women from './Main/Women';
 import ProductDetail from './Main/ProductDetail';
+import Login from './Main/Login';
+import SignUp from './Main/SignUp';
+
 
 
 function App() {
@@ -17,7 +20,9 @@ function App() {
     <Route path="/" element={<Home />} />
     <Route path="/Men" element={<Men />}/>
     <Route path="/Women" element={<Women />}/>
-    <Route path = "/product/:id" element={<ProductDetail />} />
+    <Route path="/product/:id" element={<ProductDetail />} />
+    <Route path="/Login" element={<Login />} />
+    <Route path="/SignUp" element={<SignUp />}/>
     </Routes>
     </Router>
     </>
