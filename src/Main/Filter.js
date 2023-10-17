@@ -1,12 +1,14 @@
 import React from "react";
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem, Box } from '@chakra-ui/react';
-//import { useDispatch, useSelector } from "react-redux";
+
 
 
 const Filter=()=>{
+const handleCategorySelect = (category)=>{
+ 
+};
 
-   
-    
+
     return(
         <>
   <Accordion allowToggle className='accordian'>
@@ -21,20 +23,18 @@ const Filter=()=>{
     </h2>
     <AccordionPanel pb={4}>
      <ul className='accordianList'>
-      <li value="1">T-Shirt</li>
-      <li value="2">Shirt</li>
-      <li value="3">Boxer</li>
-      <li value="4">Vest</li>
-      <li value="5">Jeans</li>
-      <li value="6">Shorts</li>
-      <li value="7">Joggers</li>
-      <li value="8">Track Pants</li>
-      <li value="9">Pyjama</li>
-      <li value="10">Trousers</li>
-      <li value="11">Hoodies</li>
-      <li value="12">Sweatshirt</li>
-      <li value="13">Casual Pants</li>
-      <li value="14">Jacket</li>
+      <li  onClick={() => handleCategorySelect("tshirt")}>T-Shirt</li>
+      <li  onClick={() => handleCategorySelect("shirt")}>Shirt</li>
+      <li  onClick={() => handleCategorySelect("jeans")}>Jeans</li>
+      <li  onClick={() => handleCategorySelect("shorts")}>Shorts</li>
+      <li  onClick={() => handleCategorySelect("joggers")}>Joggers</li>
+      <li  onClick={() => handleCategorySelect("trackPants")}>Track Pants</li>
+      <li  onClick={() => handleCategorySelect("pyjama")}>Pyjama</li>
+      <li>Trousers</li>
+      <li>Hoodies</li>
+      <li>Sweatshirt</li>
+      <li>Casual Pants</li>
+      <li>Jacket</li>
      </ul>
     </AccordionPanel>
   </AccordionItem>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Spacer, Text } from '@chakra-ui/react';
 import loginPage from '../Images/loginPage.png'
 import {useDispatch, useSelector} from 'react-redux';
-import { LOGIN_FAILURE, LOGIN_SUCCESS, USER_DATA } from '../ProductStore.js/Register/Action';
+import { LOGIN_FAILURE,  signup} from '../Action';
 import {useNavigate} from 'react-router-dom';
 
 
@@ -34,14 +34,18 @@ import {useNavigate} from 'react-router-dom';
         } else if (!email.includes("@")) {
           dispatch(LOGIN_FAILURE("Email is invalid"));
           setColor("red");
-        } else {
-          dispatch(USER_DATA(name, email, password)); 
-          if(isLoggedIn===true){
-            console.log('redirecting to home page...')
+        }else {
+          dispatch(signup(name, email, password)); 
+          if(isLoggedIn){
             navigator('/')
+          }else{
+            dispatch(LOGIN_FAILURE("Incorrect name or Password"));
+            setColor("red");
+          }
           }
         }
-    }
+      
+    
   
   return (
     <div>

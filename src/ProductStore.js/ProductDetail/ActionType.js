@@ -1,8 +1,0 @@
-const ACTION_TYPE = {
-    SET_DATA : "SET_DATA",
-    ERROR:"ERROR",
-    FETCH_DATA: "FETCH_DATA",
-    FETCH_FILTERS: "FETCH_FILTERS",
-}
-
-export default ACTION_TYPE;

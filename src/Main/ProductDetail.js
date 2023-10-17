@@ -10,17 +10,15 @@ import {RiFileListLine, RiExchangeLine} from 'react-icons/ri';
 import flag from '../Images/flag.png';
 import info from '../Images/info.png';
 
-function ProductDetail(){
+
+function ProductDetail(props){
 
     const {id} = useParams();
     console.log(id);
-
    
     const[productImages, setProductImages] = useState([]);
     const[productInfo, setProductInfo] = useState([]);
     const[number, setNumber] = useState(0);
-
-  
 
     const getProduct = async()=>{
 
@@ -110,7 +108,8 @@ function ProductDetail(){
     <button className="CART">
     <PiShoppingBagLight style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     ADD TO BAG</button>
-    <button className="WISH"><AiOutlineHeart style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
+    <button className="WISH">
+    <AiOutlineHeart style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     WISHLIST</button>
     </Flex>
 

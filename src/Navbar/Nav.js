@@ -2,14 +2,16 @@ import React, { useState } from 'react'
 import logo from '../Images/logo.webp';
 // import Heart from '../Images/Heart.jpg';
 import flag from '../Images/flag.png';
-import shoppingBag from '../Images/shoppingBag.jpg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from  '@fortawesome/free-solid-svg-icons';
-import {Flex, UnorderedList, ListItem, Box, Button, Text} from '@chakra-ui/react'
+import {Flex, UnorderedList, ListItem} from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom';
-import {BsHeart} from 'react-icons/bs'
+import {BsHeart, BsBag} from 'react-icons/bs';
+import {CiUser} from 'react-icons/ci';
 import OptionWomen from './CategoriesWomen';
 import OptionMen from './CategoriesOption';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGOUT } from '../Action';
 
 
 
@@ -17,13 +19,36 @@ import OptionMen from './CategoriesOption';
 export default function Nav() {
 
     const[menuHover, setMenuHover] = useState(false);
+    const[dropmenu, setDropmenu] = useState(false);
     
+
+
+    const dispatch = useDispatch();
+
+    const isLoggedIn = useSelector((store) => store.user?.isLoggedIn);
+    console.log(isLoggedIn)
+
     const handleMouseEnter = (category)=>{
         setMenuHover(category);
     }
     const handleMouseLeave=()=>{
         setMenuHover(null);
     };
+
+    const handleProfileClick = ()=>{
+        console.log('handleProfileClick is triggered');
+        console.log('isLoggedIn:', isLoggedIn);
+        setDropmenu(!dropmenu);    
+    }
+
+    const handleLogout =() =>{
+        dispatch(LOGOUT()); // Dispatch the logout action
+        setDropmenu(false);
+        console.log('isLoggedIn:', isLoggedIn);
+    }
+     
+
+   
     
   return (
     <>
@@ -44,14 +69,14 @@ export default function Nav() {
             <ListItem><img src={logo} alt="logo" className='imageStyle'></img></ListItem>
             
             <div onMouseEnter={()=>handleMouseEnter('Men')} onMouseLeave={handleMouseLeave} className='menu-container'>
-            <NavLink to="/Men" className="navLink">
+            <NavLink to={`/categories/men`} className="navLink">
             <ListItem className='menuItem' style={{marginTop:"-10px"}}>MEN</ListItem>
             </NavLink>
             {menuHover==='Men'&& <OptionMen />}
             </div>
        
             <div onMouseEnter={()=>handleMouseEnter('Women')} onMouseLeave={handleMouseLeave} className='menu-container'>
-             <NavLink to="/Women" className="navLink">
+             <NavLink to={`/categories/women`}  className="navLink">
              <ListItem className='menuItem' style={{marginTop:"-10px"}}>WOMEN</ListItem>
              </NavLink>
              {menuHover === 'Women' && <OptionWomen />}
@@ -66,15 +91,33 @@ export default function Nav() {
         <UnorderedList className='navBar-right'>
             <ListItem className='navLi'><FontAwesomeIcon icon ={faSearch} style={{color:"#b9b3b3", marginTop:"12px", paddingLeft:"10px"}}/><input type="search" placeholder='Search by product, category or collection' className='inputSearch'/></ListItem>
              <ListItem style={{fontSize:"25px"}}>|</ListItem>
-
-             <NavLink to='/Login' style={{color:"black", textDecoration:"none"}}>
+              
+              {isLoggedIn ?(
+              <><CiUser onClick={handleProfileClick} style={{fontSize:"25px", marginTop:"8px", marginRight:"10px"}}/>
+              {dropmenu && (
+                <ul className='profileOption'>
+                    <li>Hi, </li>
+                    <li>My Account</li>
+                    <li>My Wishlist</li>
+                    <li>My Orders</li>
+                    <li>My Wallet</li>
+                    <li onClick={handleLogout}>Logout</li>
+                </ul>
+              )}
+              </>
+              ):(
+              <>
+            <NavLink to='/Login' style={{color:"black", textDecoration:"none"}}>
              <ListItem style={{marginTop:"8px"}}>Login</ListItem>
              </NavLink>
-
-             <ListItem>
-            <BsHeart style={{height:"20px", width:"20px", marginLeft:"5px", marginTop:"10px" }}/>
+              </>)}
+            
+            <NavLink to='/wishlist'>
+            <ListItem>
+            <BsHeart style={{height:"20px", width:"20px", marginLeft:"5px", marginTop:"12px" }}/>
              </ListItem>
-            <ListItem><img src={shoppingBag} alt="shopping" className='bag'/> </ListItem>
+             </NavLink>
+            <ListItem><BsBag style={{marginTop:"11px", fontSize:"20px"}}/> </ListItem>
             <ListItem><img src={flag} alt="flagIcon" className='flag'/></ListItem>
         </UnorderedList>
     </Flex>

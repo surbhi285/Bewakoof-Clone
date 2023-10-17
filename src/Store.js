@@ -1,6 +1,6 @@
 import {applyMiddleware, createStore, combineReducers} from 'redux';
-import dataReducer from './ProductStore.js/ProductDetail/Reducer';
-import userReducer from './ProductStore.js/Register/Reducer';
+import dataReducer from './ProductReducer';
+import userReducer from './UserReducer';
 import thunk from 'redux-thunk';
 
 function dataStore(){

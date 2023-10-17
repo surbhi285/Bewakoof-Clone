@@ -2,8 +2,10 @@ import React from 'react'
 import ImageSlider from './ImageSlider';
 import { ListItem, UnorderedList, Flex, Box, Button } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
+
   return (
     <>
     <Flex>
