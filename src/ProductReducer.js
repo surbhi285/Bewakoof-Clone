@@ -2,8 +2,9 @@ import ACTION_TYPE from "./ActionType";
 
 const initialState ={
     data:[],
-    category: "", 
-    wishlist:[],   
+    category: [], 
+    wishlist:[], 
+    cart:[], 
 }
 
 function dataReducer(state=initialState, action){
@@ -18,11 +19,20 @@ function dataReducer(state=initialState, action){
             case ACTION_TYPE.ADD_TO_WISHLIST:
                 return{
                 ...state,
-                wishlist: [...state.wishlist, action.product],
+                wishlist: [...state.wishlist, action.payload],
                 }
                 
             case ACTION_TYPE.GET_WISHLIST:
-                return{...state, wishlist: action.product};
+                return {...state, wishlist: action.payload};
+
+            case ACTION_TYPE.REMOVE_FROM_WISHLIST:
+                return {...state, wishlist: action.payload};
+
+            case ACTION_TYPE.ADD_CART:
+                return{ ...state, cart: action.payload}
+                   
+            case ACTION_TYPE.GET_CART:
+                return{...state, cart: action.payload};
 
             default:
                 return state;

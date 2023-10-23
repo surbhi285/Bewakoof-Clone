@@ -2,23 +2,28 @@ import { Container, Box, Flex, filter} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams, Link } from 'react-router-dom';
 import {BsHeart} from 'react-icons/bs';
-import Filter from './Filter';
+import { AiFillHeart } from 'react-icons/ai';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FETCH_DATA, addWishlist } from '../Action';
+import { FETCH_DATA, SET_FILTERS, addWishlist, removeWatchlist } from '../Action';
 
 export default function Men() {
   const {id} = useParams();
-  console.log(id);
+  //console.log(id);
 
   const getData = useSelector((store)=>{
-    console.log(store, "store debug");
+    //console.log(store, "store debug");
     return store.data;
   })
 
 
+
   const [genderData, setGenderData] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedPopularity, setSelectedPopularity] = useState(null);
+
   const dispatch = useDispatch();
 
 
@@ -31,21 +36,42 @@ export default function Men() {
   setGenderData(getData?.data?.data?.filter((item) => item.gender.toLowerCase() === id))
   }
    }, [id, getData])
-   console.log(genderData, "gender");
+  //  //console.log(genderData, "gender");
 
-   const handleFilterChange = (filter) => {
-    setSelectedFilter(filter);
-  };
-
-  const filteredData = selectedFilter
-    ? genderData.filter((item) => item[selectedFilter] === selectedFilter)
-    : genderData;
-
-    console.log(filteredData);
+  const filteredData = genderData.filter((item)=>{
+    if(
+      (!selectedCategory || item.subCategory===selectedCategory) &&
+      (!selectedBrand || item.brand===selectedBrand) &&
+      (!selectedColor || item.color === selectedColor) &&
+      (!selectedPopularity || item.sellerTag === selectedPopularity)
+    ){
+      return true;
+    }
+    return false;
+  }) 
+  //console.log(filteredData);
    
   const handleAddToWishList = (product)=>{
     dispatch(addWishlist(product));
+    const updateData = genderData.map((item)=>{
+      if(item._id===product){
+        return{...item, inWishlist: true};
+      }
+      return item;
+    })
+    setGenderData(updateData);
   }
+
+  const handleRemoveFromWishList = (product) => {
+    dispatch(removeWatchlist(product));
+    const updatedData = genderData.map((item) => {
+        if (item._id === product) {
+            return { ...item, inWishlist: false };
+        }
+        return item;
+    });
+    setGenderData(updatedData);
+}
 
   return (
     <Box>
@@ -54,7 +80,9 @@ export default function Men() {
           <Container className='heading2'>Home</Container>
         </NavLink>
         <Container className='heading2'>/</Container>
+       
         <Container className='heading2'>{id === 'men' ? "Men Clothing" : "Women Clothing"}</Container>
+      
       </Flex>
 
 
@@ -92,9 +120,10 @@ export default function Men() {
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4}>
-     <ul className='accordianList'   onClick={() => handleFilterChange('subCategory')}>
+     <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.subCategory)).values()).map((subCategory, index) => (
-          <li key={index}>{subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}</li>
+          <li key={index} onClick={() => setSelectedCategory(subCategory)}  className={selectedCategory === subCategory ? 'activeCategory' : ''}>
+            {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -102,7 +131,7 @@ export default function Men() {
   <hr className='divider'/>
   <AccordionItem>
     <h2>
-      <AccordionButton className='accordianButton'  onClick={() => handleFilterChange('brand')}>
+      <AccordionButton className='accordianButton'>
         <Box as="span" flex='1' textAlign='left'>
           Brands
         </Box>
@@ -112,7 +141,8 @@ export default function Men() {
     <AccordionPanel pb={4}>
      <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.brand)).values()).map((brand, index) => (
-          <li key={index}>{brand.charAt(0).toUpperCase() + brand.slice(1)}</li>
+          <li key={index} onClick={() => setSelectedBrand(brand)}  className={selectedBrand === brand ? 'activeCategory' : ''}>
+            {brand.charAt(0).toUpperCase() + brand.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -128,9 +158,11 @@ export default function Men() {
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4}>
-    <ul className='accordianList' onClick={() => handleFilterChange('Color')}>
+    <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.color)).values()).map((color, index) => (
-          <button key={index} className='listButton'style={{ backgroundColor: color, border:"0.5px solid grey"}}></button>
+          <button key={index} onClick={() => setSelectedColor(color)}  className={selectedColor === color ? 'activeCategory' : ''}
+         style={{ backgroundColor: color, border:"0.5px solid grey", width: "30px", height: "30px", borderRadius: "10px", marginRight: "10px",marginBottom: "8px", border: "none"}}>
+          </button>
         ))}
      </ul>
      
@@ -139,7 +171,7 @@ export default function Men() {
   <hr className='divider'/>
   <AccordionItem>
     <h2>
-      <AccordionButton className='accordianButton' onClick={() => handleFilterChange('Popularity')}>
+      <AccordionButton className='accordianButton'>
         <Box as="span" flex='1' textAlign='left'>
          Popularity
         </Box>
@@ -149,7 +181,8 @@ export default function Men() {
     <AccordionPanel pb={4}>
     <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.sellerTag)).values()).map((sellerTag, index) => (
-          <li key={index}>{sellerTag.charAt(0).toUpperCase() + sellerTag.slice(1)}</li>
+          <li key={index} onClick={() => setSelectedPopularity(sellerTag)}  className={selectedPopularity === sellerTag ? 'activeCategory' : ''}>
+            {sellerTag.charAt(0).toUpperCase() + sellerTag.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -160,15 +193,21 @@ export default function Men() {
         </Container>
 
         <Container className='dataInfo'>
-          {genderData.map((item, index) => (
+          {filteredData.map((item, index) => (
             <Box className='dataStyle' key={index}>
               <Link to={`/product/${item._id}`}>
                 <img className='dataImage' src={item.displayImage}></img>
               </Link>
               <Flex>
                 <h3 className='dataBrand'>{item.brand}</h3>
+                {item.inWishlist?(
+                  <AiFillHeart style={{ height: "20px", width: "20px", color: "red", marginLeft: "15px" }} 
+                  onClick={()=> handleRemoveFromWishList(item._id)}/>
+                 
+                ):(
                 <BsHeart style={{ height: "20px", width: "20px", color: "grey", marginLeft: "15px" }} 
-                onClick={()=> handleAddToWishList(item)}/>
+                onClick={()=> handleAddToWishList(item._id)}/>
+                )}
               </Flex>
               <div className='dataTitle' style={{ color: "rgb(115, 115, 115)" }}>{item.name}</div>
               <div className='dataPrice' style={{ fontSize: "20px" }}>₹{item.price}</div>

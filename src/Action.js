@@ -1,4 +1,4 @@
-import { addWishlistItem, fetchData, getWatchlistItem } from "./ServiceApi";
+import { addCartList, addWishlistItem, fetchData, getCartList, getWatchlistItem, removeWatchlistItem } from "./ServiceApi";
 import { signupCall } from "./ServiceApi";
 import { loginCall } from "./ServiceApi";
 import ACTION_TYPE from "./ActionType"
@@ -84,14 +84,11 @@ export const GET_WISHLIST = (payload)=>({
     payload: payload,
 })
   
-//   export const REMOVE_FROM_WISHLIST = (productId) => ({
-//     type: 'REMOVE_FROM_WISHLIST',
-//     productId,
-//   });
+  export const REMOVE_FROM_WISHLIST = (payload) => ({
+    type: ACTION_TYPE.REMOVE_FROM_WISHLIST,
+    payload: payload,
+  });
   
-//   export const CLEAR_WISHLIST = () => ({
-//     type: 'CLEAR_WISHLIST',
-//   });
 
   export const addWishlist = (productId)=>{
     return async (dispatch)=>{
@@ -111,3 +108,40 @@ export const getWatchlist = ()=>{
     }
 }
   
+export const removeWatchlist=(productId)=>{
+    return async(dispatch)=>{
+        const removeItem = await removeWatchlistItem(productId);
+        //console.log(removeItem)
+        if(removeItem){
+            dispatch(REMOVE_FROM_WISHLIST(removeItem));
+        }  
+    }
+} 
+export const ADD_CART = (payload) => ({
+    type: ACTION_TYPE.ADD_CART,
+    payload: payload,
+  });
+
+
+export const GET_CART = (payload)=>({
+    type: ACTION_TYPE.GET_CART,
+    payload: payload,
+});
+
+export const addCart =(productID)=>{
+    return async (dispatch)=>{
+        const cartItem= await addCartList(productID);
+        if(cartItem){
+            dispatch(ADD_CART(cartItem));
+        }
+    }
+}
+
+export const getCart = ()=>{
+    return async(dispatch)=>{
+       const getCartItem = await getCartList();
+       if(getCartItem){
+        dispatch(GET_CART(getCartItem));
+       }
+    }
+}

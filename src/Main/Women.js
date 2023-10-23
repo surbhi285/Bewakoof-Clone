@@ -9,7 +9,7 @@ import Filter from './Filter';
 export default function Women() {
   
   const getData = useSelector((store)=>{
-    console.log(store.data, "store debug");
+    //console.log(store.data, "store debug");
     return store.data;
   })
 
@@ -25,7 +25,7 @@ export default function Women() {
     return item.gender==="Women";
    
   });
-  console.log(womenData);
+  //console.log(womenData);
 
   return (
     <Box>

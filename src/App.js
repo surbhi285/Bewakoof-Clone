@@ -10,6 +10,7 @@ import Login from './Main/Login';
 import SignUp from './Main/SignUp';
 import Filter from './Main/Filter';
 import Wishlist from './Main/Wishlist';
+import Cart from './Main/Cart';
 
 
 
@@ -24,6 +25,7 @@ function App() {
     {/* <Route path="/Women" element={<Women />}/> */}
     <Route path="/product/:id" element={<ProductDetail />} />
     <Route path="/wishlist" element={<Wishlist/>}/>
+    <Route path="/Cart" element={<Cart />}/>
     <Route path="/Login" element={<Login />} />
     <Route path="/SignUp" element={<SignUp />}/>
     </Routes>

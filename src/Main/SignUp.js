@@ -18,13 +18,13 @@ import {useNavigate} from 'react-router-dom';
     const isLoggedIn = useSelector ((state)=>{
         return state.user.isLoggedIn;
     })
-    console.log(isLoggedIn);
+    //console.log(isLoggedIn);
    
 
     const message = useSelector((state)=>{
         return state.user.message;
     })
-    console.log(message)
+    //console.log(message)
 
     const handleSignUp = (e) => {
         e.preventDefault();

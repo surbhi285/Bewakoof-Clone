@@ -26,7 +26,9 @@ export default function Nav() {
     const dispatch = useDispatch();
 
     const isLoggedIn = useSelector((store) => store.user?.isLoggedIn);
-    console.log(isLoggedIn)
+    //console.log(isLoggedIn)
+
+    const wishlist = useSelector((state) => state.data.wishlist);
 
     const handleMouseEnter = (category)=>{
         setMenuHover(category);
@@ -36,15 +38,15 @@ export default function Nav() {
     };
 
     const handleProfileClick = ()=>{
-        console.log('handleProfileClick is triggered');
-        console.log('isLoggedIn:', isLoggedIn);
+        //console.log('handleProfileClick is triggered');
+        //console.log('isLoggedIn:', isLoggedIn);
         setDropmenu(!dropmenu);    
     }
 
     const handleLogout =() =>{
         dispatch(LOGOUT()); // Dispatch the logout action
         setDropmenu(false);
-        console.log('isLoggedIn:', isLoggedIn);
+        //console.log('isLoggedIn:', isLoggedIn);
     }
      
 
@@ -112,12 +114,15 @@ export default function Nav() {
              </NavLink>
               </>)}
             
-            <NavLink to='/wishlist'>
+            <NavLink to='/wishlist' style={{color:"black"}}>
             <ListItem>
-            <BsHeart style={{height:"20px", width:"20px", marginLeft:"5px", marginTop:"12px" }}/>
+            <BsHeart style={{height:"20px", width:"20px", marginTop:"12px" }}/>
              </ListItem>
              </NavLink>
+             <NavLink to='/Cart' style={{color:"black"}}>
             <ListItem><BsBag style={{marginTop:"11px", fontSize:"20px"}}/> </ListItem>
+            </NavLink>
+
             <ListItem><img src={flag} alt="flagIcon" className='flag'/></ListItem>
         </UnorderedList>
     </Flex>

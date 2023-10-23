@@ -5,20 +5,32 @@ import { NavLink, useParams } from 'react-router-dom';
 import {AiFillStar, AiOutlineHeart} from 'react-icons/ai';
 import {PiShoppingBagLight} from 'react-icons/pi';
 import {BiStar, BiMinus} from 'react-icons/bi';
+import {GrLocation} from 'react-icons/gr';
 import {MdAdd} from 'react-icons/md';
 import {RiFileListLine, RiExchangeLine} from 'react-icons/ri';
 import flag from '../Images/flag.png';
 import info from '../Images/info.png';
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "../Action";
 
 
 function ProductDetail(props){
 
     const {id} = useParams();
-    console.log(id);
+    //console.log(id);
    
     const[productImages, setProductImages] = useState([]);
     const[productInfo, setProductInfo] = useState([]);
     const[number, setNumber] = useState(0);
+
+    const dispatch = useDispatch();
+    const cartItem = useSelector((state)=>state.data.cart);
+    //console.log(cartItem);
+
+    const handleAddToCart = (product)=>{
+      //console.log(product);
+      dispatch(addCart(product));
+    };
 
     const getProduct = async()=>{
 
@@ -26,25 +38,20 @@ function ProductDetail(props){
         {
             method: 'GET',
                 headers: {
-                    'projectId': "8jf3b15onzua",
+                    'projectId': "3ggih9l8ac0f",
                 }
             }));
-
-        if(!response.ok){
-            console.error('Failed to Fetch');
-            return;
-        }
-
         const data = await response.json();
-        console.log(data, "data");
-        console.log(data.data?.images)
+        //console.log(data, "data");
+        //console.log(data.data?.images)
         setProductImages(data.data?.images);
         setProductInfo(data.data);
     }
      useEffect(()=>{
         getProduct();
      },[id])
-
+    
+     //console.log(productInfo);
 
     return(
      <Box>
@@ -53,7 +60,7 @@ function ProductDetail(props){
       <Container className='heading2'>Home</Container>
       </NavLink>
       <Container className='heading2'>/</Container>
-      <Container className='heading2'>{productInfo.gender}Clothing</Container>
+      <Container className='heading2'>{productInfo.gender} Clothing</Container>
       <Container className='heading2'>/</Container>
       <Container className='heading2'>{productInfo.name}</Container>
       </Flex>
@@ -105,18 +112,20 @@ function ProductDetail(props){
     <button className="size">XXL</button>
     <br/>
      <Flex style={{marginTop:"40px", borderBottom:"2px solid #eee"}}>
-    <button className="CART">
+    <NavLink to="/Cart" style={{textDecoration:"none"}}>
+    <button className="CART" onClick={()=>handleAddToCart(productInfo._id)}>
     <PiShoppingBagLight style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     ADD TO BAG</button>
+    </NavLink>
     <button className="WISH">
     <AiOutlineHeart style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     WISHLIST</button>
     </Flex>
 
-    {/* <Flex style={{marginTop:"20px"}}>
+    <Flex style={{marginTop:"20px"}}>
      <GrLocation style={{width:"20px", height:"20px", marginRight:"10px"}}/>
      <div style={{fontSize:"12px", fontWeight:"bold"}}>CHECK FOR DELIVERY DETAILS</div> 
-    </Flex> */}
+    </Flex>
 
     <Flex style={{borderBottom:"2px solid #eee"}}>
     <div style={{marginTop:"10px", marginRight:"10px", fontWeight:"bold",fontSize:"15px", color:"#363636"}}>

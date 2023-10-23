@@ -19,12 +19,12 @@ export default function Login(){
   const isLoggedIn = useSelector ((state)=>{
   return state.user.isLoggedIn;
 })
-console.log(isLoggedIn);
+//console.log(isLoggedIn);
 
 const message = useSelector((state)=>{
   return state.user.message;
 })
-console.log(message)
+//console.log(message)
 
   
 const handlelogin = (e) => {
