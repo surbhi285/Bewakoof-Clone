@@ -15,7 +15,7 @@ export async function fetchData(){
                }
            });
        const data = await response.json();
-       //console.log(data, "data");
+       console.log(data, "data");
        //console.log(data.data.subCategory)
        localStorage.setItem("productList", JSON.stringify({"productList": data}))
        return data;
@@ -242,7 +242,31 @@ export async function getCartList(){
 }
 }
 
-    
+export async function removeCartItem(productId){
+    console.log(productId);
+    const userInfo = localStorage.getItem("signup")
+    if (userInfo){
+    const userDetail = JSON.parse(userInfo);
+    const response = await(fetch(`https://academics.newtonschool.co/api/v1/ecommerce/cart/${productId}`,
+    {
+        method: 'DELETE',
+        headers: {
+           Accept: "application/json",
+           "Content-Type": "application/json",
+           Authorization: `Bearer ${userDetail.signup.token}`,
+           projectId: "3ggih9l8ac0f",
+        }
+    }))
+    if(response.ok){
+        const cartData = await response.json();
+        //console.log(cartData.data)
+        return cartData;
+        }
+        else{
+            console.log('Error not able to remove')
+        }
+    }
+}   
 
 
 

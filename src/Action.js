@@ -10,12 +10,7 @@ export const SET_DATA = (payload)=>{
     };
 };
 
-export const SET_FILTERS = (category)=>{
-    return{
-        type: ACTION_TYPE.SET_FILTERS,
-        payload: category,
-    };
-};
+
 
 export const ERROR = (payload)=>{
     return{
@@ -123,10 +118,7 @@ export const ADD_CART = (payload) => ({
   });
 
 
-export const GET_CART = (payload)=>({
-    type: ACTION_TYPE.GET_CART,
-    payload: payload,
-});
+
 
 export const addCart =(productID)=>{
     return async (dispatch)=>{
@@ -137,11 +129,3 @@ export const addCart =(productID)=>{
     }
 }
 
-export const getCart = ()=>{
-    return async(dispatch)=>{
-       const getCartItem = await getCartList();
-       if(getCartItem){
-        dispatch(GET_CART(getCartItem));
-       }
-    }
-}

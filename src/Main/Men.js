@@ -1,4 +1,4 @@
-import { Container, Box, Flex, filter} from '@chakra-ui/react';
+import { Container, Box, Flex, Text} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams, Link } from 'react-router-dom';
 import {BsHeart} from 'react-icons/bs';
@@ -6,13 +6,14 @@ import { AiFillHeart } from 'react-icons/ai';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FETCH_DATA, SET_FILTERS, addWishlist, removeWatchlist } from '../Action';
+import bewa from'../Images/bewa.png';
 
 export default function Men() {
   const {id} = useParams();
   //console.log(id);
 
   const getData = useSelector((store)=>{
-    //console.log(store, "store debug");
+    console.log(store, "store debug");
     return store.data;
   })
 
@@ -50,6 +51,34 @@ export default function Men() {
     return false;
   }) 
   //console.log(filteredData);
+  const handleCategoryFilter = (category) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(category);
+    }
+  }
+  const handleColorFilter = (category) => {
+    if (selectedColor === category) {
+      setSelectedColor(null);
+    } else {
+      setSelectedColor(category);
+    }
+  }
+  const handleBrandFilter = (category) => {
+    if (selectedBrand=== category) {
+      setSelectedBrand(null);
+    } else {
+      setSelectedBrand(category);
+    }
+  }
+  const handlePopularityFilter = (category) => {
+    if (selectedPopularity === category) {
+      setSelectedPopularity(null);
+    } else {
+      setSelectedPopularity(category);
+    }
+  }
    
   const handleAddToWishList = (product)=>{
     dispatch(addWishlist(product));
@@ -89,7 +118,7 @@ export default function Men() {
       <Box>
         <Flex>
           <h2 className='heading3'>{id === 'men' ? "Men Clothing" : "Women Clothing"}</h2>
-          <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({genderData.length})</div>
+          <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({filteredData.length})</div>
         </Flex>
         <hr className='ruler' />
       </Box>
@@ -122,7 +151,7 @@ export default function Men() {
     <AccordionPanel pb={4}>
      <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.subCategory)).values()).map((subCategory, index) => (
-          <li key={index} onClick={() => setSelectedCategory(subCategory)}  className={selectedCategory === subCategory ? 'activeCategory' : ''}>
+          <li key={index} onClick={() =>handleCategoryFilter(subCategory)}  className={selectedCategory === subCategory ? 'activeCategory' : ''}>
             {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}</li>
         ))}
      </ul>
@@ -141,7 +170,7 @@ export default function Men() {
     <AccordionPanel pb={4}>
      <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.brand)).values()).map((brand, index) => (
-          <li key={index} onClick={() => setSelectedBrand(brand)}  className={selectedBrand === brand ? 'activeCategory' : ''}>
+          <li key={index} onClick={() => handleBrandFilter(brand)}  className={selectedBrand === brand ? 'activeCategory' : ''}>
             {brand.charAt(0).toUpperCase() + brand.slice(1)}</li>
         ))}
      </ul>
@@ -160,8 +189,8 @@ export default function Men() {
     <AccordionPanel pb={4}>
     <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.color)).values()).map((color, index) => (
-          <button key={index} onClick={() => setSelectedColor(color)}  className={selectedColor === color ? 'activeCategory' : ''}
-         style={{ backgroundColor: color, border:"0.5px solid grey", width: "30px", height: "30px", borderRadius: "10px", marginRight: "10px",marginBottom: "8px", border: "none"}}>
+          <button key={index} onClick={() => handleColorFilter(color)}  className={selectedColor === color ? 'activeCategory' : ''}
+         style={{ backgroundColor: color, border:"1px solid grey", width: "30px", height: "30px", borderRadius: "10px", marginRight: "10px",marginBottom: "8px"}}>
           </button>
         ))}
      </ul>
@@ -181,7 +210,7 @@ export default function Men() {
     <AccordionPanel pb={4}>
     <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.sellerTag)).values()).map((sellerTag, index) => (
-          <li key={index} onClick={() => setSelectedPopularity(sellerTag)}  className={selectedPopularity === sellerTag ? 'activeCategory' : ''}>
+          <li key={index} onClick={() => handlePopularityFilter(sellerTag)}  className={selectedPopularity === sellerTag ? 'activeCategory' : ''}>
             {sellerTag.charAt(0).toUpperCase() + sellerTag.slice(1)}</li>
         ))}
      </ul>
@@ -191,7 +220,7 @@ export default function Men() {
 
   </Accordion>
         </Container>
-
+        {filteredData.length>0 ? (
         <Container className='dataInfo'>
           {filteredData.map((item, index) => (
             <Box className='dataStyle' key={index}>
@@ -214,8 +243,18 @@ export default function Men() {
             </Box>
           )
           )}
-
         </Container>
+        ):(
+          <Box style={{marginLeft:"40%", marginTop:"8%"}}>
+          <img src={bewa} alt="bewa" 
+          style={{ borderRadius:"10px"}}/>
+          <h5 style={{marginTop:"20px", paddingLeft:"30px", color:"gray"}}>Not Available Right Now.</h5>
+          <Link to="/" style={{textDecoration:"none", color:"#fdd835", cursor:"pointer"}}>
+          <h3 style={{marginLeft:"-1%", color:"#fdd835"}}>Stay Tuned! 
+           Back To Shopping</h3>
+           </Link>
+          </Box>
+        )}
       </Flex>
     </Box>
   )

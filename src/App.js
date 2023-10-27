@@ -11,6 +11,8 @@ import SignUp from './Main/SignUp';
 import Filter from './Main/Filter';
 import Wishlist from './Main/Wishlist';
 import Cart from './Main/Cart';
+import Categories from './Main/Categories';
+import BrandCategories from './Main/BrandCategories';
 
 
 
@@ -28,6 +30,8 @@ function App() {
     <Route path="/Cart" element={<Cart />}/>
     <Route path="/Login" element={<Login />} />
     <Route path="/SignUp" element={<SignUp />}/>
+    <Route path="/subcategories/:gender/:id" element={<Categories/>}/>
+    <Route path="/brand/:gender/:special" element={<BrandCategories />}/>
     </Routes>
     </Router>
     
