@@ -75,7 +75,8 @@ export async function loginCall(email, password){
             });
             if(response.ok){
                 const responseData = await response.json();
-                //console.log(responseData);
+                localStorage.setItem("authToken", responseData.token);
+                console.log(responseData);
                 localStorage.setItem(
                     "signup",
                     JSON.stringify({
@@ -84,7 +85,7 @@ export async function loginCall(email, password){
                 );
                 return responseData;
             }else{
-                //console.log("registration failed", response);
+                console.log("registration failed", response);
                 // dispatch(LOGIN_FAILURE("User Not Found"));
             }
         }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import logo from '../Images/logo.webp';
-// import Heart from '../Images/Heart.jpg';
 import flag from '../Images/flag.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from  '@fortawesome/free-solid-svg-icons';
@@ -27,6 +26,8 @@ export default function Nav() {
 
     const isLoggedIn = useSelector((store) => store.user?.isLoggedIn);
     //console.log(isLoggedIn)
+  
+
 
     const wishlist = useSelector((state) => state.data.wishlist);
 
@@ -99,18 +100,27 @@ export default function Nav() {
              <ListItem style={{fontSize:"25px", marginTop:"5px"}}>|</ListItem>
               
               {isLoggedIn ?(
-              <><CiUser onClick={handleProfileClick} style={{fontSize:"25px", marginTop:"8px", marginRight:"10px"}}/>
+              <div><CiUser onClick={handleProfileClick} 
+              style={{fontSize:"25px", marginTop:"12px", marginRight:"15px"}}/>
               {dropmenu && (
                 <ul className='profileOption'>
-                    <li>Hi, </li>
+                    <li style={{backgroundColor:"#eee"}}>Hi,</li>
+                    <NavLink to="/Account" style={{textDecoration:"none", cursor:"pointer", color:"black"}}>
                     <li>My Account</li>
+                    </NavLink>
+                    <NavLink to="/Wishlist" style={{textDecoration:"none", cursor:"pointer", color:"black"}}>
                     <li>My Wishlist</li>
+                    </NavLink>
+                    <NavLink to="/Orders" style={{textDecoration:"none", cursor:"pointer", color:"black"}}>
                     <li>My Orders</li>
+                    </NavLink>
+                    <NavLink to="/Wallet" style={{textDecoration:"none", cursor:"pointer", color:"black"}}>
                     <li>My Wallet</li>
+                    </NavLink>
                     <li onClick={handleLogout}>Logout</li>
                 </ul>
               )}
-              </>
+              </div>
               ):(
               <>
             <NavLink to='/Login' style={{color:"black", textDecoration:"none"}}>

@@ -2,7 +2,7 @@ import { LOGOUT } from "./Action";
 import Action_Type from "./ActionType";
 
 const initialState ={
-    isLoggedIn:false,
+    isLoggedIn: localStorage.getItem("authToken") ? true : false,
     userInfo: {},
     message:"",
     token:"",
@@ -20,6 +20,7 @@ const userReducer = (state=initialState, action)=>{
             return{...state, isLoggedIn: true, userInfo: action.payload, message:""};
 
         case Action_Type.LOGOUT:
+            localStorage.removeItem("authToken");
             return{  ...state, isLoggedIn: false, userInfo: null}
 
           

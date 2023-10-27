@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Spacer, Text } from '@chakra-ui/react'
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import {NavLink, useNavigate} from 'react-router-dom';
 import { LOGIN_FAILURE, login } from '../Action';
 import loginPage from '../Images/loginPage.png'
@@ -11,6 +11,7 @@ export default function Login(){
   const[email, setEmail] = useState("");
   const[password, setPassword] = useState("");
   const [color, setColor] = useState("");
+  
 
 
   const dispatch = useDispatch();
@@ -19,12 +20,12 @@ export default function Login(){
   const isLoggedIn = useSelector ((state)=>{
   return state.user.isLoggedIn;
 })
-//console.log(isLoggedIn);
+console.log(isLoggedIn);
 
 const message = useSelector((state)=>{
   return state.user.message;
 })
-//console.log(message)
+console.log(message)
 
   
 const handlelogin = (e) => {
@@ -36,16 +37,15 @@ const handlelogin = (e) => {
     dispatch(LOGIN_FAILURE("Email is invalid"));
     setColor("red");
   }else {
-    dispatch(login(email, password));
-    if(isLoggedIn) {
+    dispatch(login(email, password)) 
+      }
+    }  
+
+  useEffect(()=>{
+    if(isLoggedIn===true){
       navigator('/')
     }
-      else {
-        dispatch(LOGIN_FAILURE("User not found"));
-        setColor("red");
-      }
-    }
-  }
+  }, [isLoggedIn, navigator]);
    
   return (
     <div>

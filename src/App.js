@@ -8,11 +8,13 @@ import Men from './Main/Men';
 import ProductDetail from './Main/ProductDetail';
 import Login from './Main/Login';
 import SignUp from './Main/SignUp';
-import Filter from './Main/Filter';
 import Wishlist from './Main/Wishlist';
 import Cart from './Main/Cart';
 import Categories from './Main/Categories';
 import BrandCategories from './Main/BrandCategories';
+import Account  from './Main/Account';
+import Orders from './Main/Orders';
+import Wallet from './Main/Wallet';
 
 
 
@@ -32,6 +34,9 @@ function App() {
     <Route path="/SignUp" element={<SignUp />}/>
     <Route path="/subcategories/:gender/:id" element={<Categories/>}/>
     <Route path="/brand/:gender/:special" element={<BrandCategories />}/>
+    <Route path="/Account" element={<Account />}/>
+    <Route path="/Orders" element={<Orders />}/>
+    <Route path="/Wallet" element={<Wallet />}/>
     </Routes>
     </Router>
     

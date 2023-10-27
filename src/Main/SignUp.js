@@ -36,14 +36,14 @@ import {useNavigate} from 'react-router-dom';
           setColor("red");
         }else {
           dispatch(signup(name, email, password)); 
-          if(isLoggedIn){
-            navigator('/')
-          }else{
-            dispatch(LOGIN_FAILURE("Incorrect name or Password"));
-            setColor("red");
-          }
           }
         }
+
+        useEffect(()=>{
+          if(isLoggedIn==true){
+            navigator('/');
+          }
+        },[isLoggedIn, navigator]);
       
     
   

@@ -494,24 +494,21 @@ margin-bottom: 20px;
 }
 .profileOption{
   position: absolute;
-  margin-top: 55px;
-  margin-left: 25%;
-  width: 180px;
+  margin-top: 13px;
+  margin-left: -10px;
+  width: 200px;
   z-index: 100;
- 
   background-color: white;
   font-family: sans-serif;
   padding: 0;
 }
 .profileOption li{
   padding-top: 12px;
+  width: 185px;
   padding-bottom: 12px;
   padding-left: 15px;
 }
-.profileOption :first-child{
-  background-color: #eee;
 
-}
 .profileOption li:hover{
   background-color: #eee;
 }
