@@ -14,10 +14,8 @@ function dataReducer(state=initialState, action){
 
             
             case ACTION_TYPE.ADD_TO_WISHLIST:
-                return{
-                ...state,
-                wishlist: [...state.wishlist, action.payload],
-                }
+                return{...state, wishlist: action.payload};
+                
                 
             case ACTION_TYPE.GET_WISHLIST:
                 return {...state, wishlist: action.payload};

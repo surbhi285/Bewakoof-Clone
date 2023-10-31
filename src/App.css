@@ -88,7 +88,6 @@ margin-left: 20px;
 .navBar-right{
   display: flex;
   list-style: none;
-  margin-left: 70px;
 }
 
 .navBar-right li{
@@ -113,7 +112,6 @@ margin-left: 20px;
   background-color: #eee;
   border-radius: 5px;
   height:40px;
-  margin-left: 180px;
   margin-top: 5px;
 }
 
@@ -542,19 +540,15 @@ margin-bottom: 20px;
 }
 .cartInfo{
 margin-left: 50px;
-width: 50%;
+width: 45%;
 height: 30px;
 padding-top: 10px;
 background-color: rgb(252, 255, 238);
 }
 .cartbox{
-height: 200px;
-width: 37rem;
-border: 1px solid #ced4da;
-margin-left: -40rem;
-margin-bottom: 30px;
-border-radius: 5px;
-margin-top: 20px;
+  margin-bottom: 10%;
+  border: 1px solid green;
+  
 }
 .cartName{
   margin-top: 50px;
@@ -601,7 +595,8 @@ margin-top: 20px;
   font-size: 18px;
   border-radius: 5px;
   position: relative;
-  margin-top: -47rem;
+  bottom: 780px;
+  
 }
 
 .order{

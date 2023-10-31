@@ -96,8 +96,8 @@ export async function loginCall(email, password){
 
 export async function addWishlistItem(productId){
         const user = localStorage.getItem("signup");
-        //console.log(productId);
-        //console.log("userData", user);
+        console.log(productId);
+        console.log("userData", user);
         if(user){
           const parsedData = JSON.parse(user);
         ////console.log(parsedData.signup.token);
@@ -113,10 +113,11 @@ export async function addWishlistItem(productId){
                   body: JSON.stringify({'productId': productId}),
                 });
                 if(response.ok){
-                    //console.log("successfully added");
+                    console.log("response", response)
+                    console.log("successfully added");
                     return productId;
                 }else{
-                    console.error("failed to add")
+                    console.error("Request failed with status: " + response.status);
                 }
             }
         }
@@ -140,7 +141,7 @@ export async function getWatchlistItem(){
         if(response.ok){ 
         // //console.log("response", response);
         const wishlistData = await response.json();
-        //console.log(wishlistData.data)
+        console.log(wishlistData.data)
         // localStorage.setItem(
         //     "wishlistData",
         //     JSON.stringify({
@@ -244,10 +245,10 @@ export async function getCartList(){
 }
 
 export async function removeCartItem(productId){
-    console.log(productId);
     const userInfo = localStorage.getItem("signup")
     if (userInfo){
     const userDetail = JSON.parse(userInfo);
+    //console.log(userDetail.signup.token); 
     const response = await(fetch(`https://academics.newtonschool.co/api/v1/ecommerce/cart/${productId}`,
     {
         method: 'DELETE',

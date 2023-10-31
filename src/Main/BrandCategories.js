@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AiFillHeart } from 'react-icons/ai';
 import { BsHeart } from 'react-icons/bs';
 import { Container, Box, Flex} from '@chakra-ui/react';
-import { FETCH_DATA, addWishlist, removeWatchlist } from '../Action';
+import { FETCH_DATA, addWishlist, removeWishlist } from '../Action';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
 
 export default function BrandCategories(){
@@ -15,9 +15,12 @@ export default function BrandCategories(){
     const[brand, setBrand] = useState([]);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedPopularity, setSelectedPopularity] = useState(null);
+    const [inWishList, setInWishlist] = useState({});
 
     const dispatch = useDispatch();
-
+    const wishlist = useSelector((store)=> store.data.wishlist);
+    const isLoggedIn = useSelector((store)=>store.user.isLoggedIn)
+    console.log(wishlist);
 
     useEffect(()=>{
      dispatch(FETCH_DATA());
@@ -61,27 +64,36 @@ export default function BrandCategories(){
         }
       }
 
-    const handleAddToWishList = (product)=>{
-        dispatch(addWishlist(product));
-        const updateData = brand.map((item)=>{
-          if(item._id ===product){
-            return{...item, inWishlist: true};
+      const handleAddToWishList =(productId)=>{
+        console.log("handlewishlist being called", productId)
+       if(isLoggedIn){
+        if(inWishList[productId]){
+          dispatch(removeWishlist(productId));
+          setInWishlist((prevState)=>({
+            ...prevState,
+            [productId]: false,
+          }));
+        }else{
+          dispatch(addWishlist(productId));
+          setInWishlist((prevState)=>({
+            ...prevState,
+            [productId]: true,
+          }));
+             }
           }
-          return item;
-        })
-        setBrand(updateData);
       }
+      
+      useEffect(()=>{
+        if (brand) {
+          const updatedData = brand.map((item) => {
+            const inWishList = wishlist && wishlist[item._id]
+            return { ...item, inWishlist: inWishList };
+          });
+          setBrand(updatedData);
+        }
+      }, [wishlist]);
     
-      const handleRemoveFromWishList = (product) => {
-        dispatch(removeWatchlist(product));
-        const updatedData = brand.map((item) => {
-            if (item._id === product) {
-                return { ...item, inWishlist: false };
-            }
-            return item;
-        });
-        setBrand(updatedData);
-    }
+  
 
   return (
     <Box>
@@ -176,20 +188,27 @@ export default function BrandCategories(){
               </Link>
               <Flex>
                 <h3 className='dataBrand'>{item.brand}</h3>
-                {item.inWishlist?(
-                  <AiFillHeart style={{ height: "20px", width:"20px", color: "red", marginLeft: "25px" }} 
-                  onClick={()=> handleRemoveFromWishList(item._id)}/>
-                 
+                {isLoggedIn ? (
+                  <>
+                {inWishList[item._id] ? (
+                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "15px" }} 
+                 onClick={()=> handleAddToWishList(item._id)}/>
                 ):(
-                <BsHeart style={{ height: "20px", width: "20px", color: "grey", marginLeft: "60px" }} 
+                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }} 
                 onClick={()=> handleAddToWishList(item._id)}/>
                 )}
-              </Flex>
-              <div className='dataTitle' style={{ color: "rgb(115, 115, 115)" }}>{item.name}</div>
-              <div className='dataPrice' style={{ fontSize: "20px" }}>₹{item.price}</div>
-            </Box>
-          )
-          )}
+                </>
+                ):(
+                  <>
+                  <Link to ='/Login'>
+                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }}/>
+                  </Link>
+                  </>
+                )}
+                 </Flex>
+                  </Box>
+                 
+          ))}
         </Container>
         </Flex>
        

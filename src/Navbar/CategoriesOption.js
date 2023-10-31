@@ -15,9 +15,7 @@ const OptionMen =()=>{
     position:"absolute",
     width:"800px",
     border:"1px solid rgba(0, 0, 0, 0.2)",
-    borderTop:"none",
     height:"400px",
-    
     }}>
     <div style={{ position: "absolute", backgroundColor: "white", width: "150px" ,}}>
     <ul className="ul" style={{flex:"1"}}>
@@ -63,7 +61,7 @@ const OptionMen =()=>{
     <div style={{
           flex: 1, 
           position: "relative",
-          marginTop: "10px",
+          marginTop: "20px",
           backgroundColor: "white",
           width:"200px",
           marginLeft:"150px",
@@ -135,7 +133,7 @@ Trousers
           marginTop: "-180px",
           backgroundColor: "white",
           width:"400px",
-          marginLeft:"400px",
+          marginLeft:"350px",
           paddingLeft:"20px",
           borderLeft: "2px solid grey",
           height:"380px"

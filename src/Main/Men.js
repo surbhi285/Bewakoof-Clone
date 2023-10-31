@@ -5,7 +5,8 @@ import {BsHeart} from 'react-icons/bs';
 import { AiFillHeart } from 'react-icons/ai';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FETCH_DATA, SET_FILTERS, addWishlist, removeWatchlist } from '../Action';
+import { ADD_TO_WISHLIST, FETCH_DATA,  REMOVE_FROM_WISHLIST, addWishlist, removeWishlist} from '../Action';
+import noAvailable from '../Images/noAvailable.jpg';
 import bewa from'../Images/bewa.png';
 
 export default function Men() {
@@ -13,8 +14,8 @@ export default function Men() {
   //console.log(id);
 
   const getData = useSelector((store)=>{
-    console.log(store, "store debug");
-    return store.data;
+  console.log(store, "store debug");
+  return store.data;
   })
 
 
@@ -24,9 +25,13 @@ export default function Men() {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedPopularity, setSelectedPopularity] = useState(null);
-
+  const [inWishList, setInWishlist] = useState({});
+  
   const dispatch = useDispatch();
-
+  const wishlist = useSelector((store)=> store.data.wishlist);
+  const isLoggedIn = useSelector((store)=>store.user.isLoggedIn)
+  console.log(wishlist);
+ 
 
    useEffect(()=>{
     dispatch(FETCH_DATA());
@@ -39,7 +44,7 @@ export default function Men() {
    }, [id, getData])
   //  //console.log(genderData, "gender");
 
-  const filteredData = genderData.filter((item)=>{
+  const filteredData = genderData?.filter((item)=>{
     if(
       (!selectedCategory || item.subCategory===selectedCategory) &&
       (!selectedBrand || item.brand===selectedBrand) &&
@@ -51,6 +56,7 @@ export default function Men() {
     return false;
   }) 
   //console.log(filteredData);
+
   const handleCategoryFilter = (category) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
@@ -79,28 +85,36 @@ export default function Men() {
       setSelectedPopularity(category);
     }
   }
-   
-  const handleAddToWishList = (product)=>{
-    dispatch(addWishlist(product));
-    const updateData = genderData.map((item)=>{
-      if(item._id===product){
-        return{...item, inWishlist: true};
-      }
-      return item;
-    })
-    setGenderData(updateData);
-  }
 
-  const handleRemoveFromWishList = (product) => {
-    dispatch(removeWatchlist(product));
+const handleAddToWishList =(productId)=>{
+  // console.log("handlewishlist being called", productId)
+ if(isLoggedIn){
+  if(inWishList[productId]){
+    dispatch(removeWishlist(productId));
+    setInWishlist((prevState)=>({
+      ...prevState,
+      [productId]: false,
+    }));
+  }else{
+    dispatch(addWishlist(productId));
+    setInWishlist((prevState)=>({
+      ...prevState,
+      [productId]: true,
+    }));
+       }
+    }
+}
+
+useEffect(()=>{
+  if (genderData) {
     const updatedData = genderData.map((item) => {
-        if (item._id === product) {
-            return { ...item, inWishlist: false };
-        }
-        return item;
+      const inWishList = wishlist && wishlist[item._id]
+      return { ...item, inWishlist: inWishList };
     });
     setGenderData(updatedData);
-}
+  }
+}, [wishlist]);
+
 
   return (
     <Box>
@@ -152,7 +166,7 @@ export default function Men() {
      <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.subCategory)).values()).map((subCategory, index) => (
           <li key={index} onClick={() =>handleCategoryFilter(subCategory)}  className={selectedCategory === subCategory ? 'activeCategory' : ''}>
-            {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}</li>
+            {subCategory?.charAt(0).toUpperCase() + subCategory?.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -171,7 +185,7 @@ export default function Men() {
      <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.brand)).values()).map((brand, index) => (
           <li key={index} onClick={() => handleBrandFilter(brand)}  className={selectedBrand === brand ? 'activeCategory' : ''}>
-            {brand.charAt(0).toUpperCase() + brand.slice(1)}</li>
+            {brand?.charAt(0).toUpperCase() + brand?.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -211,7 +225,7 @@ export default function Men() {
     <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.sellerTag)).values()).map((sellerTag, index) => (
           <li key={index} onClick={() => handlePopularityFilter(sellerTag)}  className={selectedPopularity === sellerTag ? 'activeCategory' : ''}>
-            {sellerTag.charAt(0).toUpperCase() + sellerTag.slice(1)}</li>
+            {sellerTag?.charAt(0).toUpperCase() + sellerTag?.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -225,17 +239,26 @@ export default function Men() {
           {filteredData.map((item, index) => (
             <Box className='dataStyle' key={index}>
               <Link to={`/product/${item._id}`}>
-                <img className='dataImage' src={item.displayImage}></img>
+               <img className='dataImage' src={item.displayImage ? item.displayImage : noAvailable} alt="image"/>
               </Link>
               <Flex>
                 <h3 className='dataBrand'>{item.brand}</h3>
-                {item.inWishlist?(
-                  <AiFillHeart style={{ height: "20px", width: "20px", color: "red", marginLeft: "15px" }} 
-                  onClick={()=> handleRemoveFromWishList(item._id)}/>
-                 
+                {isLoggedIn ? (
+                  <>
+                {inWishList[item._id] ? (
+                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "15px" }} 
+                 onClick={()=> handleAddToWishList(item._id)}/>
                 ):(
-                <BsHeart style={{ height: "20px", width: "20px", color: "grey", marginLeft: "15px" }} 
+                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }} 
                 onClick={()=> handleAddToWishList(item._id)}/>
+                )}
+                </>
+                ):(
+                  <>
+                  <Link to ='/Login'>
+                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }}/>
+                  </Link>
+                  </>
                 )}
               </Flex>
               <div className='dataTitle' style={{ color: "rgb(115, 115, 115)" }}>{item.name}</div>

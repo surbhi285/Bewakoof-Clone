@@ -15,7 +15,7 @@ const OptionWomen =()=>{
     position:"absolute",
     width:"800px",
     border:"1px solid rgba(0, 0, 0, 0.2)",
-    borderTop:"none",
+    
     height:"400px",
     }}>
     <div style={{ position: "absolute", backgroundColor: "white", width: "500px" }}>

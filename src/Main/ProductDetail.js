@@ -11,7 +11,7 @@ import {RiFileListLine, RiExchangeLine} from 'react-icons/ri';
 import flag from '../Images/flag.png';
 import info from '../Images/info.png';
 import { useDispatch, useSelector } from "react-redux";
-import { addCart } from "../Action";
+import { addCart, addWishlist } from "../Action";
 
 
 function ProductDetail(props){
@@ -25,13 +25,15 @@ function ProductDetail(props){
 
     const dispatch = useDispatch();
     const cartItem = useSelector((state)=>state.data.cart);
+    const isLoggedIn = useSelector((state)=> state.user.isLoggedIn);
+    const wishlist = useSelector((state)=>state.data.wishlist)
     //console.log(cartItem);
 
     const handleAddToCart = (product)=>{
       //console.log(product);
       dispatch(addCart(product));
     };
-
+    
     const getProduct = async()=>{
 
         const response = await(fetch(`https://academics.newtonschool.co/api/v1/ecommerce/product/${id}`,
@@ -42,16 +44,12 @@ function ProductDetail(props){
                 }
             }));
         const data = await response.json();
-        //console.log(data, "data");
-        //console.log(data.data?.images)
         setProductImages(data.data?.images);
         setProductInfo(data.data);
     }
      useEffect(()=>{
         getProduct();
      },[id])
-    
-     //console.log(productInfo);
 
     return(
      <Box>
@@ -117,6 +115,7 @@ function ProductDetail(props){
     <PiShoppingBagLight style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     ADD TO BAG</button>
     </NavLink>
+  
     <button className="WISH">
     <AiOutlineHeart style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     WISHLIST</button>

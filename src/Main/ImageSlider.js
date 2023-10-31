@@ -41,16 +41,16 @@ const responsive = {
       <div className="largerCarousel">
         <Carousel {...carouselOptions}>
           <div>
-            <img className="large-slider-img" src={bewakoof1} alt="" />
+            <img className="large-slider-img" src={bewakoof1} alt="bewakoof1" />
           </div>
           <div>
-            <img className="large-slider-img" src={bewakoof2} alt="" />
+            <img className="large-slider-img" src={bewakoof2} alt="bewakoof2" />
           </div>
           <div>
-            <img className="large-slider-img" src={bewakoof3} alt="" />
+            <img className="large-slider-img" src={bewakoof3} alt="bewakoof3" />
           </div>
           <div>
-            <img className="large-slider-img" src={bewakoof4} alt="" />
+            <img className="large-slider-img" src={bewakoof4} alt="bewakoof4" />
           </div>
         </Carousel>
       </div>

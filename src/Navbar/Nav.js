@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import logo from '../Images/logo.webp';
 import flag from '../Images/flag.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -11,14 +11,15 @@ import OptionWomen from './CategoriesWomen';
 import OptionMen from './CategoriesOption';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT } from '../Action';
-
-
-
+import ResNav from './ResNav';
+// import {HiOutlineMenuAlt1} from 'react-icons/hi'
+// import bewakoofLogo from '../Images/bewakoofLogo.png';
 
 export default function Nav() {
 
     const[menuHover, setMenuHover] = useState(false);
     const[dropmenu, setDropmenu] = useState(false);
+    const [smallerScreen,  setSmallerScreen] = useState(window.innerWidth < 1000);
     
 
 
@@ -27,9 +28,6 @@ export default function Nav() {
     const isLoggedIn = useSelector((store) => store.user?.isLoggedIn);
     //console.log(isLoggedIn)
   
-
-
-    const wishlist = useSelector((state) => state.data.wishlist);
 
     const handleMouseEnter = (category)=>{
         setMenuHover(category);
@@ -50,27 +48,54 @@ export default function Nav() {
         //console.log('isLoggedIn:', isLoggedIn);
     }
      
-
+    useEffect(()=>{
+        const handleResize = () => {
+          setSmallerScreen(window.innerWidth < 1000);
+          if(window.innerWidth<1000){
+            // console.log("helloo");
+            // console.log("innerwidth",window.innerWidth);
+            // console.log("width",window.width);
+          }
+          
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      },[])
    
     
   return (
     <>
-    <Flex className="topBar" >
+    {smallerScreen ? (
+      <>
+      <ResNav />
+      {/* {console.log(window.innerWidth)}
+      {console.log(smallerScreen)} */}
+      </>
+    ):(
+    <div>
+    <Flex className="topBar" style={{justifyContent:"space-between"}} >
+    <Flex>
     <UnorderedList className="topBar-left">
         <ListItem>Offers</ListItem>
         <ListItem>FanBook</ListItem>
         <ListItem>TriBe MemberShip</ListItem>
     </UnorderedList>
+    </Flex>
+    <Flex >
     <UnorderedList className='topBar-right'>
-        <ListItem style={{marginLeft:"45rem"}}>Contact Us</ListItem>
+        <ListItem>Contact Us</ListItem>
         <ListItem>Track Order</ListItem>
     </UnorderedList>
     </Flex>
+    </Flex>
 
-    <Flex className='navBar' >
+    <Flex className='navBar' style={{justifyContent:"space-between"}}>
+        <Flex>
         <UnorderedList className='navBar-left'>
             <NavLink to="/">
-            <ListItem><img src={logo} alt="logo" className='imageStyle'></img></ListItem>
+            <ListItem><img src={logo} alt="logo" className='imageStyle'/></ListItem>
             </NavLink>
 
             <Container style={{display:"flex"}}>
@@ -94,7 +119,8 @@ export default function Nav() {
              </NavLink>
              </Container>
              </UnorderedList>
-
+             </Flex>
+             <Flex>
         <UnorderedList className='navBar-right'>
             <ListItem className='navLi'><FontAwesomeIcon icon ={faSearch} style={{color:"#b9b3b3", marginTop:"12px", paddingLeft:"10px"}}/><input type="search" placeholder='Search by product, category or collection' className='inputSearch'/></ListItem>
              <ListItem style={{fontSize:"25px", marginTop:"5px"}}>|</ListItem>
@@ -128,7 +154,7 @@ export default function Nav() {
              </NavLink>
               </>)}
             
-            <NavLink to='/wishlist' style={{color:"black"}}>
+            <NavLink to='/Wishlist' style={{color:"black"}}>
             <ListItem>
             <BsHeart style={{height:"20px", width:"20px", marginTop:"15px" }}/>
              </ListItem>
@@ -141,10 +167,11 @@ export default function Nav() {
 
             <ListItem><img src={flag} alt="flagIcon" className='flag'/></ListItem>
         </UnorderedList>
+        </Flex>
     </Flex>
-   
     <hr/>
-   
+    </div>
+    )}
     </>
   )
 }

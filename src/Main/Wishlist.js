@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getWatchlist, removeWatchlist } from '../Action';
+import { getWatchlist, removeWishlist } from '../Action';
 import {Box, Button, Container, Flex, Text} from '@chakra-ui/react';
 import {Link} from 'react-router-dom';
 import {RxCrossCircled} from 'react-icons/rx';
@@ -19,7 +19,7 @@ export default function Wishlist() {
 
     const handleRemoveItem =(itemId)=>{
         //console.log(itemId)
-        dispatch(removeWatchlist(itemId));
+        dispatch(removeWishlist(itemId));
         dispatch(getWatchlist());
     }
 
