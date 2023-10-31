@@ -302,9 +302,8 @@ list-style-type: none;
 .navLink{
   text-decoration: none;
   color: black;
-  padding-bottom: 12px;
+  /* padding-bottom: 12px; */
   margin: 0;
-  width: 70px;
 }
 
 
@@ -315,11 +314,13 @@ list-style-type: none;
 
 .menuItem{
 margin: 0;
-padding: 10px 15px;
+/* padding: 10px 15px; */
 width: fit-content;
 font-size: 13px;
 font-weight: 500;
 height: 22px;
+padding-left: 15px;
+padding-top: 15px;
 }
 
 
@@ -548,7 +549,7 @@ background-color: rgb(252, 255, 238);
 .cartbox{
   margin-bottom: 10%;
   border: 1px solid green;
-  
+
 }
 .cartName{
   margin-top: 50px;

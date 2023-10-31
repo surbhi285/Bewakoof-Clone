@@ -8,7 +8,7 @@ import bewakoofLogo from '../Images/bewakoofLogo.png';
 
 export default function ResNav() {
   return (
-   <Container style={{backgroundColor:"#fdd835", height:"30px", maxWidth:"100%"}}>
+   <Container style={{backgroundColor:"#fdd835", height:"30px",width:"100%"}}>
     <Flex style={{justifyContent:"space-between"}}>
     <Flex>
     <HiOutlineMenuAlt1  style={{fontSize:"20px", marginLeft:"10px",paddingTop:"5px"}}/>

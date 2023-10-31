@@ -1,3 +1,4 @@
+import { json } from "react-router-dom";
 
 export async function fetchData(){  
     const storedData = localStorage.getItem("productList");
@@ -244,7 +245,8 @@ export async function getCartList(){
 }
 }
 
-export async function removeCartItem(productId){
+export async function removeCartItem(productId, quantity){
+    console.log(productId);
     const userInfo = localStorage.getItem("signup")
     if (userInfo){
     const userDetail = JSON.parse(userInfo);
@@ -257,7 +259,8 @@ export async function removeCartItem(productId){
            "Content-Type": "application/json",
            Authorization: `Bearer ${userDetail.signup.token}`,
            projectId: "3ggih9l8ac0f",
-        }
+        },
+        body: JSON.stringify({'quantity': quantity}),
     }))
     if(response.ok){
         const cartData = await response.json();

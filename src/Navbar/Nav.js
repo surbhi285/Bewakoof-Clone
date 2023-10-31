@@ -3,7 +3,7 @@ import logo from '../Images/logo.webp';
 import flag from '../Images/flag.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from  '@fortawesome/free-solid-svg-icons';
-import {Flex, UnorderedList, ListItem, Container} from '@chakra-ui/react'
+import {Flex, UnorderedList, ListItem, Text} from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom';
 import {BsHeart, BsBag} from 'react-icons/bs';
 import {CiUser} from 'react-icons/ci';
@@ -92,35 +92,48 @@ export default function Nav() {
     </Flex>
 
     <Flex className='navBar' style={{justifyContent:"space-between"}}>
-        <Flex>
-        <UnorderedList className='navBar-left'>
-            <NavLink to="/">
-            <ListItem><img src={logo} alt="logo" className='imageStyle'/></ListItem>
-            </NavLink>
+    <Flex
+              style={{
+                overflow: "hidden",
+                alignItems: "center",
+                height: "60px",
+                border:"1px solid red",
+                maxWidth:"40rem"
+              }}>
+              <NavLink to="/">
+                <Flex>
+                  <img src={logo} alt="logo" className="imageStyle" />
+                </Flex>
+              </NavLink>
+              <div
+                onMouseEnter={() => handleMouseEnter("Men")}
+                onMouseLeave={handleMouseLeave}
+                className="menu-container">
+                <NavLink to={`/categories/men`} className="navLink">
+                  <Text className="menuItem" style={{ margin: "0" }}>
+                    MEN
+                  </Text>
+                </NavLink>
+                {menuHover === "Men" && <OptionMen />}
+              </div>
 
-            <Container style={{display:"flex"}}>
-            <div onMouseEnter={()=>handleMouseEnter('Men')} onMouseLeave={handleMouseLeave} className='menu-container'>
-            <NavLink to={`/categories/men`} className="navLink">
-            <ListItem className='menuItem' style={{marginRight:"0"}}>MEN</ListItem>
-            </NavLink>
-            {menuHover==='Men'&& <OptionMen />}
-            </div>
-       
-            <div onMouseEnter={()=>handleMouseEnter('Women')} onMouseLeave={handleMouseLeave} className='menu-container'>
-             <NavLink to={`/categories/women`}  className="navLink">
-             <ListItem className='menuItem'  style={{marginRight:"0"}}>WOMEN</ListItem>
-             </NavLink>
-             {menuHover === 'Women' && <OptionWomen/>}
-            </div>
-       
+              <div
+                onMouseEnter={() => handleMouseEnter("Women")}
+                onMouseLeave={handleMouseLeave}
+                className="menu-container">
+                <NavLink to={`/categories/women`} className="navLink">
+                  <Flex className="menuItem" style={{ marginRight: "0" }}>
+                    WOMEN
+                  </Flex>
+                </NavLink>
+                {menuHover === "Women" && <OptionWomen />}
+              </div>
 
-             <NavLink to="/MobileCover" className="navLink">
-             <ListItem className='menuItem' style={{width:"150px"}}>MOBILE COVERS</ListItem>
-             </NavLink>
-             </Container>
-             </UnorderedList>
-             </Flex>
-             <Flex>
+              <NavLink to="/MobileCover" className="navLink">
+                <Flex className="menuItem">MOBILE COVERS</Flex>
+              </NavLink>
+            </Flex>
+             <Flex style={{border:"1px solid green"}}>
         <UnorderedList className='navBar-right'>
             <ListItem className='navLi'><FontAwesomeIcon icon ={faSearch} style={{color:"#b9b3b3", marginTop:"12px", paddingLeft:"10px"}}/><input type="search" placeholder='Search by product, category or collection' className='inputSearch'/></ListItem>
              <ListItem style={{fontSize:"25px", marginTop:"5px"}}>|</ListItem>

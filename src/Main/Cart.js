@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 // import { getCart } from '../Action';
 // import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import {Link} from 'react-router-dom';
 import { getCartList, removeCartItem } from '../ServiceApi';
-import { Container, Flex, Box, Button, Spacer, Divider } from '@chakra-ui/react';
+import { Container, Flex, Box, Button, Text } from '@chakra-ui/react';
 import {FaTruck} from 'react-icons/fa';
 import info from '../Images/info.png';
+import emptybag from '../Images/emptybag.png';
 
 export default function Cart() {
 
@@ -32,8 +34,10 @@ export default function Cart() {
     console.log(itemId)
     try{
       await removeCartItem(itemId);
-    }catch{
-      console.error("error in removing")
+      setCartData((prevCartData) => prevCartData.filter((item) => item._id !== itemId));
+      console.log("item is removed");
+    } catch (error) {
+      console.error("Error in removing: ", error);
     }
   }
 
@@ -57,18 +61,20 @@ export default function Cart() {
       <h5 style={{marginLeft:"50px", marginTop:"50px",fontSize:"20px"}}>My Bag</h5>
       <div style={{marginLeft:"10px", marginTop:"50px", fontSize:"20px"}}>{cartData.length} item (s)</div>
       </Flex>
-      <Flex>
-      <div className='cartInfo'><FaTruck style={{color: "red", marginRight: "20px"}}/>
+      {cartData.length>0 ?(
+      <div>
+       <div className='cartInfo'><FaTruck style={{color: "red", marginRight: "20px"}}/>
       Yay! You get FREE delivery on this order</div>
-      <Container style={{marginTop:"40px"}}>
-        <Box>
-          {cartData?.map((item)=>(
-            <div key={item._id} className='cartbox'>
-              <Flex>
-              <div className='cartName'>{item.product.name}</div>
-              <img className="cartImage" src= {item.product.displayImage} alt="image" />
-              </Flex>
-              <div className='cartPrice'>₹ {item.product.price}</div>
+
+      <Container style={{width:"40rem", height:"fit-content", marginLeft:"30px", marginTop:"20px"}}>
+        {cartData?.map((item)=>(
+          <div key={item._id} style={{marginBottom:"5%", border:"1px solid rgb(203, 201, 201)", 
+          height:"200px"}}>
+            <Flex>
+            <div className='cartName'>{item.product.name}</div>
+            <img className="cartImage" src= {item.product.displayImage} alt="image" />
+            </Flex>
+            <div className='cartPrice'>₹ {item.product.price}</div>
               <select style={{marginLeft:"20px", height:"25px", fontSize: "12px", border: "1px solid #ced4da", borderRadius: "5px" }}>
               <option value="1">Size: XS</option>
               <option value="1">S</option>
@@ -84,50 +90,24 @@ export default function Cart() {
               <option value="1">3</option>
               <option value="1">5</option>
               </select>
-              <hr className='divider'style={{marginTop:"20px"}}/>
+             <hr className='divider'style={{marginTop:"20px"}}/>
               <Button className='removeCart' onClick={()=>removeItem(item._id)}>Remove</Button>
               </div>   
-          ))}
-        </Box>
-        </Container>
-        </Flex>
-       
-        <Flex>
-        <Container >
-        <Box className="cartDiscount">Save extra <span style={{fontWeight:"bold"}}>₹ 70</span> with <span style={{fontWeight:"bold"}}>TriBe</span></Box>
-       </Container>
-       <Container className='order'>
-        <Box className='cartTotal'>PRICE SUMMARY</Box>
-       </Container>
-       <Flex>
-       <Box className='priceTag'>Total MRP (Incl. of taxes)</Box>
-       <Box className='priceTag' style={{marginLeft:"10rem"}}>₹ {TotalPrice()}</Box>
-       </Flex>
-       <Flex>
-       <div>
-       <div className='priceTag' style={{marginTop:"-32rem"}}>Shipping Charges</div>
-       <div style={{marginLeft:"-7rem", marginTop:"-18px", color:"#42a2a2"}}>FREE</div>
-       </div>
-       </Flex>
-       <Flex>
-       <Box >
-       <Box className='priceTag' style={{marginTop:"-29rem", fontWeight:"bold"}}>SubTotal</Box>
-       <Box style={{marginTop:"-18px", marginLeft:"-7.5rem", fontWeight:"bold"}}>₹ {TotalPrice()}</Box>
-       </Box>
-       </Flex>
-     
-       <Box>
-        <Flex style={{borderTop:"2px solid black"}}>
-          <div className='total'>Total</div>
-          <Button className='totalButton'>CONTINUE</Button>
-        </Flex>
-        <div style={{ marginTop:"-22.5rem", marginLeft:"-28.5rem"}}>₹ <span style={{fontWeight:"bold"}}>{TotalPrice()}</span></div>
-       </Box>
-       <Box className='cartpic'>
-       <img src={info} alt="infoPage" style={{width:"450px"}}/>
-       </Box> 
-      </Flex>
-   
+        ))}
+      </Container>
+       </div> 
+      ):(
+        <>
+         <img src={emptybag} alt="cartbag" style={{width:"200px", paddingLeft:"45%"}}/>
+         <Text style={{paddingLeft:"50%", marginTop:"0", fontSize:"25px"}}>Nothing in the bag.</Text>
+            <Link to='/' style={{marginLeft:"30%"}}>
+            <Button 
+            style={{width:"20%", height:"2.5rem", fontWeight:"bold",fontSize:"18px", marginLeft:"18%",
+            color:"rgb(66, 162, 162)", backgroundColor:"white", borderRadius:"5px", border:"1px solid rgb(66, 162, 162)", cursor:"pointer"}}>
+            Continue Shopping</Button>
+            </Link>
+        </>
+      )}
       </div>
   )
 }
