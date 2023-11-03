@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import logo from '../Images/logo.webp';
 import flag from '../Images/flag.png';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSearch} from  '@fortawesome/free-solid-svg-icons';
-import {Flex, UnorderedList, ListItem, Text} from '@chakra-ui/react'
+import {BiSearch} from 'react-icons/bi';
+import {Flex, UnorderedList, ListItem, Text, Box} from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom';
 import {BsHeart, BsBag} from 'react-icons/bs';
 import {CiUser} from 'react-icons/ci';
@@ -16,12 +15,9 @@ import ResNav from './ResNav';
 // import bewakoofLogo from '../Images/bewakoofLogo.png';
 
 export default function Nav() {
-
     const[menuHover, setMenuHover] = useState(false);
     const[dropmenu, setDropmenu] = useState(false);
     const [smallerScreen,  setSmallerScreen] = useState(window.innerWidth < 1000);
-    
-
 
     const dispatch = useDispatch();
 
@@ -37,24 +33,18 @@ export default function Nav() {
     };
 
     const handleProfileClick = ()=>{
-        //console.log('handleProfileClick is triggered');
-        //console.log('isLoggedIn:', isLoggedIn);
         setDropmenu(!dropmenu);    
     }
 
     const handleLogout =() =>{
-        dispatch(LOGOUT()); // Dispatch the logout action
+        dispatch(LOGOUT()); 
         setDropmenu(false);
-        //console.log('isLoggedIn:', isLoggedIn);
     }
      
     useEffect(()=>{
         const handleResize = () => {
           setSmallerScreen(window.innerWidth < 1000);
           if(window.innerWidth<1000){
-            // console.log("helloo");
-            // console.log("innerwidth",window.innerWidth);
-            // console.log("width",window.width);
           }
           
         };
@@ -62,19 +52,18 @@ export default function Nav() {
         return () => {
           window.removeEventListener("resize", handleResize);
         };
-      },[])
-   
+      },[]);
     
   return (
     <>
     {smallerScreen ? (
       <>
       <ResNav />
-      {/* {console.log(window.innerWidth)}
-      {console.log(smallerScreen)} */}
+      
+      
       </>
     ):(
-    <div>
+    <div style={{ position: "fixed", left:0, top: 0, right: 0, zIndex: "100", backgroundColor: "white"}}>
     <Flex className="topBar" style={{justifyContent:"space-between"}} >
     <Flex>
     <UnorderedList className="topBar-left">
@@ -97,7 +86,6 @@ export default function Nav() {
                 overflow: "hidden",
                 alignItems: "center",
                 height: "60px",
-                border:"1px solid red",
                 maxWidth:"40rem"
               }}>
               <NavLink to="/">
@@ -133,14 +121,14 @@ export default function Nav() {
                 <Flex className="menuItem">MOBILE COVERS</Flex>
               </NavLink>
             </Flex>
-             <Flex style={{border:"1px solid green"}}>
+             <Flex>
         <UnorderedList className='navBar-right'>
-            <ListItem className='navLi'><FontAwesomeIcon icon ={faSearch} style={{color:"#b9b3b3", marginTop:"12px", paddingLeft:"10px"}}/><input type="search" placeholder='Search by product, category or collection' className='inputSearch'/></ListItem>
-             <ListItem style={{fontSize:"25px", marginTop:"5px"}}>|</ListItem>
+           <Box style={{marginRight:"10px"}}><BiSearch className='icon'/><input type="search" placeholder='Search by product, category or collection' className='inputSearch'/></Box>
+             <ListItem style={{fontSize:"20px"}}>|</ListItem>
               
               {isLoggedIn ?(
               <div><CiUser onClick={handleProfileClick} 
-              style={{fontSize:"25px", marginTop:"12px", marginRight:"15px"}}/>
+              style={{fontSize:"25px", marginRight:"15px"}}/>
               {dropmenu && (
                 <ul className='profileOption'>
                     <li style={{backgroundColor:"#eee"}}>Hi,</li>
@@ -163,26 +151,26 @@ export default function Nav() {
               ):(
               <>
             <NavLink to='/Login' style={{color:"black", textDecoration:"none"}}>
-             <ListItem style={{marginTop:"15px"}}>Login</ListItem>
+             <ListItem style={{marginTop:"5px"}}>Login</ListItem>
              </NavLink>
               </>)}
             
             <NavLink to='/Wishlist' style={{color:"black"}}>
             <ListItem>
-            <BsHeart style={{height:"20px", width:"20px", marginTop:"15px" }}/>
+            <BsHeart style={{height:"20px", width:"20px", marginTop:"10px" }}/>
              </ListItem>
              </NavLink>
              <NavLink to='/Cart' style={{color:"black"}}>
             <ListItem>
-            <BsBag style={{marginTop:"15px", fontSize:"20px"}}/>
+            <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
             </ListItem>
             </NavLink>
 
-            <ListItem><img src={flag} alt="flagIcon" className='flag'/></ListItem>
+            <ListItem><img src={flag} alt="flagIcon" className='flag' style={{marginTop:"5px"}} /></ListItem>
         </UnorderedList>
         </Flex>
     </Flex>
-    <hr/>
+    
     </div>
     )}
     </>

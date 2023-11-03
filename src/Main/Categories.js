@@ -4,7 +4,7 @@ import { useParams, Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillHeart } from 'react-icons/ai';
 import { BsHeart } from 'react-icons/bs';
-import { Container, Box, Flex} from '@chakra-ui/react';
+import { Container, Box, Flex, Text} from '@chakra-ui/react';
 import { FETCH_DATA, addWishlist, removeWishlist } from '../Action';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
 
@@ -17,6 +17,7 @@ export default function Categories(){
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedPopularity, setSelectedPopularity] = useState(null);
     const [inWishList, setInWishlist] = useState({});
+    const [smallerScreen,  setSmallerScreen] = useState(window.innerWidth < 1000);
 
     const dispatch = useDispatch();
     const wishlist = useSelector((store)=> store.data.wishlist);
@@ -101,19 +102,67 @@ export default function Categories(){
         }
       }, [wishlist]);
 
+      useEffect(()=>{
+        const handleResize = () => {
+          setSmallerScreen(window.innerWidth < 1000);
+          if(window.innerWidth<1000){
+          }
+          
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      },[]);
+
   return (
-    <Box>
+    <>
+    {smallerScreen ? (
+     <Container className='ResdataInfo' style={{marginLeft:"10px"}}>
+          {filteredData.map((item, index) => (
+            <Flex key={index} style={{flexDirection:"column"}}>
+              <Link to={`/product/${item._id}`}>
+                <img src={item.displayImage} style={{width:"100%"}}></img>
+              </Link>
+              <Flex>
+                <h5 style={{paddingLeft:"10px", marginTop:"5px"}}>{item.brand}</h5>
+                {isLoggedIn ? (
+                  <>
+                {inWishList[item._id] ? (
+                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "45px" }} 
+                 onClick={()=> handleAddToWishList(item._id)}/>
+                ):(
+                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "45px" }} 
+                onClick={()=> handleAddToWishList(item._id)}/>
+                )}
+                </>
+                ):(
+                  <>
+                  <Link to ='/Login'>
+                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }}/>
+                  </Link>
+                  </>
+                )}
+                </Flex>
+                <Text style={{marginTop:"-10px", paddingLeft:"10px", overflow: "hidden"}}>{item.name}</Text>
+                <h3 style={{marginTop:"-10px", paddingLeft:"10px"}}>₹ {item.price}</h3>
+                </Flex>
+               
+          ))}        
+        </Container>
+    ):(
+    <Box style={{marginTop:"10rem"}}>
     <Flex className='heading1'>
       <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <Container className='heading2'>Home</Container>
       </Link>
       <Container className='heading2'>/</Container>
-      <Container className='heading2'>{gender.charAt(0).toUpperCase()+gender.slice(1)} Clothing</Container>
+      <Container className='heading2'>{gender?.charAt(0)?.toUpperCase()+gender?.slice(1)} Clothing</Container>
     </Flex>
 
     <Box>
         <Flex>
-          <h2 className='heading3'>{id.charAt(0).toUpperCase()+ id.slice(1)} for {category[0]?.gender}</h2>
+          <h2 className='heading3'>{id?.charAt(0)?.toUpperCase()+ id?.slice(1)} for {category[0]?.gender}</h2>
           <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({filteredData.length})</div>
         </Flex>
         <hr className='ruler' />
@@ -147,7 +196,7 @@ export default function Categories(){
      <ul className='accordianList'>
      {Array.from(new Set(category.map(item => item.brand)).values()).map((brand, index) => (
           <li key={index} onClick={() => handleBrandFilter(brand)}  className={selectedBrand === brand ? 'activeCategory' : ''}>
-            {brand.charAt(0).toUpperCase() + brand.slice(1)}</li>
+            {brand?.charAt(0)?.toUpperCase() + brand?.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -187,7 +236,7 @@ export default function Categories(){
     <ul className='accordianList'>
      {Array.from(new Set(category.map(item => item.sellerTag)).values()).map((sellerTag, index) => (
           <li key={index} onClick={() => handlePopularityFilter(sellerTag)}  className={selectedPopularity === sellerTag ? 'activeCategory' : ''}>
-            {sellerTag.charAt(0).toUpperCase() + sellerTag.slice(1)}</li>
+            {sellerTag?.charAt(0)?.toUpperCase() + sellerTag?.slice(1)}</li>
         ))}
      </ul>
     </AccordionPanel>
@@ -223,10 +272,14 @@ export default function Categories(){
                   </>
                 )}
                 </Flex>
+                <Text className='dataTitle'>{item.name}</Text>
+                 <h2 className='dataPrice'>₹ {item.price}</h2>
                 </Box>
           ))}        
         </Container>
         </Flex>
         </Box>
+        )}
+        </>
   )
 }

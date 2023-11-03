@@ -22,9 +22,9 @@ const OptionWomen =()=>{
     <ul className="ul" style={{flex:"1"}}>
 
     <NavLink to='subcategories/women/tshirt'style={{ color: "black", textDecoration: "none" }}>
-    <li className="listItem" style={{marginTop:"20px"}}>
-    TopWear
-    </li>
+    <li className="listItem" style={{marginTop:"20px", marginBottom:"15px", fontWeight:"500"}}>
+     Topwear
+     </li>
     </NavLink>
     <NavLink to='subcategories/women/shirt' style={{color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
     <li className="listItem">
@@ -48,8 +48,8 @@ const OptionWomen =()=>{
     </NavLink>
     <br/>
     <NavLink to='subcategories/women/jumpsuit' style={{ color: "black", textDecoration: "none" }}>
-    <li className="listItem">
-    Dresses
+    <li className="listItem" style={{marginTop:"20px", marginBottom:"15px", fontWeight:"500"}}>
+      Dresses
     </li>
     </NavLink>
     <NavLink to='subcategories/women/jumpsuit' style={{ color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
@@ -74,8 +74,8 @@ const OptionWomen =()=>{
       
     <ul className="ul" flex="1">     
     <NavLink to='subcategories/women/jeans' style={{ color: "black", textDecoration: "none" }}>
-    <li className="listItem">
-    Bottom Wear
+    <li className="listItem" style={{marginTop:"20px", marginBottom:"15px", fontWeight:"500"}}>
+    Bottomwear
     </li>
     </NavLink>
     <NavLink to='subcategories/women/jeans' style={{ color:"rgba(45,45,45,.5)", textDecoration: "none" }}>

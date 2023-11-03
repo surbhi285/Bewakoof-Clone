@@ -15,6 +15,8 @@ import BrandCategories from './Main/BrandCategories';
 import Account  from './Main/Account';
 import Orders from './Main/Orders';
 import Wallet from './Main/Wallet';
+import Address from './Main/Address';
+import ResCategories from './Main/ResCategories';
 
 
 
@@ -37,6 +39,8 @@ function App() {
     <Route path="/Account" element={<Account />}/>
     <Route path="/Orders" element={<Orders />}/>
     <Route path="/Wallet" element={<Wallet />}/>
+    <Route path="/Address" element={<Address/>}/>
+    <Route path="/ResCategory/:id" element={<ResCategories/>}/>
     </Routes>
     </Router>
     

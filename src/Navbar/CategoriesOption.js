@@ -21,8 +21,8 @@ const OptionMen =()=>{
     <ul className="ul" style={{flex:"1"}}>
 
     <NavLink to='/subcategories/men/shirt' style={{ color: "black", textDecoration: "none" }}>
-    <li className="listItem" style={{marginTop:"20px"}}>
-    TopWear
+    <li className="listItem" style={{marginTop:"20px", marginBottom:"15px", fontWeight:"500"}}>
+    Topwear
     </li>
     </NavLink>
     <NavLink to='/subcategories/men/tshirt' style={{color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
@@ -69,8 +69,8 @@ const OptionMen =()=>{
    
     <ul className="ul" flex="1">     
     <NavLink to='' style={{ color: "black", textDecoration: "none" }}>
-    <li className="listItem">
-    Bottom Wear
+    <li className="listItem" style={{marginTop:"20px", marginBottom:"15px", fontWeight:"500"}}>
+    Bottomwear
     </li>
     </NavLink>
     <NavLink to='/subcategories/men/jeans' style={{ color:"rgba(45,45,45,.5)", textDecoration: "none" }}>
@@ -106,8 +106,8 @@ Trousers
       
     <ul className="ul" flex="1">     
     <NavLink to='' style={{ color: "black", textDecoration: "none" }}>
-    <li className="listItem">
-   Winter Wear
+    <li className="listItem" style={{marginTop:"20px", marginBottom:"15px", fontWeight:"500"}}>
+   Winterwear
     </li>
     </NavLink>
     <NavLink to='/subcategories/men/hoddie' style={{ color:"rgba(45,45,45,.5)", textDecoration: "none" }}>
@@ -130,7 +130,7 @@ Trousers
     <div style={{
           flex: 1, 
           position: "relative",
-          marginTop: "-180px",
+          marginTop: "-220px",
           backgroundColor: "white",
           width:"400px",
           marginLeft:"350px",

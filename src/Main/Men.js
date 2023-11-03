@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useParams, Link } from 'react-router-dom';
 import {BsHeart} from 'react-icons/bs';
 import { AiFillHeart } from 'react-icons/ai';
-import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem, Spinner} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_WISHLIST, FETCH_DATA,  REMOVE_FROM_WISHLIST, addWishlist, removeWishlist} from '../Action';
 import noAvailable from '../Images/noAvailable.jpg';
@@ -117,7 +117,7 @@ useEffect(()=>{
 
 
   return (
-    <Box>
+    <Box style={{marginTop:"6rem"}}>
       <Flex className='heading1'>
         <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
           <Container className='heading2'>Home</Container>
@@ -263,7 +263,7 @@ useEffect(()=>{
               </Flex>
               <div className='dataTitle' style={{ color: "rgb(115, 115, 115)" }}>{item.name}</div>
               <div className='dataPrice' style={{ fontSize: "20px" }}>₹{item.price}</div>
-            </Box>
+           </Box>
           )
           )}
         </Container>
@@ -279,7 +279,9 @@ useEffect(()=>{
           </Box>
         )}
       </Flex>
-    </Box>
+    
+    
+  </Box>
   )
 }
 

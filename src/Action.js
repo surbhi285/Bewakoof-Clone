@@ -118,26 +118,36 @@ export const ADD_CART = (payload) => ({
     payload: payload,
   });
 
-export const addCart =(productID)=>{
+export const GET_CART = (payload) => ({
+    type: ACTION_TYPE.GET_CART,
+    payload: payload,
+  });
+
+export const addCart =(productID, quantity)=>{
     return async (dispatch)=>{
-        const cartItem= await addCartList(productID);
+        const cartItem= await addCartList(productID, quantity);
         if(cartItem){
             dispatch(ADD_CART(cartItem));
         }
     }
 }
 
-// export const REMOVE_FROM_CART = (payload) => ({
-//     type: ACTION_TYPE.REMOVE_FROM_CART,
-//     payload: payload,
-//   });
+export const getCart =(productID)=>{
+    return async (dispatch)=>{
+        const cartItem= await getCartList(productID);
+        if(cartItem){
+            dispatch(GET_CART(cartItem));
+        }
+    }
+}
 
-// export const removeCart =(product, quantity)=>{
-//     return async (dispatch)=>{
-//         const removeItem = await removeCartItem(product, quantity);
-//          if(removeItem){
-//             dispatch(REMOVE_FROM_CART(removeItem));
-//          }
-//     }
-// }
+
+export const REMOVE_FROM_CART = (productId) => {
+    return async (dispatch) => {
+        const response = await removeCartItem(productId);
+        console.log(response, "removed Cart");
+        dispatch(GET_CART());
+    };
+}
+
 

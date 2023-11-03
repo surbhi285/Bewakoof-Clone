@@ -24,7 +24,16 @@ function dataReducer(state=initialState, action){
                 return {...state, wishlist: action.payload};
 
             case ACTION_TYPE.ADD_CART:
-                return{ ...state, cart: action.payload}
+                return{ ...state, cart: action.payload};
+
+            case ACTION_TYPE.GET_CART:
+                return{...state, cart: action.payload};
+
+            // case ACTION_TYPE.REMOVE_FROM_CART:
+            //     return {
+            //         ...state,
+            //         cart: state.cart.filter((item) => item.product._id !== action.payload),
+            //       };
                    
 
             default:

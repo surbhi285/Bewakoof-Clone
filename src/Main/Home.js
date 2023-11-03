@@ -1,7 +1,7 @@
 import React from 'react'
 import ImageSlider from './ImageSlider';
 import {useState, useEffect} from 'react';
-import { ListItem, UnorderedList, Flex, Box, Button, Text } from '@chakra-ui/react';
+import { ListItem, UnorderedList, Flex, Box, Button, Text} from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
 import Footer from './Footer';
 import tshirt from '../Images/tshirt.png';
@@ -53,7 +53,7 @@ export default function Home() {
     <>
     {smallerScreen ? (
     <>
-    <Box>
+    <Box style={{marginTop:"3rem", zIndex:"0"}}>
      <Flex style={{marginTop:"20px", gap:"20px", overflowX: 'auto', whiteSpace: 'nowrap', paddingLeft:"10px"}}>
     <Box>
     <img src={men} style={{width:"160px", height:"200px", borderRadius:"30px"}}/>
@@ -82,51 +82,59 @@ export default function Home() {
     TRENDING CATEGORIES</Text>
     <Box>
     <Link to="/subcategories/men/tshirt">
-    <img src={shop3} style={{minWidth:"95%", maxWidth:"50%", borderRadius:"10px", paddingLeft:"20px", paddingRight:"20px"}}/>
+    <img src={shop3} style={{width:"95%", borderRadius:"20px", alignItems:"center", paddingLeft:"10px"}}/>
     </Link>
-    {/* <Flex style={{ alignItems:"center", justifyContent:"space-evenly", marginTop:"20px", paddingLeft:"-50px", paddingRight:"40px"}}>
+    <Box style={{position: "relative" }}>
+    <Flex style={{gap:"10px", alignItems:"center", justifyContent:"center"}}>
     <Link to="/subcategories/men/jeans">
-    <img src={shop1} style={{minWidth:"120%", height:"200px", borderRadius:"30px", border:"1px solid red"}}/>
+    <img src={shop1} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px",}}/>
     </Link>
     <Link to="/subcategories/men/hoodies">
-    <img src={shop2} style={{minWidth:"120%", height:"200px", borderRadius:"30px",}}/>
+    <img src={shop2} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px" }}/>
     </Link>
     </Flex>
-    <Flex style={{gap:"60px", alignItems:"center", justifyContent:"center", marginTop:"20px", paddingLeft:"-50px", paddingRight:"40px"}}>
+    </Box> 
+    <Box style={{position: "relative" }}>
+    <Flex style={{gap:"10px", alignItems:"center", justifyContent:"center"}}>
+    <Link to="/subcategories/men/jogger">
+    <img src={shop4} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px",}}/>
+    </Link>
     <Link to="/subcategories/men/sweater">
-    <img src={shop4} style={{width:"120%", height:"200px", borderRadius:"30px"}}/>
-    </Link>
-    <Link to="/subcategories/men/joggers">
-    <img src={shop5} style={{width:"120%", height:"200px", borderRadius:"30px"}}/>
+    <img src={shop5} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px" }}/>
     </Link>
     </Flex>
-    </Box>
-    <Box style={{marginTop:"20px"}}>
+    </Box> 
     <Link to="/subcategories/women/tshirt">
-    <img src={shop6} style={{width:"90%", height:"400px", borderRadius:"30px", marginLeft:"20px", marginRight:"40px"}}/>
+    <img src={shop6} style={{width:"95%", borderRadius:"20px", alignItems:"center", paddingLeft:"10px"}}/>
     </Link>
-    <Flex style={{gap:"60px", alignItems:"center", justifyContent:"center", marginTop:"20px", paddingLeft:"-50px", paddingRight:"40px"}}>
-    <Link to="/subcategories/women/jeans">
-    <img src={shop7} style={{width:"120%", height:"200px", borderRadius:"30px"}}/>
+
+    <Box style={{position: "relative" }}>
+    <Flex style={{gap:"10px", alignItems:"center", justifyContent:"center"}}>
+    <Link to="/subcategories/women/hoddies">
+    <img src={shop7} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px",}}/>
     </Link>
-    <Link to="/subcategories/women/hoodies">
-    <img src={shop8} style={{width:"120%", height:"200px", borderRadius:"30px",}}/>
+    <Link to="/subcategories/women/jogger">
+    <img src={shop8} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px" }}/>
     </Link>
     </Flex>
-    <Flex style={{gap:"60px", alignItems:"center", justifyContent:"center", marginTop:"20px", paddingLeft:"-50px", paddingRight:"40px"}}>
-    <Link to="/subcategories/women/sweater">
-    <img src={shop9} style={{width:"120%", height:"200px", borderRadius:"30px"}}/>
+    </Box> 
+    <Box style={{position: "relative", marginBottom:"50px" }}>
+    <Flex style={{gap:"10px", alignItems:"center", justifyContent:"center"}}>
+    <Link to="/subcategories/women/jeans">
+    <img src={shop9} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px",}}/>
     </Link>
-    <Link to="/subcategories/women/joggers">
-    <img src={shop10} style={{width:"120%", height:"200px", borderRadius:"30px",}}/>
+    <Link to="/subcategories/women/pyjama">
+    <img src={shop10} style={{maxWidth: "90%", height: "auto", borderRadius: "20px", margin: "10px" }}/>
     </Link>
-    </Flex> */}
-    </Box>
-    </Box>
+    </Flex>
+    </Box> 
+    </Box> 
+    </Box> 
     </Box>
     </>
     ):(
-    <div>
+    <div style={{marginTop:"5.33rem"}}>
+      <hr />
     <Flex>
       <UnorderedList className='lowerBar'>
         <ListItem>LIVE NOW</ListItem>
@@ -142,6 +150,7 @@ export default function Home() {
     <Box>
         <ImageSlider />
     </Box>
+   
     <Box>
     <Box className='image1'></Box>
     <NavLink to="/Men" style={{textDecoration:"none"}}>

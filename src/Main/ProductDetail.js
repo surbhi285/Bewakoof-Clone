@@ -29,10 +29,6 @@ function ProductDetail(props){
     const wishlist = useSelector((state)=>state.data.wishlist)
     //console.log(cartItem);
 
-    const handleAddToCart = (product)=>{
-      //console.log(product);
-      dispatch(addCart(product));
-    };
     
     const getProduct = async()=>{
 
@@ -111,7 +107,7 @@ function ProductDetail(props){
     <br/>
      <Flex style={{marginTop:"40px", borderBottom:"2px solid #eee"}}>
     <NavLink to="/Cart" style={{textDecoration:"none"}}>
-    <button className="CART" onClick={()=>handleAddToCart(productInfo._id)}>
+    <button className="CART" onClick={()=>dispatch(addCart(productInfo._id, productInfo.quantity))}>
     <PiShoppingBagLight style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     ADD TO BAG</button>
     </NavLink>

@@ -190,7 +190,7 @@ export async function getWatchlistItem(){
     }
 }
 
-export async function addCartList(productID){
+export async function addCartList(productID, quantity){
     //console.log(productID);
     const userInfo = localStorage.getItem("signup")
     //console.log(productID);
@@ -207,16 +207,15 @@ export async function addCartList(productID){
             Authorization: `Bearer ${parseData.signup.token}`,
             projectId: "3ggih9l8ac0f",
         },
-        body: JSON.stringify({'quantity': 1}),
+        body: JSON.stringify({'quantity': quantity}),
      }))
-     if(response.ok){
-        //console.log("successfully added to cart");
-        return productID;
+     const data = await response.json();
+      return data.status;
     }else{
         console.error("failed to add in cart")
     }
 }
-}
+
 
 export async function getCartList(){
     const userInfo = localStorage.getItem("signup")
@@ -245,33 +244,68 @@ export async function getCartList(){
 }
 }
 
-export async function removeCartItem(productId, quantity){
+export async function removeCartItem(productId){
     console.log(productId);
     const userInfo = localStorage.getItem("signup")
-    if (userInfo){
-    const userDetail = JSON.parse(userInfo);
-    //console.log(userDetail.signup.token); 
-    const response = await(fetch(`https://academics.newtonschool.co/api/v1/ecommerce/cart/${productId}`,
-    {
-        method: 'DELETE',
-        headers: {
-           Accept: "application/json",
-           "Content-Type": "application/json",
-           Authorization: `Bearer ${userDetail.signup.token}`,
-           projectId: "3ggih9l8ac0f",
-        },
-        body: JSON.stringify({'quantity': quantity}),
-    }))
-    if(response.ok){
-        const cartData = await response.json();
-        //console.log(cartData.data)
-        return cartData;
-        }
-        else{
-            console.log('Error not able to remove')
-        }
+    if(userInfo){
+      const userDetail = JSON.parse(userInfo);
+    //   console.log(userDetail);
+      try{
+        const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/cart/${productId}`,{
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userDetail.signup.token}`,
+              projectid: "3ggih9l8ac0f",
+            },
+            // body: JSON.stringify({ quantity: quantity }),
+          });
+          console.log(response);
+            const data = await response.json();
+          console.log(data);
+            return data;
+      }catch(error){
+        console.log("something went wrong")
+      }
     }
-}   
+}
+  
 
+export async function placeOrder (product, address, quantity){
+    const {streetName, state, country, city, pinCode} = address;
+    const user = localStorage.getItem("authToken");
+    if(user){
+        const parsedData = JSON.parse(user);
+    try {
+            const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/order`, 
+            {
+            method: "POST",
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.authToken}`,
+            projectId: "3ggih9l8ac0f",
+        },
+        body: JSON.stringify({
+            product: product,
+            quantity: quantity,
+            address: {
+              street: streetName,
+              city: city,
+              state: state,
+              country: country,
+              zipCode: pinCode,
+            },
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+      return data.status;
+    }catch(error){
+        console.log("No getting address");
+        }
+   }
+}
 
 
