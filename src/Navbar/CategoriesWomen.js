@@ -94,7 +94,7 @@ const OptionWomen =()=>{
 <div style={{
           flex: 1, 
           position: "relative",
-          marginTop: "-100px",
+          marginTop: "-130px",
           backgroundColor: "white",
           width:"400px",
           marginLeft:"350px",

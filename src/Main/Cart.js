@@ -1,4 +1,4 @@
-  import React, { useState } from 'react'
+  import { useState } from 'react'
   import { useEffect, useRef } from 'react';
   import {Link, useNavigate} from 'react-router-dom';
   import { Container, Flex, Box, Button, Text, propNames} from '@chakra-ui/react';
@@ -17,6 +17,7 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
     const [inWishList, setInWishlist] = useState({});
     const [qty, setQty] = useState(1);
     const [size, setSize] = useState("S");
+    const [smallerScreen, setSmallerScreen] = useState(window.innerWidth<100);
     
   
     // const navigate = useNavigate();
@@ -47,13 +48,14 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
     const [formData, setFormData] = useState({
       name:"",
       mobile:"",
-      pin:"",
+      pinCode:"",
       city:"",
       state:"",
-      address:"",
+      street:"",
       locality:"",
       landmark:"",
       addressType:"",
+      country:"India",
     });
 
     const[userInfo, setUserInfo] = useState(()=>{
@@ -66,32 +68,33 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
       setFormData({...formData, [name]: value})
     };
 
-    const handleSubmit=async(e)=>{
+    const handleSubmit=(e)=>{
       e.preventDefault();
       console.log(formData);
       setUserInfo([...userInfo, formData])
       setFormData({
       name:"",
       mobile:"",
-      pin:"",
+      pinCode:"",
       city:"",
       state:"",
-      address:"",
+      street:"",
       locality:"",
       landmark:"",
       addressType:"",
+      country:"India",
       })
     }
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const handleOrder = async (address) => {
+      for (const product of items) {
+        await delay(200);
+        const orderSuccess = await placeOrder(product.product._id, address, product.quantity);
+        console.log(orderSuccess);
+        // dispatch(REMOVE_FROM_CART(product.product._id, product.quantity));
+      }
+    };
     
-    // const handlePlaceOrder = async()=>{
-    //       // const orderStatus = await placeOrder(product, address);
-    //       // console.log(orderStatus);
-    //       if (orderStatus === 'success') {
-    //         console.log('Order placed successfully');
-    //       } else {
-    //         console.log('Failed to place the order', orderStatus);
-    //       } 
-    //   } 
     
   
     const dispatch = useDispatch();
@@ -108,10 +111,16 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
       dispatch(getCart());
       // console.log(cart);
   }
+  const totalPrice = cart?.data?.totalPrice;
+  const items = cart?.data?.items
 
- 
-
-      const totalPrice = cart?.data?.totalPrice;
+  useEffect(() => {
+    const handleResize = () => {
+      setSmallerScreen(window.innerWidth < 1000);
+    };
+    window.addEventListener("resize", handleResize);
+    localStorage.setItem("userDetailsList", JSON.stringify(userInfo));
+  }, [userInfo]);
 
       return (
         <div>
@@ -174,8 +183,8 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
               </Menu>
               </div>
                       <hr className='divider' style={{ marginTop: '65px' }} />
-                      <Flex>
-                      <Button className='removeCart' onClick={() => handleRemoveItem(item.product._id)}>Remove</Button>
+                      <Flex style={{zIndex:0}}>
+                      <Button className='removeCart'onClick={() => handleRemoveItem(item.product._id)}>Remove</Button>
                       <Button className='wishcart' onClick={()=>handleAddToWishList(item.product._id)}>Move To Wishlist</Button>
                       </Flex>
                       </div>
@@ -237,7 +246,7 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
           isOpen={isOpen}
           onClose={onClose}>
           <form  onSubmit={handleSubmit}>
-          <ModalOverlay />
+          <ModalOverlay style={{backgroundColor:"rgba(0, 0, 0,0.2)"}}/>
           <ModalContent className="modal" maxH="100vh">
           {/* <form onSubmit={handleSubmit}> */}
             <ModalHeader style={{display:"flex", marginBottom:"12%", marginLeft:"10px", fontWeight:"bold"}}>Add New Address
@@ -246,7 +255,7 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
             <ModalBody pb={6} ml={20} overflowY="auto" >
               <FormControl style={{position:"relative"}}>
                 <FormLabel className='label'>Country</FormLabel>
-                <Input placeholder='India' className='input' value="India" readOnly />
+                <Input placeholder='India' className='input' value="India" name="country" readOnly />
               </FormControl>
               <hr style ={{marginRight:"10%", color:"grey"}} />
               <FormControl mt={20} style={{position:"relative"}}>
@@ -262,7 +271,7 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
             <hr style ={{marginRight:"10%", color:"grey"}} />
             
             <FormControl mt={20} style={{position:"relative"}}>
-            <Input placeholder='Pincode/Postal/Zipcode' className='input' name="pin" 
+            <Input placeholder='Pincode/Postal/Zipcode' className='input' name="pinCode" 
             required onChange={handleChange} value={formData.pin} type='number'/>
             </FormControl>
             
@@ -279,7 +288,7 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
             </Flex>
 
             <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='Flat no/Building, Street name' required value={formData.address} onChange={handleChange} type='text' name="address"
+            <Input placeholder='Flat no/Building, Street name' required value={formData.address} onChange={handleChange} type='text' name="street"
             style={{lineHeight:"8ex", width:"520px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}} />
             </FormControl>
 
@@ -300,7 +309,7 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
          
 
             <Flex mt={40} ml={50} mb={30}>
-              <Button className='save' type="submit" mr={30} >
+              <Button className='save' type="submit" mr={30} onClick={()=>handleOrder(formData)}>
                 SAVE ADDRESS
               </Button>
               <Button onClick={onClose} className='cancel'>CANCEL</Button>

@@ -147,8 +147,12 @@ export default function Home() {
     <Flex>
       <UnorderedList className='lowerBar'>
         <ListItem>LIVE NOW</ListItem>
+        <NavLink to={`/categories/men`} style={{textDecoration:"none", color:"black"}}>
         <ListItem>MEN</ListItem>
+        </NavLink>
+        <NavLink to={`/categories/women`} style={{textDecoration:"none", color:"black"}}>
         <ListItem>WOMEN</ListItem>
+        </NavLink>
         <ListItem>ACCESSORIES</ListItem>
         <ListItem>BWKF X MINIONS</ListItem>
         <ListItem>BEWAKOOF AIR</ListItem>

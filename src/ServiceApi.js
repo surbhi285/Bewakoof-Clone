@@ -257,7 +257,7 @@ export async function getCartList(){
 }
 
 export async function removeCartItem(productId){
-    console.log(productId);
+    // console.log(productId);
     const userInfo = localStorage.getItem("signup")
     if(userInfo){
       const userDetail = JSON.parse(userInfo);
@@ -275,7 +275,7 @@ export async function removeCartItem(productId){
           });
           console.log(response);
             const data = await response.json();
-          console.log(data);
+        //   console.log(data);
             return data;
       }catch(error){
         console.log("something went wrong")
@@ -285,11 +285,13 @@ export async function removeCartItem(productId){
   
 
 export async function placeOrder (product, address, quantity){
-    console.log(product, address, quantity);
+    // console.log(product, address, quantity);
     const {addressType, street, state, country, city, pinCode} = address;
-    const user = localStorage.getItem("authToken");
+    const user = localStorage.getItem("signup");
+    console.log(user);
     if(user){
         const parsedData = JSON.parse(user);
+       
     try {
             const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/order`, 
             {
@@ -297,7 +299,7 @@ export async function placeOrder (product, address, quantity){
             headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${parsedData.authToken}`,
+            Authorization: `Bearer ${parsedData.signup.token}`,
             projectId: "3ggih9l8ac0f",
         },
         body: JSON.stringify({
@@ -314,16 +316,12 @@ export async function placeOrder (product, address, quantity){
         }),
       });
       const data = await response.json();
-      console.log("data be placed", data.status);
+      console.log("data be placed", data);
       return data;
       }
      catch (error) {
       console.error("Error placing the order:", error);
-      return "error";
     }
-  } else {
-    console.log("No user data available");
-    return "error";
   }
 }
 
