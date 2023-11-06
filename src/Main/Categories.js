@@ -118,14 +118,14 @@ export default function Categories(){
   return (
     <>
     {smallerScreen ? (
-     <Container className='ResdataInfo' style={{marginLeft:"10px"}}>
+     <Container className='ResdataInfo' style={{marginLeft:"10px", marginTop:"35px"}}>
           {filteredData.map((item, index) => (
             <Flex key={index} style={{flexDirection:"column"}}>
               <Link to={`/product/${item._id}`}>
                 <img src={item.displayImage} style={{width:"100%"}}></img>
               </Link>
               <Flex>
-                <h5 style={{paddingLeft:"10px", marginTop:"5px"}}>{item.brand}</h5>
+                <h5 style={{paddingLeft:"10px", marginTop:"5px", width:"50%"}}>{item.brand}</h5>
                 {isLoggedIn ? (
                   <>
                 {inWishList[item._id] ? (
@@ -170,7 +170,7 @@ export default function Categories(){
       <Flex>
         <Container style={{ width: "150px", height: "50px" }}>
           <Flex>
-            <h3 className='heading4' style={{ marginRight: "950px" }}>FILTERS</h3>
+            <h3 className='heading4' style={{ marginRight: "950px"}}>FILTERS</h3>
             <Flex>
               <div className='sort' >SORT BY</div>
               <div style={{ marginLeft: "70px", marginTop: "50px" }}>
@@ -257,17 +257,17 @@ export default function Categories(){
                 {isLoggedIn ? (
                   <>
                 {inWishList[item._id] ? (
-                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "15px" }} 
+                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "20%" }} 
                  onClick={()=> handleAddToWishList(item._id)}/>
                 ):(
-                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }} 
+                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "20%" }} 
                 onClick={()=> handleAddToWishList(item._id)}/>
                 )}
                 </>
                 ):(
                   <>
                   <Link to ='/Login'>
-                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }}/>
+                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "20%" }}/>
                   </Link>
                   </>
                 )}

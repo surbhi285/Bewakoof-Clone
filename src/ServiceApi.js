@@ -26,6 +26,18 @@ export async function fetchData(){
 };
 }
 
+export async function getProduct(id){
+    const response = await(fetch(`https://academics.newtonschool.co/api/v1/ecommerce/product/${id}`,
+    {
+        method: 'GET',
+            headers: {
+                'projectId': "3ggih9l8ac0f",
+            }
+        }));
+    const data = await response.json();
+    return data;
+}
+
 export async function signupCall(name, email, password){
         try{
             const response = await fetch("https://academics.newtonschool.co/api/v1/user/signup",{
@@ -124,7 +136,7 @@ export async function addWishlistItem(productId){
         }
 
 
-export async function getWatchlistItem(){
+export async function getWishlistItem(){
         const userInfo = localStorage.getItem("signup")
         if (userInfo){
           const userDetail = JSON.parse(userInfo);
@@ -156,7 +168,7 @@ export async function getWatchlistItem(){
         }
     }
 
- export async function removeWatchlistItem(productId){
+ export async function removeWishlistItem(productId){
     //console.log(productId);
     const userInfo = localStorage.getItem("signup")
     if (userInfo){
@@ -273,7 +285,8 @@ export async function removeCartItem(productId){
   
 
 export async function placeOrder (product, address, quantity){
-    const {streetName, state, country, city, pinCode} = address;
+    console.log(product, address, quantity);
+    const {addressType, street, state, country, city, pinCode} = address;
     const user = localStorage.getItem("authToken");
     if(user){
         const parsedData = JSON.parse(user);
@@ -290,8 +303,9 @@ export async function placeOrder (product, address, quantity){
         body: JSON.stringify({
             product: product,
             quantity: quantity,
+            addressType: addressType,
             address: {
-              street: streetName,
+              street: street,
               city: city,
               state: state,
               country: country,
@@ -300,12 +314,24 @@ export async function placeOrder (product, address, quantity){
         }),
       });
       const data = await response.json();
-      console.log(data);
-      return data.status;
-    }catch(error){
-        console.log("No getting address");
-        }
-   }
+      console.log("data be placed", data.status);
+      return data;
+      }
+     catch (error) {
+      console.error("Error placing the order:", error);
+      return "error";
+    }
+  } else {
+    console.log("No user data available");
+    return "error";
+  }
 }
+
+
+
+
+
+
+
 
 

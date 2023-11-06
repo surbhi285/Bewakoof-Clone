@@ -20,6 +20,7 @@ import ResCategories from './Main/ResCategories';
 
 
 
+
 function App() {
   return (
     <>
@@ -41,6 +42,7 @@ function App() {
     <Route path="/Wallet" element={<Wallet />}/>
     <Route path="/Address" element={<Address/>}/>
     <Route path="/ResCategory/:id" element={<ResCategories/>}/>
+   
     </Routes>
     </Router>
     

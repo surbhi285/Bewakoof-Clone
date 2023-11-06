@@ -1,4 +1,4 @@
-import { addCartList, addWishlistItem, fetchData, getCartList, getWatchlistItem, removeCartItem, removeWatchlistItem } from "./ServiceApi";
+import { addCartList, addWishlistItem, fetchData, getCartList, getWishlistItem, removeCartItem, removeWishlistItem } from "./ServiceApi";
 import { signupCall } from "./ServiceApi";
 import { loginCall } from "./ServiceApi";
 import ACTION_TYPE from "./ActionType"
@@ -95,9 +95,9 @@ export const GET_WISHLIST = (payload)=>({
         }
     }
 
-export const getWatchlist = ()=>{
+export const getWishlist = ()=>{
     return async (dispatch)=>{
-       const getItem = await getWatchlistItem();
+       const getItem = await getWishlistItem();
        if(getItem){
         dispatch(GET_WISHLIST(getItem));
        }
@@ -106,7 +106,7 @@ export const getWatchlist = ()=>{
   
 export const removeWishlist=(productId)=>{
     return async(dispatch)=>{
-        const removeItem = await removeWatchlistItem(productId);
+        const removeItem = await removeWishlistItem(productId);
         //console.log(removeItem)
         if(removeItem){
             dispatch(REMOVE_FROM_WISHLIST(removeItem));
@@ -122,6 +122,8 @@ export const GET_CART = (payload) => ({
     type: ACTION_TYPE.GET_CART,
     payload: payload,
   });
+
+
 
 export const addCart =(productID, quantity)=>{
     return async (dispatch)=>{
@@ -142,10 +144,10 @@ export const getCart =(productID)=>{
 }
 
 
-export const REMOVE_FROM_CART = (productId) => {
+export const REMOVE_FROM_CART = (productId) =>{
     return async (dispatch) => {
         const response = await removeCartItem(productId);
-        console.log(response, "removed Cart");
+        // console.log(response, "removed Cart");
         dispatch(GET_CART());
     };
 }

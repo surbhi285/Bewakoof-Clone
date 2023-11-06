@@ -68,7 +68,39 @@ export default function ResNav() {
    <Footer />
    </Container>
    </>
-  ): location.pathname ==='/' ? (
+  ):location.pathname.includes("/product") ? (
+     <>
+   <Container style={{backgroundColor:"white", height:"30px",width:"100%"}}>
+    <Link to ="/" style={{textDecoration:"none"}}>
+    <AiOutlineLeft style={{marginTop:"7px", fontSize:"15px"}}/>
+    </Link>
+    </Container>
+    </>
+  ):location.pathname.includes("/Wishlist") ? (
+    <>
+     <Container style={{backgroundColor:"white", height:"30px",width:"100%"}}>
+    <Flex style={{justifyContent:"space-between"}}>
+    
+    <Flex>
+    <Link to ="/" style={{textDecoration:"none"}}>
+    <AiOutlineLeft style={{marginTop:"10px"}}/>
+    </Link>
+    <Text style={{marginLeft:"15px", marginTop:"8px"}}>My Wishlist</Text>
+    </Flex>
+    
+    <Flex>
+  
+    <NavLink to ="/Cart"  style={{color:"black"}}>
+    <PiShoppingBagLight style={{paddingTop:"7px", marginRight:"10px", fontSize:"25px"}}/>
+    </NavLink>
+    </Flex>
+    </Flex>
+   </Container>
+   <Container style={{bottom:"0", position:"fixed", zIndex:"100", left:"0", right:"0"}}>
+   <Footer />
+   </Container>
+    </>
+  ):location.pathname ==='/' ? (
    <>
    <Container style={{backgroundColor:"#fdd835", height:"30px",width:"100%"}}>
     <Flex style={{justifyContent:"space-between"}}>
@@ -99,16 +131,20 @@ export default function ResNav() {
       </Flex>
 
       <Text style={{color:"grey", marginLeft:"30px", letterSpacing:"1px"}}>SHOP IN</Text>
-     
+      
+      <NavLink to="/ResCategory/men" style={{textDecoration:"none", color:"black"}}>
       <Flex style={{marginLeft:"30px", marginBottom:"20px"}}>
       <Text style={{fontWeight:"bold"}}>Men</Text>
       <GrUserManager style={{marginLeft:"58%", marginTop:"20px", fontSize:"30px"}} />
       </Flex>
+      </NavLink>
 
+      <NavLink to="/ResCategory/women" style={{textDecoration:"none", color:"black"}}>
       <Flex style={{marginLeft:"30px", marginBottom:"20px"}}>
       <Text style={{fontWeight:"bold"}}>Women</Text>
       <GrUserFemale style={{marginLeft:"50%", marginTop:"20px", fontSize:"30px"}} />
       </Flex>
+      </NavLink>
 
       <Flex style={{marginLeft:"30px", marginBottom:"20px"}}>
       <Text style={{fontWeight:"bold"}}>Accessories</Text>
@@ -125,19 +161,9 @@ export default function ResNav() {
       <BsCalendar3 style={{marginLeft:"18%", marginTop:"20px", fontSize:"30px"}} />
       </Flex>
 
-      <Flex style={{marginLeft:"30px", marginBottom:"20px"}}>
+      <Flex style={{marginLeft:"30px", marginBottom:"30px"}}>
       <Text style={{fontWeight:"bold"}}>Super Sale</Text>
       <MdOutlineCelebration style={{marginLeft:"45%", marginTop:"20px", fontSize:"30px"}} />
-      </Flex>
-
-      <Flex style={{marginLeft:"30px", marginBottom:"20px"}}>
-      <Text style={{fontWeight:"bold"}}>COTM X Mickey Mouse</Text>
-      <RiMickeyLine style={{marginLeft:"12%", marginTop:"20px", fontSize:"30px"}} />
-      </Flex>
-
-      <Flex style={{marginLeft:"30px", marginBottom:"20px"}}>
-      <Text style={{fontWeight:"bold"}}>Specials</Text>
-      <GiStarFormation style={{marginLeft:"53%", marginTop:"20px", fontSize:"30px"}} />
       </Flex>
      
       </Box>

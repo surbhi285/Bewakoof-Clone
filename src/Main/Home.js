@@ -55,21 +55,31 @@ export default function Home() {
     <>
     <Box style={{marginTop:"3rem", zIndex:"0"}}>
      <Flex style={{marginTop:"20px", gap:"20px", overflowX: 'auto', whiteSpace: 'nowrap', paddingLeft:"10px"}}>
+     
+    
     <Box>
+    <NavLink to ="/ResCategory/men" style={{textDecoration:"none", color:"black"}}>
     <img src={men} style={{width:"160px", height:"200px", borderRadius:"30px"}}/>
     <Text style={{paddingLeft:"50px", fontWeight:"bold", fontSize:"20px"}}>Men</Text>
+    </NavLink>
     </Box>
+   
     <Box>
+    <Link to ="/ResCategory/women" style={{textDecoration:"none", color:"black"}}>
     <img src={women} style={{width:"160px", height:"200px", borderRadius:"30px"}}/>
     <Text style={{paddingLeft:"50px", fontWeight:"bold", fontSize:"20px"}}>Women</Text>
+    </Link>
     </Box>
+
     <Box>
     <img src={accessories} style={{width:"160px", height:"200px", borderRadius:"30px"}}/>
     <Text style={{paddingLeft:"30px", fontWeight:"bold", fontSize:"20px"}}>Accessories</Text>
     </Box>
     <Box>
+    <NavLink to='/subcategories/women/pyjama' style={{ color: "black", textDecoration: "none" }}>
     <img src={winter} style={{width:"160px", height:"200px", borderRadius:"30px"}}/>
     <Text style={{paddingLeft:"30px", fontWeight:"bold", fontSize:"20px"}}>WinterWear</Text>
+    </NavLink>
     </Box>
     <Box>
     <img src={merch} style={{width:"160px", height:"200px", borderRadius:"30px"}}/>
@@ -134,7 +144,6 @@ export default function Home() {
     </>
     ):(
     <div style={{marginTop:"5.33rem"}}>
-      <hr />
     <Flex>
       <UnorderedList className='lowerBar'>
         <ListItem>LIVE NOW</ListItem>

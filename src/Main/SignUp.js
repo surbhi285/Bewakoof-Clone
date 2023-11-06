@@ -48,7 +48,7 @@ import {useNavigate} from 'react-router-dom';
     
   
   return (
-    <div>
+    <div style={{marginTop:"6rem"}}>
     <img src={loginPage} alt="Welcome" style={{width:"50%"}} />
     <Container>
     <h1 className='login'>Sign Up</h1>

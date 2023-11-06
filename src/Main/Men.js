@@ -246,10 +246,10 @@ useEffect(()=>{
                 {isLoggedIn ? (
                   <>
                 {inWishList[item._id] ? (
-                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "15px" }} 
+                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "5%" }} 
                  onClick={()=> handleAddToWishList(item._id)}/>
                 ):(
-                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }} 
+                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "5%" }} 
                 onClick={()=> handleAddToWishList(item._id)}/>
                 )}
                 </>

@@ -1,21 +1,49 @@
   import React, { useState } from 'react'
-  // import { getCart } from '../Action';
-  // import { useDispatch, useSelector } from 'react-redux';
   import { useEffect, useRef } from 'react';
   import {Link, useNavigate} from 'react-router-dom';
-  import { getCartList, removeCartItem } from '../ServiceApi';
-  import { Container, Flex, Box, Button, Text} from '@chakra-ui/react';
+  import { Container, Flex, Box, Button, Text, propNames} from '@chakra-ui/react';
   import {FaTruck} from 'react-icons/fa';
+  import { ChevronDownIcon } from "@chakra-ui/icons";
   import info from '../Images/info.png';
   import emptybag from '../Images/emptybag.png';
   import { placeOrder } from '../ServiceApi';
-  import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, FormControl, FormLabel, Input, ModalBody, ModalFooter, useDisclosure } from "@chakra-ui/react";
+  import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, FormControl, FormLabel, 
+  Input, ModalBody, useDisclosure, MenuButton, Menu, MenuList, MenuItem } from "@chakra-ui/react";
 import { useDispatch, useSelector } from 'react-redux';
-import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
+import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Action';
 
   export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure(); 
+    const [inWishList, setInWishlist] = useState({});
+    const [qty, setQty] = useState(1);
+    const [size, setSize] = useState("S");
+    
+  
     // const navigate = useNavigate();
+    const wishlist = useSelector((store)=> store.data.wishlist);
+    const isLoggedIn = useSelector((store)=> store.user.isLoggedIn);
+
+    const handleAddToWishList =(productId)=>{
+      // console.log("handlewishlist being called", productId)
+     if(isLoggedIn){
+      if(inWishList[productId]){
+        dispatch(removeWishlist(productId));
+        dispatch(REMOVE_FROM_CART(productId));
+        setInWishlist((prevState)=>({
+          ...prevState,
+          [productId]: false,
+        }));
+      }else{
+        dispatch(addWishlist(productId));
+        dispatch(REMOVE_FROM_CART(productId));
+        setInWishlist((prevState)=>({
+          ...prevState,
+          [productId]: true,
+        }));
+           }
+        }
+    }
+
     const [formData, setFormData] = useState({
       name:"",
       mobile:"",
@@ -25,7 +53,13 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
       address:"",
       locality:"",
       landmark:"",
-    })
+      addressType:"",
+    });
+
+    const[userInfo, setUserInfo] = useState(()=>{
+      const savedAddress = localStorage.getItem("user");
+      return savedAddress ? JSON.parse(savedAddress):[];
+    });
 
     const handleChange = (e)=>{
       const {name, value} = e.target;
@@ -35,6 +69,7 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
     const handleSubmit=async(e)=>{
       e.preventDefault();
       console.log(formData);
+      setUserInfo([...userInfo, formData])
       setFormData({
       name:"",
       mobile:"",
@@ -44,80 +79,24 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
       address:"",
       locality:"",
       landmark:"",
+      addressType:"",
       })
     }
     
     // const handlePlaceOrder = async()=>{
-    //   if(
-    //     formData.name && 
-    //     formData.mobile && 
-    //     formData.pin && 
-    //     formData.city &&
-    //     formData.state &&
-    //     formData.address &&
-    //     formData.locality && 
-    //     formData.landmark
-    //   ){
-    //     const product = cartData.map((item) => ({
-    //       product: item.product._id,
-    //       quantity: item.quantity,
-    //     }));
-
-    //     const address = {
-    //       name: formData.name,
-    //       mobile: formData.mobile,
-    //       pin: formData.pin,
-    //       city: formData.city,
-    //       state: formData.state,
-    //       address: formData.address,
-    //       locality: formData.locality,
-    //       landmark: formData.landmark,
-    //     };
-    //     try {
-    //       // Call the placeOrder function
-    //       const orderStatus = await placeOrder(product, address);
-
-    //       // Handle the response, e.g., display a success message or navigate to a confirmation page
-    //       if (orderStatus === 'success' && typeof orderStatus === 'object') {
+    //       // const orderStatus = await placeOrder(product, address);
+    //       // console.log(orderStatus);
+    //       if (orderStatus === 'success') {
     //         console.log('Order placed successfully');
-    //         // You can navigate to a confirmation page or show a success message here
     //       } else {
     //         console.log('Failed to place the order', orderStatus);
-    //         // Handle the case where the order placement was not successful
-    //       }
-    //     } catch (error) {
-    //       console.error('Error placing the order:', error);
-    //       // Handle API call errors
-    //     }
-    //   } else {
-    //     // Handle the case where the user hasn't filled out all the required address information
-    //     console.log('Please fill out all address information');
-    //   }
-    // }
-      
+    //       } 
+    //   } 
     
-
-
-      // useEffect(()=>{
-      //   const cartDataItem = async()=>{
-      //     try{
-      //       const response = await getCartList();
-      //       if (response && response.data && response.data.items) {
-      //         console.log(response.data.items)
-      //         // console.log(response.data.items[0].product.totalPrice)
-      //         setCartData(response.data.items);
-      //       }
-          
-      //     }catch{
-      //       console.error("Not geting data")
-      //     }
-      //   };
-      // cartDataItem();
-      // },[]);
-
+  
     const dispatch = useDispatch();
     const cart = useSelector((state)=> state.data.cart);
-    console.log(cart);
+  
    
     useEffect(()=>{
     dispatch(getCart());
@@ -126,42 +105,21 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
     const handleRemoveItem =(itemId)=>{
       console.log(itemId);
       dispatch(REMOVE_FROM_CART(itemId));
-      console.log(cart);
       dispatch(getCart());
-      console.log(cart);
+      // console.log(cart);
   }
 
  
 
-    // const removeItem = async(itemId)=>{
-    //   console.log(itemId)
-    //   try{
-    //   await removeCartItem(itemId);
-    //   const updatedCartData = cartData.filter((item) => item._id !== itemId);
-    //   setCartData(updatedCartData);
-    //   } catch (error) {
-    //     console.error("Error in removing: ", error);
-    //   }
-    // }
-    console.log(cart?.data?.items)
-      // const TotalPrice = ()=>{
-      //   let Price = 0;
-      //   for(const items of cart?.data){
-      //     // console.log(item.product.price);
-      //     // console.log(item.quantity);
-      //     Price +=items.product.price * items.quantity;
-      //     // console.log(Price);
-      //   }
-      //   return Price;
-      // };
-      
+      const totalPrice = cart?.data?.totalPrice;
+
       return (
         <div>
           <Flex flexDirection="row">
             <h5 style={{ marginLeft: '50px', marginTop: '50px', fontSize: '20px' }}>My Bag</h5> 
          <div style={{ marginLeft: '10px', marginTop: '50px', fontSize: '20px' }}>{cart?.data?.items?.length} item(s)</div>
           </Flex>
-          {cart?.data?.items?.length > 0 ? (
+          {Array.isArray(cart?.data?.items) && cart?.data?.items.length > 0 ? (
             <div>
               <Flex>
                 <div className="cartInfo">
@@ -173,36 +131,61 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
               <Flex>
                 <Container style={{ width: '50%', height: 'fit-content', marginLeft: '30px', marginTop: '20px' }}>
                   {cart?.data?.items?.map((item) => (
-                    <div key={item._id} style={{ marginBottom: '5%', border: '1px solid rgb(203, 201, 201)', height: '200px' }}>
+                    <div key={item._id} style={{ marginBottom: '5%', border: '1px solid rgb(203, 201, 201)', height: '250px' }}>
                       <Flex>
                         <div className='cartName'>{item.product.name}</div>
                         <img className="cartImage" src={item.product.displayImage} alt="image" />
                       </Flex>
                       <div className='cartPrice'>₹ {item.product.price}</div>
-                      <select style={{ marginLeft: '20px', height: '25px', fontSize: '12px', border: '1px solid #ced4da', borderRadius: '5px' }}>
-                        <option value="1">Size: XS</option>
-                        <option value="1">S</option>
-                        <option value="2">M</option>
-                        <option value="1">L</option>
-                        <option value="1">XL</option>
-                      </select>
-                      <select style={{ marginLeft: '20px', height: '25px', fontSize: '12px', border: '1px solid #ced4da', borderRadius: '5px' }}>
-                        <option value="1">quantity: {item.quantity}</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="1">3</option>
-                        <option value="1">5</option>
-                      </select>
-                      <hr className='divider' style={{ marginTop: '20px' }} />
-                      <Button className='removeCart' onClick={() => handleRemoveItem(item._id)}>Remove</Button>
-                    </div>
-                  ))}
+                      <div >
+                      
+                      <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton className="chooseButton"
+                    isActive={isOpen} as={Button} rightIcon={<ChevronDownIcon />} >
+                    Size:{size}
+                    </MenuButton>
+                    <MenuList >
+                      {["S", "M", "L", "XL", "XXL"].map((size, index) => (
+                        <MenuItem key={index} onClick={() => setSize(size)} className="setButton">
+                          {size}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
+              <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton className="chooseButton" isActive={isOpen} as={Button} rightIcon={<ChevronDownIcon/>}>
+                    Qty:{qty}
+                    </MenuButton>
+                    <MenuList>
+                      {[1, 2, 3, 4].map((qty) => (
+                    <MenuItem key={qty} onClick={() => setQty(qty)} className="setButton">
+                      {qty}
+                    </MenuItem>
+                    ))}
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
+              </div>
+                      <hr className='divider' style={{ marginTop: '65px' }} />
+                      <Flex>
+                      <Button className='removeCart' onClick={() => handleRemoveItem(item.product._id)}>Remove</Button>
+                      <Button className='wishcart' onClick={()=>handleAddToWishList(item.product._id)}>Move To Wishlist</Button>
+                      </Flex>
+                      </div>
+               ))}
                 </Container>
                 <Container className='order' style={{ width: '35%', height: 'fit-content', marginLeft: '80px', marginTop: '20px' }}>
                   <Box className='cartTotal'>PRICE SUMMARY</Box>
                   <Flex>
                   <Box className='priceTag'>Total MRP (Incl. of taxes)</Box>
-                  {/* <Box className='priceTag' style={{marginLeft:"10rem"}}>₹ {TotalPrice()}</Box> */}
+                  <Box className='priceTag' style={{marginLeft:"10rem"}}>₹ {totalPrice}</Box>
                   </Flex>
                   <Flex>
                   <div className='priceTag'>Shipping Charges</div>
@@ -210,19 +193,20 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
                 </Flex>
                 <Flex>
                 <Box className='priceTag' style={{fontWeight:"bold"}}>SubTotal</Box>
-                {/* <Box style={{fontWeight:"bold", marginLeft:"17rem", marginTop:"20px"}}>₹ {TotalPrice()}</Box>    */}
+                <Box style={{fontWeight:"bold", marginLeft:"17rem", marginTop:"20px"}}>₹ {totalPrice}</Box>   
                 </Flex>
                 <Box>
                 <Flex style={{borderTop:"1px solid #eee", marginTop:"20px"}}>
                 <div className='total'>Total</div>
                 <Button className='totalButton' onClick={onOpen}>ADD ADDRESS</Button>
                 </Flex>
-              {/* <div style={{marginTop:"-30px", marginLeft:"20px"}}>₹<span style={{fontWeight:"bold"}}>{TotalPrice()}</span></div> */}
+              <div style={{marginTop:"-30px", marginLeft:"20px"}}>₹<span style={{fontWeight:"bold"}}>{totalPrice}</span></div>
               </Box>
               <Box className='cartpic'>
               <img src={info} alt="infoPage" style={{width:"400px"}}/>
               </Box> 
                 </Container>
+               
               </Flex>
             </div>
           ) : (
@@ -256,7 +240,7 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
           <ModalOverlay />
           <ModalContent className="modal" maxH="100vh">
           {/* <form onSubmit={handleSubmit}> */}
-            <ModalHeader style={{display:"flex", marginBottom:"20px", marginLeft:"10px", fontWeight:"bold"}}>Add New Address
+            <ModalHeader style={{display:"flex", marginBottom:"12%", marginLeft:"10px", fontWeight:"bold"}}>Add New Address
             <ModalCloseButton style={{width:"10px", marginLeft:"75%", backgroundColor:"white", border:"none"}} />
             </ModalHeader>
             <ModalBody pb={6} ml={20} overflowY="auto" >
@@ -305,9 +289,16 @@ import { REMOVE_FROM_CART, getCart, removeCart } from '../Action';
             </FormControl>
 
             <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='Landmark(Optional)' required value={formData.landmark} onChange={handleChange} type='text' name="landmark"
+            <Input placeholder='Landmark' required value={formData.landmark} onChange={handleChange} type='text' name="landmark"
             style={{lineHeight:"8ex", width:"520px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}}/>
             </FormControl>
+             
+            <FormControl mt={20} ml={10} style={{position:"relative"}}>
+            <Input placeholder='Address Type (Home, Office or Others)' required value={formData.addressType} onChange={handleChange} type='text' name="addressType"
+            style={{lineHeight:"8ex", width:"520px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}}/>
+            </FormControl>
+         
+
             <Flex mt={40} ml={50} mb={30}>
               <Button className='save' type="submit" mr={30} >
                 SAVE ADDRESS

@@ -78,7 +78,7 @@ export default function ResCategories() {
           style={{ width: '90%', maxWidth: '150px', height: 'auto', margin: '10px', borderTopLeftRadius: '50px', borderTopRightRadius: '50px'}}/>
           </NavLink>
 
-          <NavLink to='/subcategories/women/pyjama' style={{ color: "black", textDecoration: "none" }}>
+          <NavLink to='/subcategories/women/jogger' style={{ color: "black", textDecoration: "none" }}>
           <img
           src={resw2}
           style={{width: '90%',maxWidth: '150px',height: 'auto',margin: '10px',borderTopLeftRadius: '50px',borderTopRightRadius: '50px',}}/>

@@ -48,7 +48,7 @@ const handlelogin = (e) => {
   }, [isLoggedIn, navigator]);
    
   return (
-    <div>
+    <div style={{marginTop:"6rem"}}>
     <img src={loginPage} alt="Welcome" style={{width:"50%"}} />
     <Container>
     <h1 className='login'>Log in / Sign up</h1>

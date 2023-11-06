@@ -155,11 +155,21 @@ export default function Nav() {
              </NavLink>
               </>)}
             
+            {isLoggedIn ?(
+            <>
             <NavLink to='/Wishlist' style={{color:"black"}}>
             <ListItem>
             <BsHeart style={{height:"20px", width:"20px", marginTop:"10px" }}/>
              </ListItem>
              </NavLink>
+            </>
+             ):(
+              <NavLink to='/Login' style={{color:"black"}}>
+            <ListItem>
+            <BsHeart style={{height:"20px", width:"20px", marginTop:"10px" }}/>
+            </ListItem>
+             </NavLink>
+             )}
              <NavLink to='/Cart' style={{color:"black"}}>
             <ListItem>
             <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
@@ -170,7 +180,7 @@ export default function Nav() {
         </UnorderedList>
         </Flex>
     </Flex>
-    
+    <hr style={{marginTop:"-5px"}}/>
     </div>
     )}
     </>
