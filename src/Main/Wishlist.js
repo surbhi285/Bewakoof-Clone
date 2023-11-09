@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getWishlist, removeWishlist } from '../Action';
+import { addCart, getWishlist, removeWishlist } from '../Action';
 import {Box, Button, Container, Flex, Text} from '@chakra-ui/react';
 import {Link} from 'react-router-dom';
 import {RxCrossCircled} from 'react-icons/rx';
@@ -22,6 +22,19 @@ export default function Wishlist() {
         dispatch(removeWishlist(itemId));
         dispatch(getWishlist());
     }
+
+//     const handleAddToCart=(item)=>{
+//         if (item && item.products && item.products._id) {
+//         dispatch(addCart(item.products._id, item.quantity));
+//         dispatch(removeWishlist(item));
+//         dispatch(getWishlist());
+//         console.log(item.products._id);
+//     }else {
+//         // Handle the case when item or its properties are not defined
+//         console.error("Invalid item object:", item);
+//     }
+// }
+    
 
    useEffect(()=>{
     const handleResize =()=>{
@@ -98,6 +111,7 @@ export default function Wishlist() {
         </Flex>
         <div className='wishTitle'  style={{color: "rgb(115, 115, 115)"}}>{item.products.name}</div>
         <div className='wishdata' style={{fontSize: "20px", marginLeft:"20px" }}>₹{item.products.price}</div>
+        
         <Button className='addbag'><PiShoppingBagLight style={{color: "#207bb4", marginRight:"10px"}}/>ADD TO BAG</Button>
         </Box>
         ))

@@ -30,7 +30,9 @@ function dataReducer(state=initialState, action){
                 return{...state, cart: action.payload};
 
             case ACTION_TYPE.REMOVE_FROM_CART:
-                return {...state,cart: action.payload};
+                return { ...state,
+                    cart: state.cart.filter((item) => item.productId !== action.payload),
+                  };
                   
                    
 

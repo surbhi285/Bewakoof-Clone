@@ -16,7 +16,11 @@ import Account  from './Main/Account';
 import Orders from './Main/Orders';
 import Wallet from './Main/Wallet';
 import Address from './Main/Address';
+import Profile from './Main/Profile';
 import ResCategories from './Main/ResCategories';
+import NotAvailable from './Main/NotAvailable';
+import Tribe from './Main/Tribe';
+import Payment from './Main/Payment';
 
 
 
@@ -41,8 +45,11 @@ function App() {
     <Route path="/Orders" element={<Orders />}/>
     <Route path="/Wallet" element={<Wallet />}/>
     <Route path="/Address" element={<Address/>}/>
+    <Route path="/Profile" element={<Profile/>}/>
     <Route path="/ResCategory/:id" element={<ResCategories/>}/>
-   
+    <Route path="/NotAvailable" element={<NotAvailable/>}/>
+    <Route path='/Tribe' element={<Tribe/>}/> 
+    <Route path="/Payment" element={<Payment/>}/>
     </Routes>
     </Router>
     

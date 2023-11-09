@@ -25,7 +25,10 @@ export default function Men() {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedPopularity, setSelectedPopularity] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
   const [inWishList, setInWishlist] = useState({});
+  const [selectedPrice, setSelectedPrice] = useState(null);
+
   
   const dispatch = useDispatch();
   const wishlist = useSelector((store)=> store.data.wishlist);
@@ -49,7 +52,8 @@ export default function Men() {
       (!selectedCategory || item.subCategory===selectedCategory) &&
       (!selectedBrand || item.brand===selectedBrand) &&
       (!selectedColor || item.color === selectedColor) &&
-      (!selectedPopularity || item.sellerTag === selectedPopularity)
+      (!selectedPopularity || item.sellerTag === selectedPopularity) &&
+      (!selectedSize || item.size.includes(selectedSize))
     ){
       return true;
     }
@@ -85,7 +89,28 @@ export default function Men() {
       setSelectedPopularity(category);
     }
   }
+  const handleSizeFilter = (category) => {
+    if (selectedSize === category) {
+      setSelectedSize(null);
+    } else {
+      setSelectedSize(category);
+    }
+  }
 
+  const handleSortChange = (e) => {
+    const selectedSortOption = e.target.value;
+  
+    if (selectedSortOption === "1") {
+      const trending=[...filteredData].sort(item=>item.sellerTag==="trending");
+      setGenderData(trending);
+    } else if (selectedSortOption === "2") {
+      const sortedData = [...filteredData].sort((a, b) => a.price - b.price);
+      setGenderData(sortedData);
+    } else if (selectedSortOption === "3") {
+      const sortedData = [...filteredData].sort((a, b) => b.price - a.price);
+      setGenderData(sortedData);
+    }
+  }
 const handleAddToWishList =(productId)=>{
   // console.log("handlewishlist being called", productId)
  if(isLoggedIn){
@@ -116,6 +141,13 @@ useEffect(()=>{
 }, [wishlist]);
 
 
+
+const allowedSizes = ["M", "S", "L", "XL", "XXL"];
+const uniqueSizes = genderData.map(item => item.size).flat().filter(size => allowedSizes.includes(size));
+const uniqueElements = [...new Set(uniqueSizes)];
+// console.log(uniqueElements);
+
+
   return (
     <Box style={{marginTop:"6rem"}}>
       <Flex className='heading1'>
@@ -134,21 +166,22 @@ useEffect(()=>{
           <h2 className='heading3'>{id === 'men' ? "Men Clothing" : "Women Clothing"}</h2>
           <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({filteredData.length})</div>
         </Flex>
-        <hr className='ruler' />
+        <hr className='ruler' style={{marginLeft:"30px"}}/>
       </Box>
 
       <Flex>
         <Container style={{ width: "150px", height: "50px" }}>
           <Flex>
-            <h3 className='heading4' style={{ marginRight: "950px" }}>FILTERS</h3>
+            <h3 className='heading4' style={{ marginRight: "900px" }}>FILTERS</h3>
             <Flex>
               <div className='sort' >SORT BY</div>
               <div style={{ marginLeft: "70px", marginTop: "50px" }}>
-                <select style={{ border: "none" }}>
-                  <option value="1">Popular</option>
-                  <option value="2">Low to High</option>
+                <select style={{border:"none", width:"120px"}} onClick={handleSortChange}>
+                  <option value="1" >Popular</option>
+                  <option value="2" >Low to High</option>
                   <option value="3">High to Low</option>
                 </select>
+
               </div>
             </Flex>
           </Flex>
@@ -232,6 +265,26 @@ useEffect(()=>{
   </AccordionItem>
   <hr className='divider'/>
 
+  <AccordionItem>
+    <h2>
+      <AccordionButton className='accordianButton'>
+        <Box as="span" flex='1' textAlign='left'>
+         Size
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+    </h2>
+    <AccordionPanel pb={4}>
+    <ul className='accordianList'>
+     {uniqueElements.map((size, index)=>(
+          <li key={index} onClick={() => handleSizeFilter(size)}  className={selectedSize === size ? 'activeCategory' : ''}>
+            {size}</li>
+     ))}
+     </ul>
+    </AccordionPanel>
+  </AccordionItem>
+  <hr className='divider'/>
+
   </Accordion>
         </Container>
         {filteredData.length>0 ? (
@@ -246,17 +299,17 @@ useEffect(()=>{
                 {isLoggedIn ? (
                   <>
                 {inWishList[item._id] ? (
-                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "5%" }} 
+                 <AiFillHeart style={{ height: "20px", width: "20px", color:"red", marginLeft: "5%", cursor:"pointer"  }} 
                  onClick={()=> handleAddToWishList(item._id)}/>
                 ):(
-                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "5%" }} 
+                <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "5%", cursor:"pointer"  }} 
                 onClick={()=> handleAddToWishList(item._id)}/>
                 )}
                 </>
                 ):(
                   <>
                   <Link to ='/Login'>
-                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }}/>
+                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "5%", cursor:"pointer" }}/>
                   </Link>
                   </>
                 )}

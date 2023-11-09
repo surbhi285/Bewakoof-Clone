@@ -123,7 +123,10 @@ export const GET_CART = (payload) => ({
     payload: payload,
   });
 
-
+export const REMOVE_FROM_CART = (payload)=>({
+    type: ACTION_TYPE.REMOVE_FROM_CART,
+    payload: payload,
+})
 
 export const addCart =(productID, quantity)=>{
     return async (dispatch)=>{
@@ -144,11 +147,19 @@ export const getCart =(productID)=>{
 }
 
 
-export const REMOVE_FROM_CART = (productId) =>{
+export const removeCart = (productId) =>{
     return async (dispatch) => {
         const response = await removeCartItem(productId);
-        // console.log(response, "removed Cart");
-        dispatch(GET_CART());
+        console.log(response);
+        if (response.status==='success')
+        {
+          const updatedCart = await getCartList();
+          console.log(updatedCart);
+          dispatch(GET_CART(updatedCart));
+        }        
+       else{
+        console.log("not able to remove")
+       }
     };
 }
 

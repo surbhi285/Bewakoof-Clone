@@ -11,12 +11,17 @@ import OptionMen from './CategoriesOption';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT } from '../Action';
 import ResNav from './ResNav';
+import { searchOrder } from '../ServiceApi';
 // import {HiOutlineMenuAlt1} from 'react-icons/hi'
 // import bewakoofLogo from '../Images/bewakoofLogo.png';
 
 export default function Nav() {
     const[menuHover, setMenuHover] = useState(false);
     const[dropmenu, setDropmenu] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
+    const [searchBarResult, setSearchBarResult] = useState(false);
+    const [searchResult, setSearchResult] = useState([]);
+
     const [smallerScreen,  setSmallerScreen] = useState(window.innerWidth < 1000);
 
     const dispatch = useDispatch();
@@ -40,6 +45,20 @@ export default function Nav() {
         dispatch(LOGOUT()); 
         setDropmenu(false);
     }
+
+    useEffect(()=>{
+      async function searchData(){
+        try{
+          const searchTerm = "search_term_here"; 
+          const searchField = "brand";
+          const searchData = await searchOrder(searchTerm, searchField);
+          console.log(searchData);
+        }catch(error){
+           console.error("Error while searching:", error);
+        }
+      }
+      searchData();
+    },[]);
      
     useEffect(()=>{
         const handleResize = () => {
@@ -67,15 +86,25 @@ export default function Nav() {
     <Flex className="topBar" style={{justifyContent:"space-between"}} >
     <Flex>
     <UnorderedList className="topBar-left">
+      <NavLink to="NotAvailable" style={{textDecoration:"none", color:"black"}}>
         <ListItem>Offers</ListItem>
+      </NavLink>
+      <NavLink to="NotAvailable" style={{textDecoration:"none", color:"black"}}>
         <ListItem>FanBook</ListItem>
-        <ListItem>TriBe MemberShip</ListItem>
+      </NavLink>
+      <NavLink to="Tribe" style={{textDecoration:"none", color:"black"}}>
+      <ListItem>TriBe MemberShip</ListItem>
+      </NavLink>
     </UnorderedList>
     </Flex>
     <Flex >
-    <UnorderedList className='topBar-right'>
+    <UnorderedList className='topBar-right' >
+      <NavLink to ="https://www.bewakoof.com/contact-us/order-delivery-payment" style={{textDecoration:"none", color:"black"}}>
         <ListItem>Contact Us</ListItem>
+      </NavLink>
+      <NavLink to="Order" style={{textDecoration:"none", color:"black"}}>
         <ListItem>Track Order</ListItem>
+      </NavLink>
     </UnorderedList>
     </Flex>
     </Flex>
@@ -117,7 +146,7 @@ export default function Nav() {
                 {menuHover === "Women" && <OptionWomen />}
               </div>
 
-              <NavLink to="/MobileCover" className="navLink">
+              <NavLink to="/NotAvailable" className="navLink">
                 <Flex className="menuItem">MOBILE COVERS</Flex>
               </NavLink>
             </Flex>
@@ -162,6 +191,11 @@ export default function Nav() {
             <BsHeart style={{height:"20px", width:"20px", marginTop:"10px" }}/>
              </ListItem>
              </NavLink>
+             <NavLink to='/Cart' style={{color:"black"}}>
+            <ListItem>
+            <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
+            </ListItem>
+            </NavLink>
             </>
              ):(
               <NavLink to='/Login' style={{color:"black"}}>
@@ -170,11 +204,7 @@ export default function Nav() {
             </ListItem>
              </NavLink>
              )}
-             <NavLink to='/Cart' style={{color:"black"}}>
-            <ListItem>
-            <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
-            </ListItem>
-            </NavLink>
+            
 
             <ListItem><img src={flag} alt="flagIcon" className='flag' style={{marginTop:"5px"}} /></ListItem>
         </UnorderedList>

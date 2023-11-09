@@ -234,7 +234,7 @@ function ProductDetail(){
       </Flex>
       <Flex>
       <Container style={{marginTop:"10px"}}>
-<div style={{ display: "flex", flex:"1"}}>
+  <div style={{ display: "flex", flex:"1"}}>
   <div style={{ flex: "1", marginTop: "30px" }}>
     {productImages && productImages.length > 0 ? (
       <div>

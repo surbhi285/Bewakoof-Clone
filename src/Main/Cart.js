@@ -10,7 +10,7 @@
   import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, FormControl, FormLabel, 
   Input, ModalBody, useDisclosure, MenuButton, Menu, MenuList, MenuItem } from "@chakra-ui/react";
 import { useDispatch, useSelector } from 'react-redux';
-import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Action';
+import {addWishlist, getCart, removeCart, removeWishlist } from '../Action';
 
   export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure(); 
@@ -20,7 +20,7 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
     const [smallerScreen, setSmallerScreen] = useState(window.innerWidth<100);
     
   
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const wishlist = useSelector((store)=> store.data.wishlist);
     const isLoggedIn = useSelector((store)=> store.user.isLoggedIn);
 
@@ -29,73 +29,21 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
      if(isLoggedIn){
       if(inWishList[productId]){
         dispatch(removeWishlist(productId));
-        dispatch(REMOVE_FROM_CART(productId));
+        dispatch(removeCart(productId));
         setInWishlist((prevState)=>({
           ...prevState,
           [productId]: false,
         }));
       }else{
         dispatch(addWishlist(productId));
-        dispatch(REMOVE_FROM_CART(productId));
+        dispatch(removeCart(productId));
         setInWishlist((prevState)=>({
           ...prevState,
           [productId]: true,
         }));
            }
         }
-    }
-
-    const [formData, setFormData] = useState({
-      name:"",
-      mobile:"",
-      pinCode:"",
-      city:"",
-      state:"",
-      street:"",
-      locality:"",
-      landmark:"",
-      addressType:"",
-      country:"India",
-    });
-
-    const[userInfo, setUserInfo] = useState(()=>{
-      const savedAddress = localStorage.getItem("user");
-      return savedAddress ? JSON.parse(savedAddress):[];
-    });
-
-    const handleChange = (e)=>{
-      const {name, value} = e.target;
-      setFormData({...formData, [name]: value})
-    };
-
-    const handleSubmit=(e)=>{
-      e.preventDefault();
-      console.log(formData);
-      setUserInfo([...userInfo, formData])
-      setFormData({
-      name:"",
-      mobile:"",
-      pinCode:"",
-      city:"",
-      state:"",
-      street:"",
-      locality:"",
-      landmark:"",
-      addressType:"",
-      country:"India",
-      })
-    }
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    const handleOrder = async (address) => {
-      for (const product of items) {
-        await delay(200);
-        const orderSuccess = await placeOrder(product.product._id, address, product.quantity);
-        console.log(orderSuccess);
-        // dispatch(REMOVE_FROM_CART(product.product._id, product.quantity));
-      }
-    };
-    
-    
+    } 
   
     const dispatch = useDispatch();
     const cart = useSelector((state)=> state.data.cart);
@@ -107,10 +55,12 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
 
     const handleRemoveItem =(itemId)=>{
       console.log(itemId);
-      dispatch(REMOVE_FROM_CART(itemId));
-      dispatch(getCart());
-      // console.log(cart);
-  }
+      dispatch(removeCart(itemId))
+        dispatch(getCart());
+      };
+       
+  
+
   const totalPrice = cart?.data?.totalPrice;
   const items = cart?.data?.items
 
@@ -119,8 +69,9 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
       setSmallerScreen(window.innerWidth < 1000);
     };
     window.addEventListener("resize", handleResize);
-    localStorage.setItem("userDetailsList", JSON.stringify(userInfo));
-  }, [userInfo]);
+    // localStorage.setItem("userDetailsList", JSON.stringify(userInfo));
+  // }, [userInfo]);
+  },[])
 
       return (
         <div>
@@ -207,7 +158,9 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
                 <Box>
                 <Flex style={{borderTop:"1px solid #eee", marginTop:"20px"}}>
                 <div className='total'>Total</div>
-                <Button className='totalButton' onClick={onOpen}>ADD ADDRESS</Button>
+                <Link to ="/Address">
+                <Button className='totalButton'>CONTINUE</Button>
+                </Link>
                 </Flex>
               <div style={{marginTop:"-30px", marginLeft:"20px"}}>₹<span style={{fontWeight:"bold"}}>{totalPrice}</span></div>
               </Box>
@@ -219,17 +172,17 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
               </Flex>
             </div>
           ) : (
-            <>
-              <img src={emptybag} alt="cartbag" style={{ width: '200px', paddingLeft: '45%' }} />
-              <Text style={{ paddingLeft: '50%', marginTop: '0', fontSize: '25px' }}>Nothing in the bag.</Text>
+            <Flex style={{flexDirection:"column", justifyContent:"center",alignItems:"center"}}>
+              <img src={emptybag} alt="cartbag" style={{ width: '150px'}} />
+              <Text style={{marginTop: '0', fontSize: '25px' }}>Nothing in the bag.</Text>
               <Link to='/'>
                 <Button
                   style={{
-                    width: '20%',
+                    width: '200px',
                     height: '2.5rem',
                     fontWeight: 'bold',
                     fontSize: '18px',
-                    marginLeft: '48%',
+                    
                     color: 'rgb(66, 162, 162)',
                     backgroundColor: 'white',
                     borderRadius: '5px',
@@ -240,87 +193,8 @@ import { REMOVE_FROM_CART, addWishlist, getCart, removeWishlist } from '../Actio
                   Continue Shopping
                 </Button>
               </Link>
-            </>
-          )}
-          <Modal
-          isOpen={isOpen}
-          onClose={onClose}>
-          <form  onSubmit={handleSubmit}>
-          <ModalOverlay style={{backgroundColor:"rgba(0, 0, 0,0.2)"}}/>
-          <ModalContent className="modal" maxH="100vh">
-          {/* <form onSubmit={handleSubmit}> */}
-            <ModalHeader style={{display:"flex", marginBottom:"12%", marginLeft:"10px", fontWeight:"bold"}}>Add New Address
-            <ModalCloseButton style={{width:"10px", marginLeft:"75%", backgroundColor:"white", border:"none"}} />
-            </ModalHeader>
-            <ModalBody pb={6} ml={20} overflowY="auto" >
-              <FormControl style={{position:"relative"}}>
-                <FormLabel className='label'>Country</FormLabel>
-                <Input placeholder='India' className='input' value="India" name="country" readOnly />
-              </FormControl>
-              <hr style ={{marginRight:"10%", color:"grey"}} />
-              <FormControl mt={20} style={{position:"relative"}}>
-                <FormLabel className='label'>Full name</FormLabel>
-                <Input placeholder='Full name' className='input' name="name" required onChange={handleChange} value={formData.fullName}/>
-              </FormControl>
-
-            <FormControl mt={20} style={{position:"relative"}}>
-                <FormLabel className='label'>Mobile Number</FormLabel>
-                <Input placeholder='+91' className='input' required onChange={handleChange} name="mobile" value={formData.mobile}/>
-              </FormControl>
-
-            <hr style ={{marginRight:"10%", color:"grey"}} />
-            
-            <FormControl mt={20} style={{position:"relative"}}>
-            <Input placeholder='Pincode/Postal/Zipcode' className='input' name="pinCode" 
-            required onChange={handleChange} value={formData.pin} type='number'/>
-            </FormControl>
-            
-            <Flex>
-            <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='City' required value={formData.city} onChange={handleChange} type='text' name="city"
-            style={{lineHeight:"6ex", width:"240px", left:"2em", borderRadius:"6px",border:"1px solid gray", paddingLeft: "20px"}}/>
-            </FormControl>
-
-            <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='State'  required value={formData.state} onChange={handleChange} type='text' name="state"
-            style={{lineHeight:"6ex", width:"240px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}}/>
-            </FormControl>
             </Flex>
-
-            <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='Flat no/Building, Street name' required value={formData.address} onChange={handleChange} type='text' name="street"
-            style={{lineHeight:"8ex", width:"520px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}} />
-            </FormControl>
-
-            <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='Area/Locality' required value={formData.locality} onChange={handleChange} type='text' name="locality"
-            style={{lineHeight:"8ex", width:"520px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}}/>
-            </FormControl>
-
-            <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='Landmark' required value={formData.landmark} onChange={handleChange} type='text' name="landmark"
-            style={{lineHeight:"8ex", width:"520px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}}/>
-            </FormControl>
-             
-            <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='Address Type (Home, Office or Others)' required value={formData.addressType} onChange={handleChange} type='text' name="addressType"
-            style={{lineHeight:"8ex", width:"520px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}}/>
-            </FormControl>
-         
-
-            <Flex mt={40} ml={50} mb={30}>
-              <Button className='save' type="submit" mr={30} onClick={()=>handleOrder(formData)}>
-                SAVE ADDRESS
-              </Button>
-              <Button onClick={onClose} className='cancel'>CANCEL</Button>
-              </Flex>
-            
-              </ModalBody>
-              {/* </form> */}
-          </ModalContent>
-          </form>
-        </Modal>
-        
+          )}
         </div>
       );
     }

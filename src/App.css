@@ -212,14 +212,14 @@ margin-bottom: 10px;
   margin-left: 40px;
   font-family: sans-serif;
   margin-top: 50px;
-  margin-bottom: 0;
+  margin-bottom: 15px;
   letter-spacing: 1px;
 }
 
 .ruler{
 border: 2px solid #fdd835;
-margin-left: 40px;
-margin-right: 87%;
+margin-left: 42 px;
+margin-right: 85%;
 font-size: 20px;
   margin-top: 0;
 }
@@ -784,6 +784,14 @@ border-bottom: 4px solid #42a2a2;
 .setButton:hover{
 color:#42a2a2;
 border: 1px solid #42a2a2;
+}
+
+.inputname{
+  width: 30%;
+  border:none;
+  border-bottom: 1px solid rgb(88, 87, 87);
+  margin-bottom: 40px;
+  margin-top: 20px;
 }
 
 

@@ -151,7 +151,7 @@ export default function Categories(){
           ))}        
         </Container>
     ):(
-    <Box style={{marginTop:"10rem"}}>
+    <Box style={{marginTop:"6rem"}}>
     <Flex className='heading1'>
       <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <Container className='heading2'>Home</Container>
@@ -165,7 +165,7 @@ export default function Categories(){
           <h2 className='heading3'>{id?.charAt(0)?.toUpperCase()+ id?.slice(1)} for {category[0]?.gender}</h2>
           <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({filteredData.length})</div>
         </Flex>
-        <hr className='ruler' />
+        <hr className='ruler' style={{marginLeft:"20px"}}/>
       </Box>
       <Flex>
         <Container style={{ width: "150px", height: "50px" }}>
