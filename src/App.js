@@ -21,6 +21,7 @@ import ResCategories from './Main/ResCategories';
 import NotAvailable from './Main/NotAvailable';
 import Tribe from './Main/Tribe';
 import Payment from './Main/Payment';
+import OrderInfo from './Main/OrderInfo';
 
 
 
@@ -50,6 +51,7 @@ function App() {
     <Route path="/NotAvailable" element={<NotAvailable/>}/>
     <Route path='/Tribe' element={<Tribe/>}/> 
     <Route path="/Payment" element={<Payment/>}/>
+    <Route path="/OrderInfo" element={<OrderInfo/>}/>
     </Routes>
     </Router>
     

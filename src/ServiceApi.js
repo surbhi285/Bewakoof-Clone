@@ -284,18 +284,18 @@ export async function removeCartItem(productId){
 }
   
 
-export async function updateProfile (name, address, phone){
+export async function placeOrder(productId, address, quantity){
     // console.log(product, address, quantity);
-    const {street, state, country, city, pinCode} = address;
+    const {addressType, street, state, country, city, pinCode} = address;
     const user = localStorage.getItem("signup");
     console.log(user);
     if(user){
         const parsedData = JSON.parse(user);
        
     try {
-            const response = await fetch(`https://academics.newtonschool.co/api/v1/user/updateme`, 
+            const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/order`, 
             {
-            method: "PATCH",
+            method: "POST",
             headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -304,26 +304,24 @@ export async function updateProfile (name, address, phone){
         },
         
         body: JSON.stringify({
-            name: name,
-            phone:phone,
-            address: [
-              {street:street,
-              city:city,
-              state:state,
-              country:country,
-              zipCode: pinCode}],
+           productId: productId,
+            quantity: quantity,
+                addressType: addressType,
+                address: {
+                  street: street,
+                  city: city,
+                  state: state,
+                  country: country,
+                  zipCode: pinCode,
+                },
         }),
       });
-      if(response.ok){
       const data = await response.json();
       console.log("data be placed", data);
-      return data;
-      }else{
-        console.log("not working");
-      }
+      return data.status;
       }
      catch (error) {
-      console.error("Error placing the order:", error);
+      console.error("something went wrong");
     }
   }
 }
@@ -354,6 +352,31 @@ export async function getOrderList() {
       }
     }
   }
+  export async function getSingleOrder(orderId) {
+    const user = localStorage.getItem("signup");
+    if (user) {
+      const parsedData = JSON.parse(user);
+      try {
+        const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/order/${orderId}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.signup.token}`,
+            projectId: "3ggih9l8ac0f",
+          },
+        });
+        if (response.ok) {
+        const data = await response.json();
+        // saveOrderToLocalStorage(data);
+        return data;
+      } 
+    }catch (error) {
+        console.error("Something went wrong");
+      }
+    }
+  }
 
 //   export function saveOrderToLocalStorage(orderData){
 //     const existingOrderList = JSON.parse(localStorage.getItem("orderHistory"))||[];
@@ -361,24 +384,24 @@ export async function getOrderList() {
 //     localStorage.setItem("orderHistory", JSON.stringify(existingOrderList));
 //   }
 
-  export async function searchOrder(searchTerm, searchField) {
-      try {
-       const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?search={"${searchField}":"${searchTerm}"}`, 
-       {
-        method:'GET',
-        headers: {
-            projectId: "3ggih9l8ac0f",
-        },
-       })
-       if(response.ok){
-        const searchData = await response.json();
-        console.log(searchData);
-        return searchData;
-       }
-      }catch (error) {
-        console.error("Something went wrong");
-      }
-    }
+//   export async function searchOrder(searchTerm, searchField) {
+//       try {
+//        const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?search={"${searchField}":"${searchTerm}"}`, 
+//        {
+//         method:'GET',
+//         headers: {
+//             projectId: "3ggih9l8ac0f",
+//         },
+//        })
+//        if(response.ok){
+//         const searchData = await response.json();
+//         console.log(searchData);
+//         return searchData;
+//        }
+//       }catch (error) {
+//         console.error("Something went wrong");
+//       }
+//     }
 
 
 

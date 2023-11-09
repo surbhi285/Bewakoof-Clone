@@ -37,11 +37,13 @@ export default function Address() {
   });
 
   const cart = useSelector((state)=> state.data.cart);
-  useEffect(()=>{
-    dispatch(getCart());
-  },[dispatch])
 
-  const items = cart?.data?.items;
+  useEffect(()=>{
+  dispatch(getCart());
+  },[dispatch]);  
+
+
+const items = cart?.data?.items;
 
   const handleEdit = (index) => {
     setFormData(userDetailsList[index]);
@@ -76,19 +78,27 @@ export default function Address() {
     addressType:"",
     country:"India",
     })
-  const updatedProfile = await updateProfile(formData.name, {
-    street: formData.street,
-    city: formData.city,
-    state: formData.state,
-    country: formData.country,
-    pinCode: formData.pinCode,
-},   formData.mobile);
-  }
+//   const updatedProfile = await placeOrder(formData.name, {
+//     street: formData.street,
+//     city: formData.city,
+//     state: formData.state,
+//     country: formData.country,
+//     pinCode: formData.pinCode,
+// },   formData.mobile);
+}
 
   useEffect(() => {
     localStorage.setItem("userDetailsList", JSON.stringify(userDetailsList)); 
   }, [userDetailsList]);
     
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const handleOrder = async (address) => {
+    for (const product of items) {
+      await delay(200);
+      await placeOrder(product.product._id, address, product.quantity);
+      // dispatch(REMOVE_FROM_CART(product.product._id, product.quantity));
+    }
+  };
    
   return (
    <div style={{marginLeft:"50px", marginTop:"7rem"}}>
@@ -124,7 +134,8 @@ export default function Address() {
   onClick={() => handleRemove(index)}>REMOVE</button>
   
   <Link to ="/Payment" >
-  <button style={{color:"white", backgroundColor:"#42A2A2", border:"1.5px solid #42A2A2", borderRadius:"5px", marginLeft:"20px", height:"30px", cursor:"pointer"}}> 
+  <button style={{color:"white", backgroundColor:"#42A2A2", border:"1.5px solid #42A2A2", borderRadius:"5px", marginLeft:"20px", height:"30px", cursor:"pointer"}}
+  onClick={handleOrder(formData)}> 
   CONFIRM</button></Link>
   </Box>
   </>
@@ -156,7 +167,7 @@ export default function Address() {
             <ModalBody pb={6} ml={20} overflowY="auto" >
               <FormControl style={{position:"relative"}}>
                 <FormLabel className='label'>Country</FormLabel>
-                <Input placeholder='India' className='input' name="country" required onChange={handleChange} value={formData.country} />
+                <Input placeholder='INDIA (in capital)' className='input' name="country" required onChange={handleChange} value={formData.country} />
               </FormControl>
               <hr style ={{marginRight:"10%", color:"grey"}} />
               <FormControl mt={20} style={{position:"relative"}}>
@@ -178,12 +189,12 @@ export default function Address() {
             
             <Flex>
             <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='City' required value={formData.city} onChange={handleChange} type='text' name="city"
+            <Input placeholder='City(in capital)' required value={formData.city} onChange={handleChange} type='text' name="city"
             style={{lineHeight:"6ex", width:"240px", left:"2em", borderRadius:"6px",border:"1px solid gray", paddingLeft: "20px"}}/>
             </FormControl>
 
             <FormControl mt={20} ml={10} style={{position:"relative"}}>
-            <Input placeholder='State'  required value={formData.state} onChange={handleChange} type='text' name="state"
+            <Input placeholder='State(in capital)'  required value={formData.state} onChange={handleChange} type='text' name="state"
             style={{lineHeight:"6ex", width:"240px", left:"2em", borderRadius:"6px", border:"1px solid gray", paddingLeft: "20px"}}/>
             </FormControl>
             </Flex>

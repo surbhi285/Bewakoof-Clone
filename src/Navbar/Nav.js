@@ -46,19 +46,19 @@ export default function Nav() {
         setDropmenu(false);
     }
 
-    useEffect(()=>{
-      async function searchData(){
-        try{
-          const searchTerm = "search_term_here"; 
-          const searchField = "brand";
-          const searchData = await searchOrder(searchTerm, searchField);
-          console.log(searchData);
-        }catch(error){
-           console.error("Error while searching:", error);
-        }
-      }
-      searchData();
-    },[]);
+    // useEffect(()=>{
+    //   async function searchData(){
+    //     try{
+    //       const searchTerm = "search_term_here"; 
+    //       const searchField = "brand";
+    //       const searchData = await searchOrder(searchTerm, searchField);
+    //       console.log(searchData);
+    //     }catch(error){
+    //        console.error("Error while searching:", error);
+    //     }
+    //   }
+    //   searchData();
+    // },[]);
      
     useEffect(()=>{
         const handleResize = () => {
