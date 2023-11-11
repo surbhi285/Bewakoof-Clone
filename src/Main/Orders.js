@@ -65,7 +65,7 @@ console.log(orderList?.data);
      <>
      {orderList?.data?.map((order)=>(
       <Box key={order._id} style={{marginTop:"50px"}}>
-       order# <span style={{fontWeight:"bold"}}>{order?.order?.items[0]?.product?._id}</span>
+       order# <span style={{fontWeight:"bold"}}>{order?.order?._id}</span>
        
       {order?.order?.items?.map((item) => (
       <Box key={item?.product?._id} style={{ border: "1px solid #d6d6d6", width: "80%", height: "250px" }}>
@@ -73,8 +73,8 @@ console.log(orderList?.data);
       <img src={item?.product?.displayImage} style={{ width: "22%" }} alt="item" />
       <Flex style={{ flexDirection: "column", width: "80%" }}>
       <Text style={{ marginLeft: "5%" }}>{item?.product?.name}</Text>
-      <Button style={{ border: "none", marginLeft: '5%', marginRight: "70%", color: "128A27", backgroundColor: "#e7ffeb", height: '30px' }}>CONFIRMED</Button>
-      <Link to="/OrderInfo" style={{textDecoration:"none"}}>
+      <Button style={{ border: "none", marginLeft: '5%', marginRight: "70%", color: "# 128A27", backgroundColor: "#e7ffeb", height: '30px' }}>CONFIRMED</Button>
+      <Link to={`/OrderInfo/${order?.order?._id}`} style={{textDecoration:"none"}}>
       <Button style={{ border: "2px solid #42A2A2", marginLeft: '70%', marginRight:"20px", color: "#42A2A2", backgroundColor: "WHITE", height: '50px', borderRadius:"5px", marginTop:"10%", fontWeight:"bold", width:"150px"}}>
       ORDER INFO</Button>
       </Link>

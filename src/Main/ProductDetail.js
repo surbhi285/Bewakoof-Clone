@@ -228,15 +228,15 @@ function ProductDetail(){
       <Container className='heading2'>Home</Container>
       </NavLink>
       <Container className='heading2'>/</Container>
-      <Container className='heading2'>{productInfo.gender} Clothing</Container>
+      <Container className='heading2'>{productInfo?.gender} Clothing</Container>
       <Container className='heading2'>/</Container>
-      <Container className='heading2'>{productInfo.name}</Container>
+      <Container className='heading2'>{productInfo?.name}</Container>
       </Flex>
       <Flex>
       <Container style={{marginTop:"10px"}}>
   <div style={{ display: "flex", flex:"1"}}>
   <div style={{ flex: "1", marginTop: "30px" }}>
-    {productImages && productImages.length > 0 ? (
+    {productImages && productImages?.length > 0 ? (
       <div>
         {productImages.map((item, index) => (
           <Flex key={index}>

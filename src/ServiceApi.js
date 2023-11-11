@@ -378,30 +378,63 @@ export async function getOrderList() {
     }
   }
 
-//   export function saveOrderToLocalStorage(orderData){
-//     const existingOrderList = JSON.parse(localStorage.getItem("orderHistory"))||[];
-//     existingOrderList.push(orderData);
-//     localStorage.setItem("orderHistory", JSON.stringify(existingOrderList));
-//   }
+  // export async function searchOrder(title, searchTerm) {
+  //     try {
+  //      const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?search={"brand":"${searchTerm}"}`, 
+  //      {
+  //       method:'GET',
+  //       headers: {
+  //           projectId: "3ggih9l8ac0f",
+  //       },
+  //      })
+  //      if(response.ok){
+  //       const searchData = await response.json();
+  //       console.log(searchData);
+  //       return searchData;
+  //      }
+  //     }catch (error) {
+  //       console.error("Something went wrong");
+  //     }
+  //   }
 
-//   export async function searchOrder(searchTerm, searchField) {
-//       try {
-//        const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?search={"${searchField}":"${searchTerm}"}`, 
-//        {
-//         method:'GET',
-//         headers: {
-//             projectId: "3ggih9l8ac0f",
-//         },
-//        })
-//        if(response.ok){
-//         const searchData = await response.json();
-//         console.log(searchData);
-//         return searchData;
-//        }
-//       }catch (error) {
-//         console.error("Something went wrong");
-//       }
-//     }
+  export async function searchOrder(title, searchTerm) {
+    try {
+        let searchType;
+        let searchKey;
+
+        // Determine the search type based on the format of the title
+        if (title.includes("subCategory:")) {
+            searchType = "subCategory";
+            searchKey = title.replace("subCategory:", "").trim();
+        } else {
+            // If no subCategory is specified, default to name search
+            searchType = "name";
+            searchKey = title.trim();
+        }
+
+        const response = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?search={"${searchType}":"${searchKey}"}&limit=1500`, {
+            method: 'GET',
+            headers: {
+                projectId: "3ggih9l8ac0f",
+            },
+        });
+
+        if (response.ok) {
+            const searchData = await response.json();
+            console.log(searchData);
+            return searchData;
+        } else {
+            // Handle non-ok response status
+            const errorData = await response.json();
+            console.error(`API Error: ${errorData.status} - ${errorData.message}`);
+            return { status: 'error', message: 'Something went wrong with the API request.' };
+        }
+    } catch (error) {
+        // Handle other errors (e.g., network issues)
+        console.error("Error:", error);
+        return { status: 'error', message: 'Something went wrong on the client side.' };
+    }
+}
 
 
 

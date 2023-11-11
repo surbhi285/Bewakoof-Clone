@@ -22,6 +22,7 @@ import NotAvailable from './Main/NotAvailable';
 import Tribe from './Main/Tribe';
 import Payment from './Main/Payment';
 import OrderInfo from './Main/OrderInfo';
+import SearchResult from './Main/SearchResult';
 
 
 
@@ -51,7 +52,8 @@ function App() {
     <Route path="/NotAvailable" element={<NotAvailable/>}/>
     <Route path='/Tribe' element={<Tribe/>}/> 
     <Route path="/Payment" element={<Payment/>}/>
-    <Route path="/OrderInfo" element={<OrderInfo/>}/>
+    <Route path="/OrderInfo/:id" element={<OrderInfo/>}/>
+    <Route path= '/SearchResult/:id' element={<SearchResult />}/>
     </Routes>
     </Router>
     
