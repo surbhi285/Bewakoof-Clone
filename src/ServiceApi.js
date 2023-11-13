@@ -344,7 +344,7 @@ export async function getOrderList() {
         });
         if (response.ok) {
         const data = await response.json();
-        // saveOrderToLocalStorage(data);
+      console.log(data);  
         return data;
       } 
     }catch (error) {

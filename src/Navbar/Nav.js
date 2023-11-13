@@ -56,7 +56,6 @@
         const term = event.target.value;
         setSearchTerm(term);
         setShowSuggestions(term.trim().length > 0 );
-    
         try {
           const result = await searchOrder(term);
           setSearchResult(result);
@@ -75,6 +74,10 @@
         ) {
           setShowSuggestions(false);
         }
+  // console.log('Clicked outside');
+  // console.log('Event target:', event.target);
+  // console.log('searchInputRef:', searchInputRef.current);
+  // console.log('suggestionBoxRef:', suggestionBoxRef.current);
       };
    
       // useEffect(() => {
@@ -212,7 +215,8 @@
               <Flex>
           <UnorderedList className='navBar-right'>
             <Box style={{marginRight:"10px"}}><BiSearch className='icon'/>
-          <input type="search" placeholder='Search by product, category or collection' className='inputSearch' onChange={handleSearchInputChange}/>
+          <input type="search" placeholder='Search by product, category or collection' className='inputSearch' onChange={handleSearchInputChange}
+          ref={searchInputRef}/>
           {showSuggestions && Array.isArray(searchResult.data) && searchResult.data.length > 0 && (
           <Box
           ref={suggestionBoxRef}

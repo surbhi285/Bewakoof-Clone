@@ -78,13 +78,6 @@ const items = cart?.data?.items;
     addressType:"",
     country:"India",
     })
-//   const updatedProfile = await placeOrder(formData.name, {
-//     street: formData.street,
-//     city: formData.city,
-//     state: formData.state,
-//     country: formData.country,
-//     pinCode: formData.pinCode,
-// },   formData.mobile);
 }
 
   useEffect(() => {
@@ -135,7 +128,7 @@ const items = cart?.data?.items;
   
   <Link to ="/Payment" >
   <button style={{color:"white", backgroundColor:"#42A2A2", border:"1.5px solid #42A2A2", borderRadius:"5px", marginLeft:"20px", height:"30px", cursor:"pointer"}}
-  onClick={handleOrder(formData)}> 
+  onClick={()=>handleOrder(formData)}> 
   CONFIRM</button></Link>
   </Box>
   </>
