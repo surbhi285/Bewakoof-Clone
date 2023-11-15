@@ -2,11 +2,12 @@ import React from 'react';
 import  { useEffect, useState } from 'react';
 import { useParams, Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart,  AiOutlineDown } from 'react-icons/ai';
 import { BsHeart } from 'react-icons/bs';
-import { Container, Box, Flex} from '@chakra-ui/react';
+import { Container, Box, Flex, UnorderedList, ListItem} from '@chakra-ui/react';
 import { FETCH_DATA, addWishlist, removeWishlist } from '../Action';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
+import Footer from './Footer';
 
 export default function BrandCategories(){
     const{gender, special} = useParams();
@@ -15,12 +16,18 @@ export default function BrandCategories(){
     const[brand, setBrand] = useState([]);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedPopularity, setSelectedPopularity] = useState(null);
+    const[option, setOption] = useState(false)
+    const [selectedSort, setSelectedSort] = useState(null);
     const [inWishList, setInWishlist] = useState({});
 
     const dispatch = useDispatch();
     const wishlist = useSelector((store)=> store.data.wishlist);
     const isLoggedIn = useSelector((store)=>store.user.isLoggedIn)
     console.log(wishlist);
+
+    const handleClick = ()=>{
+    setOption(!option)
+    }
 
     useEffect(()=>{
      dispatch(FETCH_DATA());
@@ -34,7 +41,7 @@ export default function BrandCategories(){
     useEffect(()=>{ 
     if( gender && special && getData){
         console.log("Filtering data for special:", special);
-        setBrand(getData?.data?.data?.filter((item) => item.brand.toLowerCase() === special && item.gender.toLowerCase()===gender))
+        setBrand(getData?.data?.data?.filter((item) => item?.brand?.toLowerCase() === special && item?.gender?.toLowerCase()===gender))
     }
      }, [gender, special, getData])
     console.log("brand", brand)
@@ -48,6 +55,32 @@ export default function BrandCategories(){
         }
         return false;
       }) 
+
+      const handleSortChange = (e) => {
+        const selectedSortOption = e.target.value;
+        setSelectedSort(selectedSortOption);
+        if(selectedSort===selectedSortOption){
+          setSelectedSort(null);
+        }else{
+        if (selectedSortOption === "1") {
+          const sortedByPopularity = [...filteredData].sort((a, b) => {
+            if (a.sellerTag === "trending") {
+              return -1;
+            } else if (b.sellerTag === "trending") {
+              return 1;
+            }
+            return 0;
+          });
+          setBrand(sortedByPopularity);
+         } else if (selectedSortOption === "2") {
+          const sortedData = [...filteredData].sort((a, b) => a.price - b.price);
+          setBrand(sortedData);
+        } else if (selectedSortOption === "3") {
+          const sortedData = [...filteredData].sort((a, b) => b.price - a.price);
+          setBrand(sortedData);
+        }
+      }
+    } 
 
       const handleColorFilter = (brand) => {
         if (selectedColor === brand) {
@@ -96,7 +129,7 @@ export default function BrandCategories(){
   
 
   return (
-    <Box>
+    <Box style={{marginTop:"6rem"}}>
     <Flex className='heading1'>
       <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <Container className='heading2'>Home</Container>
@@ -110,20 +143,29 @@ export default function BrandCategories(){
           <h2 className='heading3'>Special Clothing</h2>
           <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({filteredData.length})</div>
         </Flex>
-        <hr className='ruler' />
+        <hr className='ruler' style={{marginLeft:"30px",marginTop:"-10px", marginRight:"80%"}}/>
       </Box>
       <Flex>
         <Container style={{ width: "150px", height: "50px" }}>
           <Flex>
             <h3 className='heading4' style={{ marginRight: "950px" }}>FILTERS</h3>
             <Flex>
-              <div className='sort' >SORT BY</div>
-              <div style={{ marginLeft: "70px", marginTop: "50px" }}>
-                <select style={{ border: "none" }}>
-                  <option value="1">Popular</option>
-                  <option value="2">Low to High</option>
-                  <option value="3">High to Low</option>
-                </select>
+            <div className='sort' >SORT BY</div>
+              <div style={{display:"flex"}} onClick={handleClick}>
+              <div style={{ marginLeft: "70px", marginTop: "50px", cursor:"pointer"}}> Popular </div>
+              <div style={{ marginLeft: "40px", marginTop: "55px", cursor:"pointer"}}><AiOutlineDown /></div>
+              {option && (
+                <Box className='optionBox'>
+                  <UnorderedList style={{paddingLeft:"0"}}>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "1" } })}  
+                  style={{ color: selectedSort === "1" ? "#42A2A2" : "black" }}>Popular</ListItem>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "2" } })}
+                   style={{ color: selectedSort === "2" ? "#42A2A2" : "black" }}>Price: Low to High</ListItem>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "3" } })}
+                   style={{ color: selectedSort === "3" ? "#42A2A2" : "black" }}>Price: High to Low</ListItem>
+                  </UnorderedList>
+                </Box>
+              )}
               </div>
             </Flex>
           </Flex>
@@ -201,17 +243,19 @@ export default function BrandCategories(){
                 ):(
                   <>
                   <Link to ='/Login'>
-                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }}/>
+                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "50px" }}/>
                   </Link>
                   </>
                 )}
                  </Flex>
+                 <div className='dataTitle' style={{ color: "rgb(115, 115, 115)" }}>{item.name}</div>
+              <div className='dataPrice' style={{ fontSize: "20px" }}>₹{item.price}</div>
                   </Box>
                  
           ))}
         </Container>
         </Flex>
-       
+       <Footer />
         </Box>
   )
 }

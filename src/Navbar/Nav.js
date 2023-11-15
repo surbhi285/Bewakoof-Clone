@@ -2,7 +2,7 @@
   import logo from '../Images/logo.webp';
   import flag from '../Images/flag.png';
   import {BiSearch} from 'react-icons/bi';
-  import {Flex, UnorderedList, ListItem, Text, Box, List} from '@chakra-ui/react'
+  import {Flex, UnorderedList, ListItem, Text, Box, List, Button} from '@chakra-ui/react'
   import { NavLink, useNavigate } from 'react-router-dom';
   import {BsHeart, BsBag} from 'react-icons/bs';
   import {CiUser} from 'react-icons/ci';
@@ -29,7 +29,8 @@
       const dispatch = useDispatch();
 
       const isLoggedIn = useSelector((store) => store.user?.isLoggedIn);
-   
+      const cartItem = useSelector((state)=>state.data.cart);
+      console.log(cartItem.results);
 
 
       const searchInputRef = useRef(null); 
@@ -161,10 +162,10 @@
       </Flex>
       <Flex >
       <UnorderedList className='topBar-right' >
-        <NavLink to ="https://www.bewakoof.com/contact-us/order-delivery-payment" style={{textDecoration:"none", color:"black"}}>
+        <NavLink to ="ContactUs" style={{textDecoration:"none", color:"black"}}>
           <ListItem>Contact Us</ListItem>
         </NavLink>
-        <NavLink to="Order" style={{textDecoration:"none", color:"black"}}>
+        <NavLink to="Orders" style={{textDecoration:"none", color:"black"}}>
           <ListItem>Track Order</ListItem>
         </NavLink>
       </UnorderedList>
@@ -189,7 +190,7 @@
                   onMouseLeave={handleMouseLeave}
                   className="menu-container">
                   <NavLink to={`/categories/men`} className="navLink">
-                    <Text className="menuItem" style={{ margin: "0" }}>
+                    <Text className="menuItem" style={{ margin: "0", cursor:"pointer" }}>
                       MEN
                     </Text>
                   </NavLink>
@@ -201,7 +202,7 @@
                   onMouseLeave={handleMouseLeave}
                   className="menu-container">
                   <NavLink to={`/categories/women`} className="navLink">
-                    <Flex className="menuItem" style={{ marginRight: "0" }}>
+                    <Flex className="menuItem" style={{ marginRight: "0" , cursor:"pointer" }}>
                       WOMEN
                     </Flex>
                   </NavLink>
@@ -290,7 +291,7 @@
                 ):(
                 <>
               <NavLink to='/Login' style={{color:"black", textDecoration:"none"}}>
-              <ListItem style={{marginTop:"5px"}}>Login</ListItem>
+              <ListItem style={{marginTop:"5px", cursor:"pointer"}}>Login</ListItem>
               </NavLink>
                 </>)}
               
@@ -304,15 +305,28 @@
               <NavLink to='/Cart' style={{color:"black"}}>
               <ListItem>
               <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
+              {cartItem.results > 0 && (
+              <Button className='cartlength'>{cartItem.results}</Button>
+              )}
               </ListItem>
               </NavLink>
               </>
               ):(
-                <NavLink to='/Login' style={{color:"black"}}>
+              <Flex>
+              <NavLink to='/Login' style={{color:"black"}}>
               <ListItem>
               <BsHeart style={{height:"20px", width:"20px", marginTop:"10px" }}/>
               </ListItem>
               </NavLink>
+               <NavLink to='/Login' style={{color:"black"}}>
+               <ListItem>
+               <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
+               {cartItem.results > 0 && (
+              <Button className='cartlength'>{cartItem.results}</Button>
+              )}
+               </ListItem>
+               </NavLink>
+               </Flex>
               )}
               
 

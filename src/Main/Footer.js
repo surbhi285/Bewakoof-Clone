@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {Link, useLocation} from 'react-router-dom'
+import {Link, NavLink, useLocation} from 'react-router-dom'
 import { Container, Box, Flex, Text, Button } from '@chakra-ui/react';
 import {FaFacebookSquare} from 'react-icons/fa';
 import {AiOutlineInstagram} from 'react-icons/ai';
@@ -100,15 +100,27 @@ export default function Footer() {
               <Flex style={{ gap: "16%" }}>
                 <Box>
                   <Box style={{ marginBottom: "20px", color: "#fdd835" }}>CUSTOMER SERVICE</Box>
+                  <NavLink to ="ContactUs" style={{textDecoration:"none", color:"white"}}>
                   <div>Contact Us</div>
+                  </NavLink>
+                  <NavLink to ="Orders" style={{textDecoration:"none", color:"white"}}>
                   <div>Track Order</div>
+                  </NavLink>
+                  <NavLink to ="Orders" style={{textDecoration:"none", color:"white"}}>
                   <div>Return Order</div>
+                  </NavLink>
+                  <NavLink to ="Orders" style={{textDecoration:"none", color:"white"}}>
                   <div>Cancel Order</div>
+                  </NavLink>
                 </Box>
                 <Box>
                   <Box style={{ marginBottom: "20px", color: "#fdd835" }}>COMPANY</Box>
+                  <NavLink to="https://www.linkedin.com/company/bewakoof-com---bewakoof-brands-pvt-ltd-/?originalSubdomain=in" style={{textDecoration:"none", color:"white"}}>
                   <div>About Us</div>
+                 </NavLink>
+                 <NavLink to="https://www.linkedin.com/company/bewakoof-com---bewakoof-brands-pvt-ltd-/?originalSubdomain=in" style={{textDecoration:"none", color:"white"}}>
                   <div>We're Hiring</div>
+                  </NavLink>
                   <div>Terms & Conditions</div>
                   <div>Privacy Policy</div>
                   <div>Blog</div>
@@ -119,8 +131,15 @@ export default function Footer() {
                   <div style={{ marginBottom: "10px" }}><FaFacebookSquare /> 4.7M People Like </div>
                   <div style={{ marginBottom: "10px" }}><AiOutlineInstagram />1M Followers</div>
                   <div style={{ fontSize: "25px", marginLeft: "10px" }}>
+                    <NavLink to="https://twitter.com/bewakoof"style={{color:"white"}}>
                     <BiLogoTwitter style={{ marginRight: "5px" }} />
-                    <BiLogoSnapchat style={{ marginRight: "5px" }} /><BiLogoApple />
+                    </NavLink>
+                    <NavLink to="https://www.snapchat.com/add/bewakoof_tv" style={{color:"white"}}>
+                    <BiLogoSnapchat style={{ marginRight: "5px" }} />
+                    </NavLink>
+                    <NavLink to="https://www.snapchat.com/add/bewakoof_tv" style={{color:"white"}}>
+                    <BiLogoApple />
+                    </NavLink>
                   </div>
                 </Box>
                 <Box>

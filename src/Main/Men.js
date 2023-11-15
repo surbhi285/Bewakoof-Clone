@@ -1,17 +1,19 @@
-import { Container, Box, Flex, Text} from '@chakra-ui/react';
+import { Container, Box, Flex, Text, UnorderedList, ListItem} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams, Link } from 'react-router-dom';
 import {BsHeart} from 'react-icons/bs';
-import { AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart, AiOutlineDown } from 'react-icons/ai';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem, Spinner} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_TO_WISHLIST, FETCH_DATA,  REMOVE_FROM_WISHLIST, addWishlist, removeWishlist} from '../Action';
+import { ADD_TO_WISHLIST, FETCH_DATA, addWishlist, removeWishlist} from '../Action';
 import noAvailable from '../Images/noAvailable.jpg';
 import bewa from'../Images/bewa.png';
+import Footer from './Footer';
 
 export default function Men() {
   const {id} = useParams();
   //console.log(id);
+  
 
   const getData = useSelector((store)=>{
   console.log(store, "store debug");
@@ -27,15 +29,22 @@ export default function Men() {
   const [selectedPopularity, setSelectedPopularity] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [inWishList, setInWishlist] = useState({});
-  const [selectedPrice, setSelectedPrice] = useState(null);
+  const[option, setOption] = useState(false)
+  const [selectedSort, setSelectedSort] = useState(null);
+  const [imageError, setImageError] = useState(false);
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
   
   const dispatch = useDispatch();
   const wishlist = useSelector((store)=> store.data.wishlist);
   const isLoggedIn = useSelector((store)=>store.user.isLoggedIn)
   console.log(wishlist);
  
-
+  const handleClick = ()=>{
+  setOption(!option)
+  }
    useEffect(()=>{
     dispatch(FETCH_DATA());
    },[])
@@ -61,6 +70,7 @@ export default function Men() {
   }) 
   //console.log(filteredData);
 
+  
   const handleCategoryFilter = (category) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
@@ -99,11 +109,21 @@ export default function Men() {
 
   const handleSortChange = (e) => {
     const selectedSortOption = e.target.value;
-  
+    setSelectedSort(selectedSortOption);
+    if(selectedSort===selectedSortOption){
+      setSelectedSort(null);
+    }else{
     if (selectedSortOption === "1") {
-      const trending=[...filteredData].sort(item=>item.sellerTag==="trending");
-      setGenderData(trending);
-    } else if (selectedSortOption === "2") {
+      const sortedByPopularity = [...filteredData].sort((a, b) => {
+        if (a.sellerTag === "trending") {
+          return -1;
+        } else if (b.sellerTag === "trending") {
+          return 1;
+        }
+        return 0;
+      });
+      setGenderData(sortedByPopularity);
+     } else if (selectedSortOption === "2") {
       const sortedData = [...filteredData].sort((a, b) => a.price - b.price);
       setGenderData(sortedData);
     } else if (selectedSortOption === "3") {
@@ -111,6 +131,8 @@ export default function Men() {
       setGenderData(sortedData);
     }
   }
+}
+
 const handleAddToWishList =(productId)=>{
   // console.log("handlewishlist being called", productId)
  if(isLoggedIn){
@@ -166,7 +188,7 @@ const uniqueElements = [...new Set(uniqueSizes)];
           <h2 className='heading3'>{id === 'men' ? "Men Clothing" : "Women Clothing"}</h2>
           <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({filteredData.length})</div>
         </Flex>
-        <hr className='ruler' style={{marginLeft:"30px"}}/>
+        <hr className='ruler' style={{marginLeft:"30px", marginTop:"-10px"}}/>
       </Box>
 
       <Flex>
@@ -175,13 +197,21 @@ const uniqueElements = [...new Set(uniqueSizes)];
             <h3 className='heading4' style={{ marginRight: "900px" }}>FILTERS</h3>
             <Flex>
               <div className='sort' >SORT BY</div>
-              <div style={{ marginLeft: "70px", marginTop: "50px" }}>
-                <select style={{border:"none", width:"120px"}} onClick={handleSortChange}>
-                  <option value="1" >Popular</option>
-                  <option value="2" >Low to High</option>
-                  <option value="3">High to Low</option>
-                </select>
-
+              <div style={{display:"flex"}} onClick={handleClick}>
+              <div style={{ marginLeft: "70px", marginTop: "50px", cursor:"pointer"}}> Popular </div>
+              <div style={{ marginLeft: "40px", marginTop: "55px", cursor:"pointer"}}><AiOutlineDown /></div>
+              {option && (
+                <Box className='optionBox'>
+                  <UnorderedList style={{paddingLeft:"0"}}>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "1" } })}  
+                  style={{ color: selectedSort === "1" ? "#42A2A2" : "black" }}>Popular</ListItem>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "2" } })}
+                   style={{ color: selectedSort === "2" ? "#42A2A2" : "black" }}>Price: Low to High</ListItem>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "3" } })}
+                   style={{ color: selectedSort === "3" ? "#42A2A2" : "black" }}>Price: High to Low</ListItem>
+                  </UnorderedList>
+                </Box>
+              )}
               </div>
             </Flex>
           </Flex>
@@ -237,7 +267,7 @@ const uniqueElements = [...new Set(uniqueSizes)];
     <ul className='accordianList'>
      {Array.from(new Set(genderData.map(item => item.color)).values()).map((color, index) => (
           <button key={index} onClick={() => handleColorFilter(color)}  className={selectedColor === color ? 'activeCategory' : ''}
-         style={{ backgroundColor: color, border:"1px solid grey", width: "30px", height: "30px", borderRadius: "10px", marginRight: "10px",marginBottom: "8px"}}>
+         style={{ backgroundColor: color, border:"1px solid grey", width: "30px", height: "30px", borderRadius: "10px", marginRight: "10px",marginBottom: "8px", cursor:"pointer"}}>
           </button>
         ))}
      </ul>
@@ -332,8 +362,9 @@ const uniqueElements = [...new Set(uniqueSizes)];
           </Box>
         )}
       </Flex>
-    
-    
+      <div style={{marginTop:"70px"}}>
+    <Footer/>
+    </div>
   </Box>
   )
 }

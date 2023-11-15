@@ -4,7 +4,6 @@ import Nav from './Navbar/Nav';
 import Home from './Main/Home';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Men from './Main/Men';
-// import Women from './Main/Women';
 import ProductDetail from './Main/ProductDetail';
 import Login from './Main/Login';
 import SignUp from './Main/SignUp';
@@ -23,6 +22,7 @@ import Tribe from './Main/Tribe';
 import Payment from './Main/Payment';
 import OrderInfo from './Main/OrderInfo';
 import SearchResult from './Main/SearchResult';
+import ContactUs from './Main/ContactUs';
 
 
 
@@ -35,7 +35,6 @@ function App() {
     <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/categories/:id" element={<Men />}/>
-    {/* <Route path="/Women" element={<Women />}/> */}
     <Route path="/product/:id" element={<ProductDetail />} />
     <Route path="/Wishlist" element={<Wishlist/>}/>
     <Route path="/Cart" element={<Cart />}/>
@@ -54,6 +53,7 @@ function App() {
     <Route path="/Payment" element={<Payment/>}/>
     <Route path="/OrderInfo/:id" element={<OrderInfo/>}/>
     <Route path= '/SearchResult/:id' element={<SearchResult />}/>
+    <Route path='/ContactUs' element={<ContactUs/>}/>
     </Routes>
     </Router>
     

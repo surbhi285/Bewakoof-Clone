@@ -1,5 +1,5 @@
 import { useEffect, useState} from "react";
-import { Container, Box, Flex, Text} from '@chakra-ui/react';
+import { Container, Box, Flex, Text, Button} from '@chakra-ui/react';
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from "@chakra-ui/react";
 import { NavLink, useParams, useNavigate, Link } from 'react-router-dom';
 import {AiFillStar, AiFillHeart} from 'react-icons/ai';
@@ -28,6 +28,7 @@ function ProductDetail(){
     const [smallerScreen, setSmallerScreen] = useState(window.innerWidth<1000)
     const [inWishList, setInWishlist] = useState({});
     const [buttonText, setButtonText] = useState('ADD TO BAG');
+    const [selectedSize, setSelectedSize] = useState('');
      const navigate = useNavigate();
 
      const handleAddToCart = () => {
@@ -41,8 +42,11 @@ function ProductDetail(){
 
     const dispatch = useDispatch();
     const cartItem = useSelector((state)=>state.data.cart);
+    console.log(cartItem);
     const isLoggedIn = useSelector((state)=> state.user.isLoggedIn);
     const wishlist = useSelector((state)=>state.data.wishlist)
+    const productSize = ['S','XL', 'L', 'M', 'XXL']; 
+    const availableSizes = productInfo.size || [];
     //console.log(cartItem);
      
     const handleAddToWishList =(productId)=>{
@@ -90,6 +94,8 @@ function ProductDetail(){
         window.removeEventListener("resize", handleResize);
       };
     },[]);
+
+    
 
     return(
      <Box style={{ marginTop:"6rem",display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -267,24 +273,55 @@ function ProductDetail(){
 
     <div className="productOffer">TriBe members get an extra discount of 
     <span style={{fontWeight:"bold"}}> ₹30</span> and FREE shipping.<br/>
+    <NavLink to="Tribe" style={{color:"#42A2A2", textDecoration:"none"}}>
     <span style={{color:"#42a2a2"}}>Learn more</span>
+    </NavLink>
     </div>
+    <h2 style={{fontSize:"15px", marginTop:"20px", marginRight:"250px"}}>Color option</h2>
+    <Button style={{borderRadius:"50px", height:"50px", width:"50px", 
+    border:"5px solid white",  boxShadow: "0px 0px 15px 0px #42A2A2", backgroundColor:productInfo.color}}>
+    </Button>
     <Flex>
     <h2 style={{fontSize:"15px", marginTop:"20px", marginRight:"250px"}}>Select Size</h2>
-    <h2 style={{fontSize:"15px", marginTop:"20px", color:"#42a2a2"}}>Size Guide</h2>
+    {/* <h2 style={{fontSize:"15px", marginTop:"20px", color:"#42a2a2"}}>Size Guide</h2> */}
     </Flex>
-    <button className="size">S</button>
-    <button className="size">M</button>
-    <button className="size">L</button>
-    <button className="size">XL</button>
-    <button className="size">XXL</button>
+    <div>
+    {productSize.map((size, index) => (
+  <button
+    key={index}
+    className="size"
+    style={{
+      color: availableSizes.includes(size) ? 'black' : 'grey',
+      border: availableSizes.includes(size) ? '1px solid black' : '1px solid grey',
+      backgroundColor: selectedSize === size ? 'black' : 'white',
+      color: selectedSize === size ? 'white' : 'black',
+      fontWeight: selectedSize === size ? 'bold' : 'normal'
+    }}
+    onClick={() => {
+      if (availableSizes.includes(size)) {
+        setSelectedSize(selectedSize === size ? '' : size);
+      }
+    }}
+    disabled={!availableSizes.includes(size)}
+  >
+    {size}
+  </button>
+))}
+    </div>
     <br/>
      
     <Flex style={{marginTop:"40px", borderBottom:"2px solid #eee"}}>
+     {isLoggedIn ? (
     <button className="CART" onClick={handleAddToCart}>
     <PiShoppingBagLight style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
     {buttonText}</button>
-    
+    ):(
+      <NavLink to="/Login" style={{textDecoration:"none"}}>
+      <button className="CART">
+      <PiShoppingBagLight style={{marginRight:"10px", marginTop:"-5px", fontSize:"25px"}}/>
+      ADD TO BAG</button>
+      </NavLink>
+    )}
   
     {isLoggedIn ? (
       <>
@@ -302,8 +339,11 @@ function ProductDetail(){
     </>
     ):(
       <>
-      <Link to ='/Login'>
-      <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "15px" }}/>
+      <Link to ='/Login' style={{textDecoration:"none", color:"black"}}>
+    <button className="WISH"  onClick={()=> handleAddToWishList(productInfo._id)}>
+    <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "5%", marginRight:"10px" }} 
+    onClick={()=> handleAddToWishList(productInfo._id)}/>WISHLIST
+    </button>
       </Link>
       </>
     )}
@@ -404,6 +444,7 @@ function ProductDetail(){
       </Container>
       </Flex>
       </>)}
+      <Footer />
     </Box>
     )
 }

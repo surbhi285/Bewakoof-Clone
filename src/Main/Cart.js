@@ -11,6 +11,7 @@
   Input, ModalBody, useDisclosure, MenuButton, Menu, MenuList, MenuItem } from "@chakra-ui/react";
 import { useDispatch, useSelector } from 'react-redux';
 import {addWishlist, getCart, removeCart, removeWishlist } from '../Action';
+import Footer from './Footer';
 
   export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure(); 
@@ -195,6 +196,9 @@ import {addWishlist, getCart, removeCart, removeWishlist } from '../Action';
               </Link>
             </Flex>
           )}
+          <div style={{marginTop:"70px"}} >
+          <Footer/>
+          </div>
         </div>
       );
-    }
+    } 

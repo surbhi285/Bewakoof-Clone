@@ -129,7 +129,7 @@ const OptionWomen =()=>{
     <Text style={{marginLeft:"10px", color:"grey"}}>Official Marvel Merchandise</Text>
     </Flex>
     </NavLink>
-    <NavLink to='/brand/women/official minion merchandise' style={{ color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
+    <NavLink to='/brand/women/official minions merchandise' style={{ color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
     <Flex><img src={minion} alt="disney" style={{width:"70px", height:"50px", borderRadius:"50px"}}/>
     <Text style={{marginLeft:"10px", color:"grey"}}>Official Minions Merchandise</Text>
     </Flex>

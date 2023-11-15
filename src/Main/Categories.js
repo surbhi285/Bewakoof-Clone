@@ -2,11 +2,12 @@ import React from 'react';
 import  { useEffect, useState } from 'react';
 import { useParams, Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart, AiOutlineDown } from 'react-icons/ai';
 import { BsHeart } from 'react-icons/bs';
-import { Container, Box, Flex, Text} from '@chakra-ui/react';
+import { Container, Box, Flex, Text, UnorderedList, ListItem} from '@chakra-ui/react';
 import { FETCH_DATA, addWishlist, removeWishlist } from '../Action';
 import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem} from '@chakra-ui/react';
+import Footer from './Footer';
 
 export default function Categories(){
     const{gender, id} = useParams();
@@ -17,12 +18,18 @@ export default function Categories(){
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedPopularity, setSelectedPopularity] = useState(null);
     const [inWishList, setInWishlist] = useState({});
+    const[option, setOption] = useState(false)
+    const [selectedSort, setSelectedSort] = useState(null);
     const [smallerScreen,  setSmallerScreen] = useState(window.innerWidth < 1000);
 
     const dispatch = useDispatch();
     const wishlist = useSelector((store)=> store.data.wishlist);
     const isLoggedIn = useSelector((store)=>store.user.isLoggedIn)
     console.log(wishlist);
+
+    const handleClick = ()=>{
+      setOption(!option)
+      }
 
     useEffect(()=>{
      dispatch(FETCH_DATA());
@@ -36,7 +43,7 @@ export default function Categories(){
     useEffect(()=>{ 
     if(gender && id && getData){
         console.log("Filtering data for id:", id);
-        setCategory(getData?.data?.data?.filter((item) => item.subCategory.toLowerCase() === id && item.gender.toLowerCase()===gender))
+        setCategory(getData?.data?.data?.filter((item) => item?.subCategory?.toLowerCase() === id && item?.gender?.toLowerCase()===gender))
     }
      }, [id, gender, getData])
     console.log("category", category)
@@ -51,6 +58,32 @@ export default function Categories(){
         }
         return false;
       }) 
+
+      const handleSortChange = (e) => {
+        const selectedSortOption = e.target.value;
+        setSelectedSort(selectedSortOption);
+        if(selectedSort===selectedSortOption){
+          setSelectedSort(null);
+        }else{
+        if (selectedSortOption === "1") {
+          const sortedByPopularity = [...filteredData].sort((a, b) => {
+            if (a.sellerTag === "trending") {
+              return -1;
+            } else if (b.sellerTag === "trending") {
+              return 1;
+            }
+            return 0;
+          });
+          setCategory(sortedByPopularity);
+         } else if (selectedSortOption === "2") {
+          const sortedData = [...filteredData].sort((a, b) => a.price - b.price);
+          setCategory(sortedData);
+        } else if (selectedSortOption === "3") {
+          const sortedData = [...filteredData].sort((a, b) => b.price - a.price);
+          setCategory(sortedData);
+        }
+      }
+    }    
 
       const handleColorFilter = (category) => {
         if (selectedColor === category) {
@@ -165,20 +198,29 @@ export default function Categories(){
           <h2 className='heading3'>{id?.charAt(0)?.toUpperCase()+ id?.slice(1)} for {category[0]?.gender}</h2>
           <div style={{ marginLeft: "20px", fontSize: "30px", color: "gray", marginTop: "40px" }}>({filteredData.length})</div>
         </Flex>
-        <hr className='ruler' style={{marginLeft:"20px"}}/>
+        <hr className='ruler' style={{marginLeft:"30px", marginTop:"-10px"}}/>
       </Box>
       <Flex>
         <Container style={{ width: "150px", height: "50px" }}>
           <Flex>
             <h3 className='heading4' style={{ marginRight: "950px"}}>FILTERS</h3>
             <Flex>
-              <div className='sort' >SORT BY</div>
-              <div style={{ marginLeft: "70px", marginTop: "50px" }}>
-                <select style={{ border: "none" }}>
-                  <option value="1">Popular</option>
-                  <option value="2">Low to High</option>
-                  <option value="3">High to Low</option>
-                </select>
+            <div className='sort' >SORT BY</div>
+              <div style={{display:"flex"}} onClick={handleClick}>
+              <div style={{ marginLeft: "70px", marginTop: "50px", cursor:"pointer"}}> Popular </div>
+              <div style={{ marginLeft: "40px", marginTop: "55px", cursor:"pointer"}}><AiOutlineDown /></div>
+              {option && (
+                <Box className='optionBox'>
+                  <UnorderedList style={{paddingLeft:"0"}}>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "1" } })}  
+                  style={{ color: selectedSort === "1" ? "#42A2A2" : "black" }}>Popular</ListItem>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "2" } })}
+                   style={{ color: selectedSort === "2" ? "#42A2A2" : "black" }}>Price: Low to High</ListItem>
+                  <ListItem onClick={() => handleSortChange({ target: { value: "3" } })}
+                   style={{ color: selectedSort === "3" ? "#42A2A2" : "black" }}>Price: High to Low</ListItem>
+                  </UnorderedList>
+                </Box>
+              )}
               </div>
             </Flex>
           </Flex>
@@ -267,19 +309,20 @@ export default function Categories(){
                 ):(
                   <>
                   <Link to ='/Login'>
-                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "20%" }}/>
+                  <BsHeart style={{ height: "20px", width: "20px", color:"grey", marginLeft: "40px" }}/>
                   </Link>
                   </>
                 )}
                 </Flex>
                 <Text className='dataTitle'>{item.name}</Text>
-                 <h2 className='dataPrice'>₹ {item.price}</h2>
+                <div className='dataPrice' style={{ fontSize: "20px" }}>₹{item.price}</div>
                 </Box>
           ))}        
         </Container>
         </Flex>
         </Box>
         )}
+        <Footer/>
         </>
   )
 }

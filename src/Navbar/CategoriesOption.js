@@ -15,7 +15,7 @@ const OptionMen =()=>{
     position:"absolute",
     width:"800px",
     border:"1px solid rgba(0, 0, 0, 0.2)",
-    height:"400px",
+    height:"410px",
     }}>
     <div style={{ position: "absolute", backgroundColor: "white", width: "150px" ,}}>
     <ul className="ul" style={{flex:"1"}}>
@@ -110,9 +110,9 @@ Trousers
    Winterwear
     </li>
     </NavLink>
-    <NavLink to='/subcategories/men/hoddie' style={{ color:"rgba(45,45,45,.5)", textDecoration: "none" }}>
+    <NavLink to='/subcategories/men/hoodie' style={{ color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
     <li className="listItem">
-    Hoddies
+     Hoodies
     </li>
     </NavLink>
     <NavLink to='/subcategories/men/jogger' style={{ color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
@@ -165,7 +165,7 @@ Trousers
     <Text style={{marginLeft:"10px", color:"grey"}}>Official Marvel Merchandise</Text>
     </Flex>
     </NavLink>
-    <NavLink to='/brand/men/official minion merchandise' style={{ color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
+    <NavLink to='/brand/men/official minions merchandise' style={{ color: "rgba(45,45,45,.5)", textDecoration: "none" }}>
     <Flex><img src={minion} alt="disney" style={{width:"70px", height:"50px", borderRadius:"50px"}}/>
     <Text style={{marginLeft:"10px", color:"grey"}}>Official Minions Merchandise</Text>
     </Flex>

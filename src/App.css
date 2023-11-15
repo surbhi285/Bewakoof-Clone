@@ -136,12 +136,15 @@ height: 1.5rem;
   display: flex;
   letter-spacing: 2.5px;
   margin-top: 0;
+  cursor: pointer;
+ 
 }
 
 .lowerBar li{
 margin-right: 30px;
-font-size: 15px;
+font-size: 20px;
 list-style-type: none;
+cursor: pointer;
 }
 
 .ul li{
@@ -317,12 +320,14 @@ font-size: 20px;
   color: black;
    /* padding-bottom: 12px;  */
   margin: 0;
+  cursor: pointer;
 }
 
 
 .menuItem:hover{
    border-bottom: 4px solid #fdd835; 
-}
+   cursor: pointer;
+  }
 
 .menuItem{
 margin: 0;
@@ -331,6 +336,7 @@ font-size: 13px;
 font-weight: 500;
 height: 22px;
 padding: 8px 10px;
+cursor: pointer;
 }
 
 
@@ -423,6 +429,7 @@ margin-left: 70px;
   border-radius: 5px;
   margin-left: 10px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .CART{
@@ -452,6 +459,7 @@ margin-left: 70px;
   align-items: center;
   justify-content: center;
   font-size: 15px;
+  cursor: pointer;
 }
 .flag{
   width: 30px;
@@ -511,6 +519,7 @@ margin-bottom: 20px;
   background-color: white;
   font-family: sans-serif;
   padding: 0;
+  cursor: pointer;
 }
 .profileOption li{
   padding-top: 12px;
@@ -793,9 +802,43 @@ border: 1px solid #42a2a2;
   margin-bottom: 40px;
   margin-top: 20px;
 }
-
-
-
-
+.Inputicon{
+  width: 90%;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid black;
+  padding-left: 50px;
+  margin-left: 50px;
+  background: url('./Images/search.png');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: 20px 10px;
+}
+.optionBox{
+  position: absolute;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: 90px;
+  width: 13%;
+  margin-left: 20px;
+}
+.optionBox li{
+  cursor: pointer;
+  list-style: none;
+  padding-bottom: 8px;
+}
+.optionBox li :hover{
+  color: #42a2a2;
+}
+.cartlength{
+  position: absolute;
+  width: 18px;
+  height: 18px; 
+  border: none;
+  border-radius: 50px;
+  background-color: #fdd835;
+  margin-top: -30px;
+  margin-left: -10px;
+}
 
 

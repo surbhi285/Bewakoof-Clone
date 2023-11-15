@@ -143,21 +143,30 @@ export default function Home() {
     </Box>
     </>
     ):(
-    <div style={{marginTop:"5.33rem"}}>
+    <div style={{marginTop:"6rem"}}>
     <Flex>
       <UnorderedList className='lowerBar'>
-        <ListItem>LIVE NOW</ListItem>
-        <NavLink to={`/categories/men`} style={{textDecoration:"none", color:"black"}}>
-        <ListItem>MEN</ListItem>
+        <NavLink to={`/categories/men`} style={{textDecoration:"none", color:"black", cursor:"pointer", marginLeft:"60px"}}>
+        <ListItem style={{cursor:"pointer"}}>MEN</ListItem>
         </NavLink>
         <NavLink to={`/categories/women`} style={{textDecoration:"none", color:"black"}}>
         <ListItem>WOMEN</ListItem>
         </NavLink>
+        <NavLink to="/NotAvailable" style={{textDecoration:"none", color:"black"}}>
         <ListItem>ACCESSORIES</ListItem>
-        <ListItem>BWKF X MINIONS</ListItem>
-        <ListItem>BEWAKOOF AIR</ListItem>
-        <ListItem>OFFICIAL MARCH</ListItem>
-        <ListItem>PLUS SIZE</ListItem>
+        </NavLink>
+        <NavLink to='/brand/men/official marvel merchandise' style={{ color: "black", textDecoration: "none" }}>
+        <ListItem>BWKF X MARVELS</ListItem>
+        </NavLink>
+        <NavLink to='/brand/men/official disney merchandise' style={{ color: "black", textDecoration: "none" }}>
+        <ListItem>BWKF X DISNEY</ListItem>
+        </NavLink>
+        <NavLink to='/subcategories/men/sweater' style={{ color: "black", textDecoration: "none" }}>
+        <ListItem>WINTER</ListItem>
+        </NavLink>
+        <NavLink to='subcategories/women/jumpsuit'  style={{ color: "black", textDecoration: "none" }}>
+        <ListItem>DRESSES</ListItem>
+        </NavLink>
       </UnorderedList>
     </Flex>
     <Box>
@@ -166,10 +175,10 @@ export default function Home() {
    
     <Box>
     <Box className='image1'></Box>
-    <NavLink to="/Men" style={{textDecoration:"none"}}>
+    <NavLink to="/categories/men" style={{textDecoration:"none"}}>
     <Button className='button'style={{marginRight:"450px"}}>SHOP MEN</Button>
     </NavLink>
-    <NavLink to="/Women" style={{textDecoration:"none"}}>
+    <NavLink to="/categories/women" style={{textDecoration:"none"}}>
     <Button className='button'>SHOP WOMEN</Button>
     </NavLink>
     </Box>
@@ -178,7 +187,7 @@ export default function Home() {
     <Link to="/subcategories/men/tshirt">
     <img src={bewakoof7} alt="bewakoof" style={{width:"100%"}}/>
     </Link>
-    <Link to="/subcategories/men/joggers">
+    <Link to="/subcategories/men/jogger">
     <img src={bewakoof9} alt="bewakoof" style={{width:"100%"}}/>
     </Link>
     </Flex>
