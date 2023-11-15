@@ -321,9 +321,6 @@
                <NavLink to='/Login' style={{color:"black"}}>
                <ListItem>
                <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
-               {cartItem.results > 0 && (
-              <Button className='cartlength'>{cartItem.results}</Button>
-              )}
                </ListItem>
                </NavLink>
                </Flex>
