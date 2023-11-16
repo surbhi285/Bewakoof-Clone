@@ -319,7 +319,7 @@ const uniqueElements = [...new Set(uniqueSizes)];
         </Container>
         {filteredData.length>0 ? (
         <Container className='dataInfo'>
-          {filteredData.map((item, index) => (
+          {filteredData?.map((item, index) => (
             <Box className='dataStyle' key={index}>
               <Link to={`/product/${item._id}`}>
                <img className='dataImage' src={item.displayImage ? item.displayImage : noAvailable} alt="image"/>
@@ -362,7 +362,7 @@ const uniqueElements = [...new Set(uniqueSizes)];
           </Box>
         )}
       </Flex>
-      <div style={{marginTop:"70px"}}>
+      <div style={{marginTop:"155vh"}}>
     <Footer/>
     </div>
   </Box>

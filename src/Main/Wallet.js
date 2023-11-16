@@ -1,13 +1,20 @@
 import { Box, Container, Text, Flex } from '@chakra-ui/react';
-import { AiFillStar } from 'react-icons/ai';
+import {Link} from 'react-router-dom'
+import { AiFillStar, AiOutlineLeft } from 'react-icons/ai';
 import {FaRupeeSign} from 'react-icons/fa';
 import React from 'react'
 
 export default function Wallet() {
   return (
-    <Box style={{marginLeft:"7%", marginTop:"50px"}}>
-    <h1 className='heading 3'style={{letterSpacing:"0.5px"}}>My Wallet</h1>
-    <hr className='ruler' style={{marginLeft:"10px", marginTop:"-20px"}}/>
+    <Box style={{marginLeft:"7%", marginTop:"6rem"}}>
+      <Flex>
+        <Link to ="/Account" style={{textDecoration:"none"}}>
+        <AiOutlineLeft style={{marginTop:"25px", marginRight:"15px", color:"#51cccc"}}/>
+        <Text style={{color:"#51cccc", marginTop:"-24px", marginLeft:"25px"}}> Back to My Account</Text>
+        </Link>
+    </Flex>
+    <h1 className='heading3'style={{letterSpacing:"0.5px"}}>My Wallet</h1>
+    <hr className='ruler' style={{marginLeft:"10px", marginTop:"-10px"}}/>
     
     <Container style={{border:"1px solid grey", width:"70%", height:"340px", marginTop:"40px"}}>
 

@@ -26,8 +26,8 @@ export default function Wishlist() {
  const handleAddToCart = (itemId, quantity) => {
   if (itemId) {
     dispatch(addCart(itemId, quantity));
-    dispatch(removeWishlist(itemId)); // Removing the item from the wishlist after adding to the cart
-    dispatch(getWishlist()); // Refreshing the wishlist after removing the item
+    dispatch(removeWishlist(itemId)); 
+    dispatch(getWishlist()); 
   } else {
     console.error("Invalid item ID:", itemId);
   }

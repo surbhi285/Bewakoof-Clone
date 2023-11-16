@@ -10,26 +10,30 @@ export default function Account(){
         <hr className='ruler' style={{marginLeft:"10px", marginTop:"-10px"}}/>
     <Flex style={{marginTop:"7rem"}}>
     <Box>
+    <NavLink to="/Orders" style={{textDecoration:"none", color:"black"}}>
         <Flex>
         <Text style={{fontSize:"20px"}}>My Orders</Text>
         <MdArrowForwardIos style={{color:"grey", marginLeft:"10px", marginTop:"26px"}}/>
         </Flex>
+        </NavLink>
         <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey"}}>View, modify and track orders</Text>
     </Box>
 
-    <Box style={{borderLeft:"1px solid #e6e6e6", marginLeft:"30px", marginRight:"10px"}}>
+    {/* <Box style={{borderLeft:"1px solid #e6e6e6", marginLeft:"30px", marginRight:"10px"}}>
     <Flex>
      <Text style={{fontSize:"20px", marginLeft:"30px"}}>My Payments</Text>
      <MdArrowForwardIos style={{color:"grey", marginLeft:"10px", marginTop:"26px"}}/>
      </Flex>
      <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey", marginLeft:"30px"}}>View and modify payment methods</Text>
-    </Box>
+    </Box> */}
 
     <Box style={{borderLeft:"1px solid #e6e6e6", marginLeft:"30px", marginRight:"10px"}}>
+    <NavLink to="/Wallet" style={{textDecoration:"none", color:"black"}}>
     <Flex>
     <Text style={{fontSize:"20px", marginLeft:"30px"}}>My Wallet <span style={{color:"#20a437", fontSize:"12px"}}>Rs. 0</span></Text>
     <MdArrowForwardIos style={{color:"grey", marginLeft:"10px", marginTop:"26px"}}/>
     </Flex>
+    </NavLink>
     <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey", marginLeft:"30px"}}>View and modify payment methods</Text>
     </Box>
 
@@ -52,15 +56,19 @@ export default function Account(){
     <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey", marginLeft:"30px"}}>Edit personal info, change password</Text>
     </NavLink>
     </Box>
-    </Flex>
-    <hr/>
-    <Box>
+   
+    <Box style={{borderLeft:"1px solid #e6e6e6", marginLeft:"30px", marginRight:"10px"}}>
+    <NavLink to ="/NotAvailable" style={{textDecoration:"none", color:"black"}}>
     <Flex>
-    <Text style={{fontSize:"20px", marginLeft:"10px"}}>Refer and Earn</Text>
-    <MdArrowForwardIos style={{color:"grey", marginLeft:"10px", marginTop:"26px"}}/>
+    <Text style={{fontSize:"20px", marginLeft:"30px"}}>Refer & Earn</Text>
+    <MdArrowForwardIos style={{color:"grey", marginLeft:"30px", marginTop:"26px"}}/>
     </Flex>
-    <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey", marginLeft:"10px"}}>Invite your friends and earn rewards</Text>
+    <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey", marginLeft:"30px"}}> Invite your friends and earn rewards</Text>
+    </NavLink>
     </Box>
+   
+    </Flex>
     </Box>
+   
   )
 }

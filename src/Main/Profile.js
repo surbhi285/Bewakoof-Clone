@@ -39,8 +39,8 @@ export default function Profile() {
     <br/>
     <input type="date" className='inputname' />
     <Text style={{color:"rgba(0, 0, 0, 0.5)", fontSize:"10px", marginTop:"-30px", marginBottom:"30px"}}>Save Your Birthdate</Text>
-    <Link TO="/Account">
-    <Button style={{backgroundColor:"#42A2A2", color:"white", border:"none", height:"40px", fontSize:"25px", fontWeight:"bold", borderRadius:"5px", width:"250px", marginBottom:"30px" }}>
+    <Link to="/Account">
+    <Button style={{backgroundColor:"#42A2A2", color:"white", border:"none", height:"40px", fontSize:"25px", fontWeight:"bold", borderRadius:"5px", width:"250px", marginBottom:"30px", cursor:"pointer" }}>
     CONTINUE</Button>
     </Link>
     

@@ -14,7 +14,6 @@ import {addWishlist, getCart, removeCart, removeWishlist } from '../Action';
 import Footer from './Footer';
 
   export default function Cart() {
-    const { isOpen, onOpen, onClose } = useDisclosure(); 
     const [inWishList, setInWishlist] = useState({});
     const [qty, setQty] = useState(1);
     const [size, setSize] = useState("S");
@@ -47,7 +46,8 @@ import Footer from './Footer';
     } 
   
     const dispatch = useDispatch();
-    const cart = useSelector((state)=> state.data.cart);
+    const cart = useSelector((store)=> store.data.cart);
+    console.log(cart)
   
    
     useEffect(()=>{
@@ -64,6 +64,7 @@ import Footer from './Footer';
 
   const totalPrice = cart?.data?.totalPrice;
   const items = cart?.data?.items
+  console.log(items);
 
   useEffect(() => {
     const handleResize = () => {
@@ -196,9 +197,7 @@ import Footer from './Footer';
               </Link>
             </Flex>
           )}
-          <div style={{marginTop:"70px"}} >
-          <Footer/>
-          </div>
+          
         </div>
       );
     } 

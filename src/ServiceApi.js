@@ -219,7 +219,7 @@ export async function addCartList(productID, quantity){
             Authorization: `Bearer ${parseData.signup.token}`,
             projectId: "3ggih9l8ac0f",
         },
-        body: JSON.stringify({'quantity': quantity}),
+        body: JSON.stringify({'quantity': 1}),
      }))
      const data = await response.json();
       return data.status;
