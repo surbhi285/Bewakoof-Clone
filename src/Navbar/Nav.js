@@ -190,7 +190,7 @@
                   onMouseLeave={handleMouseLeave}
                   className="menu-container">
                   <NavLink to={`/categories/men`} className="navLink">
-                    <Text className="menuItem" style={{ margin: "0", cursor:"pointer" }}>
+                    <Text className="menuItem" style={{ margin: "0", cursor:"pointer", marginLeft:"40px" }}>
                       MEN
                     </Text>
                   </NavLink>
@@ -264,11 +264,9 @@
               </Box>
           )}
           </Box>
-              <ListItem style={{fontSize:"20px"}}>|</ListItem>
-                
                 {isLoggedIn ?(
                 <div><CiUser onClick={handleProfileClick} 
-                style={{fontSize:"25px", marginRight:"15px"}}/>
+                style={{fontSize:"25px", marginRight:"15px", borderLeft:"1px solid rgba(0, 0, 0, 0.2)", paddingLeft:"10px"}}/>
                 {dropmenu && (
                   <ul className='profileOption'>
                       <li style={{backgroundColor:"#eee", color:"rgba(0, 0, 0, 0.5)"}}>Hi, {userInfo?.signup?.data?.name}</li>
@@ -291,7 +289,7 @@
                 ):(
                 <>
               <NavLink to='/Login' style={{color:"black", textDecoration:"none"}}>
-              <ListItem style={{marginTop:"5px", cursor:"pointer"}}>Login</ListItem>
+              <ListItem style={{marginTop:"5px", cursor:"pointer", borderLeft:"1px solid rgba(0, 0, 0, 0.2)", paddingLeft:"10px"}}>Login</ListItem>
               </NavLink>
                 </>)}
               
@@ -299,12 +297,12 @@
               <>
               <NavLink to='/Wishlist' style={{color:"black"}}>
               <ListItem>
-              <BsHeart style={{height:"20px", width:"20px", marginTop:"10px" }}/>
+              <BsHeart style={{height:"20px", width:"20px", marginTop:"12px" }}/>
               </ListItem>
               </NavLink>
               <NavLink to='/Cart' style={{color:"black"}}>
               <ListItem>
-              <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
+              <BsBag style={{marginTop:"11px", fontSize:"20px"}}/>
               {cartItem.results > 0 && (
               <Button className='cartlength'>{cartItem.results}</Button>
               )}
@@ -315,12 +313,12 @@
               <Flex>
               <NavLink to='/Login' style={{color:"black"}}>
               <ListItem>
-              <BsHeart style={{height:"20px", width:"20px", marginTop:"10px" }}/>
+              <BsHeart style={{height:"20px", width:"20px", marginTop:"12px" }}/>
               </ListItem>
               </NavLink>
                <NavLink to='/Login' style={{color:"black"}}>
                <ListItem>
-               <BsBag style={{marginTop:"10px", fontSize:"20px"}}/>
+               <BsBag style={{marginTop:"11px", fontSize:"20px"}}/>
                </ListItem>
                </NavLink>
                </Flex>

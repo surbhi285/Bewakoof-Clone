@@ -23,17 +23,15 @@ export default function Wishlist() {
         dispatch(getWishlist());
     }
 
-//     const handleAddToCart=(item)=>{
-//         if (item && item.products && item.products._id) {
-//         dispatch(addCart(item.products._id, item.quantity));
-//         dispatch(removeWishlist(item));
-//         dispatch(getWishlist());
-//         console.log(item.products._id);
-//     }else {
-//         // Handle the case when item or its properties are not defined
-//         console.error("Invalid item object:", item);
-//     }
-// }
+ const handleAddToCart = (itemId, quantity) => {
+  if (itemId) {
+    dispatch(addCart(itemId, quantity));
+    dispatch(removeWishlist(itemId)); // Removing the item from the wishlist after adding to the cart
+    dispatch(getWishlist()); // Refreshing the wishlist after removing the item
+  } else {
+    console.error("Invalid item ID:", itemId);
+  }
+};
     
 
    useEffect(()=>{
@@ -95,7 +93,7 @@ export default function Wishlist() {
         ):(
         <>
         <h1 style={{marginLeft: "50px"}}>Wishlist</h1>
-       <Container style={{display: "flex", flexWrap:"wrap", alignItems:"center", justifyContent:"center"}}>    
+       <Container style={{display: "flex", flexWrap:"wrap"}}>    
        {wishlist?.data?.items && wishlist.data.items.length>0 ?(
        wishlist?.data?.items?.map((item, index) => (
        <Box className='wishlistData' key={index}>
@@ -112,14 +110,14 @@ export default function Wishlist() {
         <div className='wishTitle'  style={{color: "rgb(115, 115, 115)"}}>{item.products.name}</div>
         <div className='wishdata' style={{fontSize: "20px", marginLeft:"20px" }}>₹{item.products.price}</div>
         
-        <Button className='addbag'><PiShoppingBagLight style={{color: "#207bb4", marginRight:"10px"}}/>ADD TO BAG</Button>
+        <Button className='addbag' onClick={() => handleAddToCart(item.products._id, item.quantity)}><PiShoppingBagLight style={{color: "#207bb4", marginRight:"10px"}}/>ADD TO BAG</Button>
         </Box>
         ))
        ):(
-        <Flex style={{justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
+        <Flex style={{justifyContent:"center", alignItems:"center", flexDirection:"column", marginLeft:"37%"}}>
             <img src={wishImage} alt="wishlist" style={{ width:"35%"}} />
             <Text style={{marginTop:"0",fontWeight:"bold"}}>Hey! Your wishlist is empty.</Text>
-            <Text style={{marginTop:"0", width:"19rem", color:"#8f98a9"}}>
+            <Text style={{marginTop:"0", width:"24rem", color:"#8f98a9"}}>
             Save Your favourites here and make them your soon!</Text>
             <Link to='/'>
             <Button 

@@ -146,7 +146,7 @@ export default function Home() {
     <div style={{marginTop:"6rem"}}>
     <Flex>
       <UnorderedList className='lowerBar'>
-        <NavLink to={`/categories/men`} style={{textDecoration:"none", color:"black", cursor:"pointer", marginLeft:"60px"}}>
+        <NavLink to={`/categories/men`} style={{textDecoration:"none", color:"black", cursor:"pointer"}}>
         <ListItem style={{cursor:"pointer"}}>MEN</ListItem>
         </NavLink>
         <NavLink to={`/categories/women`} style={{textDecoration:"none", color:"black"}}>

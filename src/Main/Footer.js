@@ -13,8 +13,12 @@ export default function Footer() {
   const[smallerScreen, setSmallerScreen] = useState(window.innerWidth<1000);
   const [isBarOpen, setIsBarOpen] = useState(false);
   const location = useLocation();
+  const[text, setText] = useState(false);
   
-  
+  const handleButton =()=>{
+    setText(true);
+  }
+
   const openBar=()=>{
     setIsBarOpen(true);
   };
@@ -94,10 +98,10 @@ export default function Footer() {
         </div>
       ) : (
         <div>
-          <Container style={{ paddingLeft: "50px", backgroundColor: "#181818", color: "white", margin: "0" }}>
+          <Container style={{ paddingLeft: "50px", backgroundColor: "#181818", color: "white", margin: "0"}}>
             <Box>
               <h1 style={{ color: "#fdd835", paddingTop: "50px", marginTop: "0" }}>Bewakoof®</h1>
-              <Flex style={{ gap: "16%" }}>
+              <Flex style={{ gap: "14%" }}>
                 <Box>
                   <Box style={{ marginBottom: "20px", color: "#fdd835" }}>CUSTOMER SERVICE</Box>
                   <NavLink to ="ContactUs" style={{textDecoration:"none", color:"white"}}>
@@ -123,19 +127,25 @@ export default function Footer() {
                   </NavLink>
                   <div>Terms & Conditions</div>
                   <div>Privacy Policy</div>
-                  <div>Blog</div>
+                  <div style={{marginBottom:"40px"}}>Blog</div>
                 </Box>
 
                 <Box>
                   <Box style={{ marginBottom: "20px", color: "#fdd835" }}>CONNECT WITH US</Box>
-                  <div style={{ marginBottom: "10px" }}><FaFacebookSquare /> 4.7M People Like </div>
-                  <div style={{ marginBottom: "10px" }}><AiOutlineInstagram />1M Followers</div>
-                  <div style={{ fontSize: "25px", marginLeft: "10px" }}>
+                  <div style={{ marginBottom: "10px", display:"flex"}}>
+                  <FaFacebookSquare style={{fontSize:"30px"}}/> 
+                  <div style={{marginTop:"8px"}}>4.7M People Like</div>
+                  </div>
+                  <div style={{ marginBottom: "10px", display:"flex"}}>
+                  <AiOutlineInstagram style={{fontSize:"30px"}}/>
+                  <div style={{marginTop:"8px"}}>1M Followers</div>
+                  </div>
+                  <div style={{fontSize: "25px"}}>
                     <NavLink to="https://twitter.com/bewakoof"style={{color:"white"}}>
-                    <BiLogoTwitter style={{ marginRight: "5px" }} />
+                    <BiLogoTwitter style={{ marginRight: "20px" }} />
                     </NavLink>
                     <NavLink to="https://www.snapchat.com/add/bewakoof_tv" style={{color:"white"}}>
-                    <BiLogoSnapchat style={{ marginRight: "5px" }} />
+                    <BiLogoSnapchat style={{ marginRight: "20px" }} />
                     </NavLink>
                     <NavLink to="https://www.snapchat.com/add/bewakoof_tv" style={{color:"white"}}>
                     <BiLogoApple />
@@ -144,7 +154,13 @@ export default function Footer() {
                 </Box>
                 <Box>
                   <Box style={{ marginBottom: "20px", color: "#fdd835" }}>KEEP UP TO DATE</Box>
-                  {/* <div><input type='text' placeholder='Enter Email Id' /></div> */}
+                  <Flex>
+                  <div><input type='text' placeholder='Enter Email Id' className='inputStyle'/></div>
+                  <Button onClick={handleButton} style={{border:"none", backgroundColor:"#fdd835", height:"30px", marginTop:"-8px"}}>Subscribe</Button>
+                  </Flex>
+                  {text &&
+                  <div style={{color:"#42A2A2"}}>user subscribed</div>}
+                  
                 </Box>
               </Flex>
             </Box>

@@ -42,16 +42,17 @@
   background-color: #eee;
   display: flex;
   height:30px;
-  font-size: 12px;
-  font-family: sans-serif;
+  font-size: 11px;
+  font-family: sans-serif
 }
 .topBar-left {
-  display: flex;
+display: flex;
 margin-left: 20px;
 }
 .topBar-left li{
   margin-right: 20px;
   list-style-type: none;
+  margin-left: -11px;
 }
 .topBar-right{
   display: flex;
@@ -137,14 +138,19 @@ height: 1.5rem;
   letter-spacing: 2.5px;
   margin-top: 0;
   cursor: pointer;
- 
+  justify-content: space-between;
+  margin-left: 42px;
+  font-weight: 450;
+  gap:60px
 }
 
 .lowerBar li{
-margin-right: 30px;
-font-size: 20px;
+font-size: 17px;
 list-style-type: none;
 cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
 .ul li{
@@ -840,5 +846,10 @@ border: 1px solid #42a2a2;
   margin-top: -30px;
   margin-left: -10px;
 }
-
+.inputStyle{
+  background-color:#181818;
+  border: none;
+  border-bottom: 1px solid #fdd835;
+  color: grey;
+}
 
