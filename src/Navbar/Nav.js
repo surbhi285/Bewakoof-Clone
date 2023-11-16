@@ -303,9 +303,9 @@
               <NavLink to='/Cart' style={{color:"black"}}>
               <ListItem>
               <BsBag style={{marginTop:"11px", fontSize:"20px"}}/>
-              {/* {cartItem.results > 0 && (
+              {cartItem.results > 0 && (
               <Button className='cartlength'>{cartItem.results}</Button>
-              )} */}
+              )}
               </ListItem>
               </NavLink>
               </>
