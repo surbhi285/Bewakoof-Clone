@@ -46,7 +46,7 @@ export default function Payment() {
               }
             };
             await removeItems(itemsToRemove);
-            navigator('/');
+            navigator('/PlaceOrder');
           };
         
          

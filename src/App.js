@@ -23,6 +23,7 @@ import Payment from './Main/Payment';
 import OrderInfo from './Main/OrderInfo';
 import SearchResult from './Main/SearchResult';
 import ContactUs from './Main/ContactUs';
+import PlaceOrder from './Main/PlaceOrder';
 
 
 
@@ -54,6 +55,7 @@ function App() {
     <Route path="/OrderInfo/:id" element={<OrderInfo/>}/>
     <Route path= '/SearchResult/:id' element={<SearchResult />}/>
     <Route path='/ContactUs' element={<ContactUs/>}/>
+    <Route path='/PlaceOrder' element={<PlaceOrder/>}/>
     </Routes>
     </Router>
     
