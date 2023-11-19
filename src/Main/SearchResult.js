@@ -51,7 +51,8 @@ export default function SearchResult(){
     useEffect(()=>{ 
     if(id && getData){
         console.log("Filtering data for id:", id);
-        setCategory(getData?.data?.data?.filter((item) => item?.subCategory?.toLowerCase() === id))
+        setCategory(getData?.data?.data?.filter((item) => item?.subCategory?.toLowerCase() === id
+        || item?.color?.toLowerCase()===id ))
     }
      }, [id, getData])
     console.log("category", category)
@@ -165,7 +166,7 @@ export default function SearchResult(){
                
           ))}        
         </Container>
-    ):(
+    ):(  
     <Box style={{marginTop:"6rem"}}>
     <Flex className='heading1'>
       <Link to="/" style={{ textDecoration: "none", color: "black" }}>
@@ -174,7 +175,14 @@ export default function SearchResult(){
       <Container className='heading2'>/</Container>
       <Container className='heading2'>{id?.charAt(0)?.toUpperCase()+id?.slice(1)} Clothing</Container>
     </Flex>
-
+    {filteredData.length===0 ? (
+    <>
+    <Container style={{textAlign:"center", marginTop:"5rem"}}>
+      <h2>No Result found</h2>
+    </Container>
+    </>
+    ):(
+    <>
     <Box>
         <Flex>
           <h2 className='heading3'>Search Results For {id?.charAt(0)?.toUpperCase()+ id?.slice(1)}</h2>
@@ -288,11 +296,12 @@ export default function SearchResult(){
                 )}
                 </Flex>
                 <Text className='dataTitle'>{item.name}</Text>
-                 <h2 className='dataPrice'>₹ {item.price}</h2>
+                 <h2 className='dataPrice'>₹{item.price}</h2>
                 </Box>
           ))}        
         </Container>
         </Flex>
+        </>)}
         </Box>
         )}
         </>

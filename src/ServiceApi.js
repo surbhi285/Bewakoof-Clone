@@ -402,12 +402,10 @@ export async function getOrderList() {
         let searchType;
         let searchKey;
 
-        // Determine the search type based on the format of the title
         if (title.includes("subCategory:")) {
             searchType = "subCategory";
             searchKey = title.replace("subCategory:", "").trim();
         } else {
-            // If no subCategory is specified, default to name search
             searchType = "name";
             searchKey = title.trim();
         }

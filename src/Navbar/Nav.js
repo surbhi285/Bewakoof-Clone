@@ -215,7 +215,7 @@
               </Flex>
               <Flex>
           <UnorderedList className='navBar-right'>
-            <Box style={{marginRight:"10px"}}><BiSearch className='icon'/>
+            <Box style={{marginRight:"10px"}}><BiSearch className='icon' onClick={handleSeeAllResultsClick}/>
           <input type="search" placeholder='Search by product, category or collection' className='inputSearch' onChange={handleSearchInputChange}
           ref={searchInputRef}/>
           {showSuggestions && Array.isArray(searchResult.data) && searchResult.data.length > 0 && (
@@ -223,7 +223,7 @@
           ref={suggestionBoxRef}
           position="absolute"
            top="80"
-            left="780"
+            left="810"
             right="0"
             zIndex="10"
             backgroundColor="white"
