@@ -293,6 +293,7 @@ function ProductDetail(){
     style={{
       color: availableSizes.includes(size) ? 'black' : 'grey',
       border: availableSizes.includes(size) ? '1px solid black' : '1px solid grey',
+      cursor: availableSizes.includes(size)? 'pointer' : "not-allowed",
       backgroundColor: selectedSize === size ? 'black' : 'white',
       color: selectedSize === size ? 'white' : 'black',
       fontWeight: selectedSize === size ? 'bold' : 'normal'

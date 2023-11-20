@@ -31,11 +31,9 @@ export default function Men() {
   const [inWishList, setInWishlist] = useState({});
   const[option, setOption] = useState(false)
   const [selectedSort, setSelectedSort] = useState(null);
-  const [imageError, setImageError] = useState(false);
+  
 
-  const handleImageError = () => {
-    setImageError(true);
-  };
+  
   
   const dispatch = useDispatch();
   const wishlist = useSelector((store)=> store.data.wishlist);
@@ -68,7 +66,7 @@ export default function Men() {
     }
     return false;
   }) 
-  //console.log(filteredData);
+  // console.log(filteredData);
 
   
   const handleCategoryFilter = (category) => {

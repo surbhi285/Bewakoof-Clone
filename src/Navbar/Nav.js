@@ -212,7 +212,7 @@
           <Box style={{marginRight:"10px"}}><BiSearch className='icon' onClick={handleSeeAllResultsClick}/>
           <input type="search" placeholder='Search by product, category or collection' className='inputSearch' onChange={handleSearchInputChange}
           ref={searchInputRef}/>
-          {showSuggestions && Array.isArray(searchResult.data) && searchResult.data.length > 0 && (
+          {showSuggestions && Array.isArray(searchResult?.data) && searchResult?.data?.length > 0 && (
           <Box
           ref={suggestionBoxRef}
           position="absolute"
