@@ -66,15 +66,9 @@ export default function Categories(){
           setSelectedSort(null);
         }else{
         if (selectedSortOption === "1") {
-          const sortedByPopularity = [...filteredData].sort((a, b) => {
-            if (a.sellerTag === "trending") {
-              return -1;
-            } else if (b.sellerTag === "trending") {
-              return 1;
-            }
-            return 0;
-          });
-          setCategory(sortedByPopularity);
+          const trendingItems = filteredData.filter(item => item.sellerTag === "trending");
+          setCategory(trendingItems);
+
          } else if (selectedSortOption === "2") {
           const sortedData = [...filteredData].sort((a, b) => a.price - b.price);
           setCategory(sortedData);

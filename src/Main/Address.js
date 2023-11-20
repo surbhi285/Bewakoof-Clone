@@ -45,9 +45,9 @@ export default function Address() {
 
 const items = cart?.data?.items;
 
-  const handleEdit = (index) => {
-    setFormData(userDetailsList[index]);
-  };
+  // const handleEdit = (index) => {
+  //   setFormData(userDetailsList[index]);
+  // };
 
   const handleRemove = (index) => {
     const updatedList = [...userDetailsList];
@@ -119,11 +119,8 @@ const items = cart?.data?.items;
   <Text  style={{fontSize:"13px", marginLeft:"20px", marginTop:"10%"}}>{formData.city}, {formData.pinCode}</Text>
   <Text style={{fontSize:"13px", marginLeft:"20px", marginTop:"-10px"}}>{formData.state}, {formData.country}</Text>
   
-  <Text style={{fontSize:"13px", marginLeft:"20px", marginTop:"-10px", marginBottom:"30px"}}>Contact No: {formData.mobile}</Text>
-  <button style={{color:"#42A2A2", backgroundColor:"WHITE", border:"1.5px solid #42A2A2", borderRadius:"5px", marginLeft:"20px", height:"30px", cursor:"pointer"}} 
-  onClick={() => handleEdit(index)}> EDIT</button>
   
-  <button style={{color:"#42A2A2", backgroundColor:"WHITE", border:"1.5px solid #42A2A2", borderRadius:"5px", marginLeft:"20px", height:"30px", cursor:"pointer"}} 
+  <button style={{color:"#42A2A2", backgroundColor:"WHITE", border:"1.5px solid #42A2A2", borderRadius:"5px", marginLeft:"20px", height:"30px", cursor:"pointer", marginTop:"30px"}} 
   onClick={() => handleRemove(index)}>REMOVE</button>
   
   <Link to ="/Payment" >
