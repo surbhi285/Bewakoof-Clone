@@ -12,13 +12,6 @@ export const SET_DATA = (payload)=>{
 
 
 
-export const ERROR = (payload)=>{
-    return{
-        type: ACTION_TYPE.ERROR,
-        payload: payload,
-    };
-};
-
 export const FETCH_DATA = ()=>async(dispatch)=>{  
    const data = await fetchData() ;
    dispatch(SET_DATA(data));

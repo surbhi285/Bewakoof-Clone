@@ -80,19 +80,13 @@
   // console.log('searchInputRef:', searchInputRef.current);
   // console.log('suggestionBoxRef:', suggestionBoxRef.current);
       };
-   
-      // useEffect(() => {
-      //   searchOrder(searchTerm)
-      //     .then(result => setSearchResult(result))
-      //     .catch(error => console.error("Error while searching:", error));
-      // }, [searchTerm]);
 
       const handleSuggestionClick = (suggestion) => {
         const productId = suggestion?._id;
         console.log(productId);
         const productUrl = `/product/${productId}`;
         navigate(productUrl);
-        setSearchTerm(suggestion);
+        // setSearchTerm(suggestion);
         setShowSuggestions(false);
       };
 
@@ -215,7 +209,7 @@
               </Flex>
               <Flex>
           <UnorderedList className='navBar-right'>
-            <Box style={{marginRight:"10px"}}><BiSearch className='icon' onClick={handleSeeAllResultsClick}/>
+          <Box style={{marginRight:"10px"}}><BiSearch className='icon' onClick={handleSeeAllResultsClick}/>
           <input type="search" placeholder='Search by product, category or collection' className='inputSearch' onChange={handleSearchInputChange}
           ref={searchInputRef}/>
           {showSuggestions && Array.isArray(searchResult.data) && searchResult.data.length > 0 && (

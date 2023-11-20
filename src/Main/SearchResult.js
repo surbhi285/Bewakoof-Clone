@@ -52,7 +52,7 @@ export default function SearchResult(){
     if(id && getData){
         console.log("Filtering data for id:", id);
         setCategory(getData?.data?.data?.filter((item) => item?.subCategory?.toLowerCase() === id
-        || item?.color?.toLowerCase()===id ))
+        || item?.color?.toLowerCase()===id  || item?.brand?.toLowerCase()===id))
     }
      }, [id, getData])
     console.log("category", category)
