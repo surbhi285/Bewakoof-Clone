@@ -43,7 +43,7 @@ export default function Account(){
     <Text style={{fontSize:"20px", marginLeft:"30px"}}>My Addresses</Text>
     <MdArrowForwardIos style={{color:"grey", marginLeft:"10px", marginTop:"26px"}}/>
     </Flex>
-    <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey", marginLeft:"30px"}}>Edit, add or remove addresses</Text>
+    <Text style={{fontSize:"12px", marginTop:"-10px", color:"grey", marginLeft:"30px"}}>Edit, add or remove address</Text>
     </NavLink>
     </Box>
 
