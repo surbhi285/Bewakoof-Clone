@@ -7,7 +7,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { FETCH_DATA, addWishlist, removeWishlist} from '../Action';
 import noAvailable from '../Images/noAvailable.jpg';
-import {Circles} from 'react-loader-spinner';
+
 
 const ComponentCard = ({ data }) => {
     const [inWishList, setInWishlist] = useState({});
@@ -78,15 +78,7 @@ const ComponentCard = ({ data }) => {
     {isLoading ? (
     <div style={{display:"flex", justifyContent:"center", 
     alignItems:"center",height:"70vh", width:"50vw",}}>
-    <Circles
-    height="100"
-    width="100"
-    color="#fdd835"
-    ariaLabel="circles-loading"
-    wrapperStyle={{}}   
-    wrapperClass=""
-    visible={true}
-    />
+   <Text>Loading is .....</Text>
     </div>
     ):(
     <>
