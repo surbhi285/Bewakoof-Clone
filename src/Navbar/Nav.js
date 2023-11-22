@@ -36,6 +36,10 @@
       const searchInputRef = useRef(null); 
       const suggestionBoxRef = useRef(null);
 
+      useEffect(() => {
+        window.scroll(0, 0);
+    }, []);
+
       const handleMouseEnter = (category)=>{
           setMenuHover(category);
       }
@@ -75,10 +79,6 @@
         ) {
           setShowSuggestions(false);
         }
-  // console.log('Clicked outside');
-  // console.log('Event target:', event.target);
-  // console.log('searchInputRef:', searchInputRef.current);
-  // console.log('suggestionBoxRef:', suggestionBoxRef.current);
       };
 
       const handleSuggestionClick = (suggestion) => {
@@ -125,11 +125,6 @@
           }
         },[])
 
-        // console.log(userInfo.signup.data.name);
-
-        // console.log('showSuggestions:', showSuggestions);
-        // console.log('searchResult:', searchResult);
-        // console.log('searchResult length:', searchResult.data);
     return (
       <>
       {smallerScreen ? (
@@ -217,7 +212,7 @@
           ref={suggestionBoxRef}
           position="absolute"
            top="80"
-            left="810"
+            left="770"
             right="0"
             zIndex="10"
             backgroundColor="white"

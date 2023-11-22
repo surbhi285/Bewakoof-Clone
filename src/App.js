@@ -1,15 +1,15 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Nav from './Navbar/Nav';
 import Home from './Main/Home';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Men from './Main/Men';
+import Categories from './Main/Categories';
 import ProductDetail from './Main/ProductDetail';
 import Login from './Main/Login';
 import SignUp from './Main/SignUp';
 import Wishlist from './Main/Wishlist';
 import Cart from './Main/Cart';
-import Categories from './Main/Categories';
+import Product from './Main/Product';
 import BrandCategories from './Main/BrandCategories';
 import Account  from './Main/Account';
 import Orders from './Main/Orders';
@@ -25,9 +25,6 @@ import SearchResult from './Main/SearchResult';
 import ContactUs from './Main/ContactUs';
 import PlaceOrder from './Main/PlaceOrder';
 
-
-
-
 function App() {
   return (
     <>
@@ -35,7 +32,7 @@ function App() {
     <Nav />
     <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/categories/:id" element={<Men />}/>
+    <Route path="/categories/:id" element={<Product />}/>
     <Route path="/product/:id" element={<ProductDetail />} />
     <Route path="/Wishlist" element={<Wishlist/>}/>
     <Route path="/Cart" element={<Cart />}/>

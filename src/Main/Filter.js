@@ -1,20 +1,102 @@
-import React from "react";
-import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem, Box } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionPanel, AccordionItem, Box} from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { FETCH_DATA} from '../Action';
+
+export default function Filter({ onFilterChange, genderData}) {
+
+    const getData = useSelector((store)=>{
+        console.log(store, "store debug");
+        return store.data;
+    })
+
+    const dispatch = useDispatch();
+    useEffect(()=>{
+    dispatch(FETCH_DATA());
+    },[])
 
 
+      const [selectedCategory, setSelectedCategory] = useState(null);
+      const [selectedBrand, setSelectedBrand] = useState(null);
+      const [selectedColor, setSelectedColor] = useState(null);
+      const [selectedPopularity, setSelectedPopularity] = useState(null);
+      const [selectedSize, setSelectedSize] = useState(null);
 
-const Filter=()=>{
-const handleCategorySelect = (category)=>{
- 
-};
+    const applyFilter = () => {
+        const filteredData = genderData?.filter((item) => {
+          if (
+            (!selectedCategory || item.subCategory === selectedCategory) &&
+            (!selectedBrand || item.brand === selectedBrand) &&
+            (!selectedColor || item.color === selectedColor) &&
+            (!selectedPopularity || item.sellerTag === selectedPopularity) &&
+            (!selectedSize || item.size.includes(selectedSize))
+          ) {
+            return true;
+          }
+          return false;
+        });
+        console.log(filteredData);
+        onFilterChange(filteredData);
+    }
+      
 
+     
+  
+  useEffect(() => {
+    applyFilter();
+  }, [ selectedCategory,
+    selectedBrand,
+    selectedColor,
+    selectedPopularity,
+    selectedSize]);
 
-    return(
-        <>
-  <Accordion allowToggle className='accordian'>
-  <AccordionItem>
+      const handleCategoryFilter = (category) => {
+        if (selectedCategory === category) {
+          setSelectedCategory(null);
+        } else {
+          setSelectedCategory(category);
+        }
+      }
+      const handleColorFilter = (category) => {
+        if (selectedColor === category) {
+          setSelectedColor(null);
+        } else {
+          setSelectedColor(category);
+        }
+      }
+      const handleBrandFilter = (category) => {
+        if (selectedBrand=== category) {
+          setSelectedBrand(null);
+        } else {
+          setSelectedBrand(category);
+        }
+      }
+      const handlePopularityFilter = (category) => {
+        if (selectedPopularity === category) {
+          setSelectedPopularity(null);
+        } else {
+          setSelectedPopularity(category);
+        }
+      }
+      const handleSizeFilter = (category) => {
+        if (selectedSize === category) {
+          setSelectedSize(null);
+        } else {
+          setSelectedSize(category);
+        }
+      }
+    
+const allowedSizes = ["M", "S", "L", "XL", "XXL"];
+const uniqueSizes = genderData?.map(item => item.size).flat().filter(size => allowedSizes.includes(size));
+const uniqueElements = [...new Set(uniqueSizes)];
+
+  return (
+    <>
+    <Accordion allowToggle className='accordian'>
+   <AccordionItem>
     <h2>
-      <AccordionButton className='accordianButton'>
+      <AccordionButton className='accordianButton'  >
         <Box as="span" flex='1' textAlign='left'>
           Category
         </Box>
@@ -23,42 +105,11 @@ const handleCategorySelect = (category)=>{
     </h2>
     <AccordionPanel pb={4}>
      <ul className='accordianList'>
-      <li  onClick={() => handleCategorySelect("tshirt")}>T-Shirt</li>
-      <li  onClick={() => handleCategorySelect("shirt")}>Shirt</li>
-      <li  onClick={() => handleCategorySelect("jeans")}>Jeans</li>
-      <li  onClick={() => handleCategorySelect("shorts")}>Shorts</li>
-      <li  onClick={() => handleCategorySelect("joggers")}>Joggers</li>
-      <li  onClick={() => handleCategorySelect("trackPants")}>Track Pants</li>
-      <li  onClick={() => handleCategorySelect("pyjama")}>Pyjama</li>
-      <li>Trousers</li>
-      <li>Hoodies</li>
-      <li>Sweatshirt</li>
-      <li>Casual Pants</li>
-      <li>Jacket</li>
+     {Array.from(new Set(genderData?.map(item => item?.subCategory)).values())?.map((subCategory, index) => (
+          <li key={index} onClick={() =>handleCategoryFilter(subCategory)}  className={selectedCategory === subCategory ? 'activeCategory' : ''}>
+            {subCategory?.charAt(0).toUpperCase() + subCategory?.slice(1)}</li>
+        ))}
      </ul>
-    </AccordionPanel>
-  </AccordionItem>
-  <hr className='divider'/>
-  <AccordionItem>
-    <h2>
-      <AccordionButton className='accordianButton'>
-        <Box as="span" flex='1' textAlign='left'>
-          Sizes
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
-    <AccordionPanel pb={4}>
-      <ul className='accordianList'>
-        <li>XS</li>
-        <li>S</li>
-        <li>M</li>
-        <li>L</li>
-        <li>XL</li>
-        <li>2XL</li>
-        <li>3XL</li>
-        <li>4XL</li>
-      </ul>
     </AccordionPanel>
   </AccordionItem>
   <hr className='divider'/>
@@ -72,26 +123,18 @@ const handleCategorySelect = (category)=>{
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4}>
-      <ul  className='accordianList'>
-        <li>Bewakoof®</li>
-        <li>Official Rick And Morty Merchandise</li>
-        <li>Official Disney Merchandise</li>
-        <li>Bewakoof X Streetwear</li>
-        <li>Official Naruto Merchandise</li>
-        <li>Official Minions Merchandise</li>
-        <li>Official Harry Potter Merchandise</li>
-        <li>Official DC Comics Merchandise</li>
-        <li>Official Marvel Merchandise</li>
-        <li>Official Tom & Jerry Merchandise</li>
-        <li>Redwolf</li>
-        <li>Rigo</li>
-      </ul>
+     <ul className='accordianList'>
+     {Array.from(new Set(genderData?.map(item => item?.brand)).values())?.map((brand, index) => (
+          <li key={index} onClick={() => handleBrandFilter(brand)}  className={selectedBrand === brand ? 'activeCategory' : ''}>
+            {brand?.charAt(0).toUpperCase() + brand?.slice(1)}</li>
+        ))}
+     </ul>
     </AccordionPanel>
   </AccordionItem>
   <hr className='divider'/>
   <AccordionItem>
     <h2>
-      <AccordionButton className='accordianButton'>
+      <AccordionButton className='accordianButton'  >
         <Box as="span" flex='1' textAlign='left'>
          Color
         </Box>
@@ -99,64 +142,58 @@ const handleCategorySelect = (category)=>{
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4}>
-      <button className='listButton' style={{backgroundColor:"black"}}></button>
-      <button className='listButton' style={{backgroundColor:"blue"}}></button>
-      <button className='listButton' style={{backgroundColor:"white", border:"1px solid rgb(203, 201, 201)"}}></button>
-      <button className='listButton' style={{backgroundColor:"green"}}></button>
-      <button className='listButton' style={{backgroundColor:"grey"}}></button>
-      <button className='listButton' style={{backgroundColor:"brown"}}></button>
-      <button className='listButton' style={{backgroundColor:"red"}}></button>
-      <button className='listButton' style={{backgroundColor:"pink"}}></button>
-      <button className='listButton' style={{backgroundColor:"purple"}}></button>
-      <button className='listButton' style={{backgroundColor:"yellow"}}></button>
-      <button className='listButton' style={{backgroundColor:"orange"}}></button>
+    <ul className='accordianList'>
+     {Array.from(new Set(genderData?.map(item => item?.color)).values())?.map((color, index) => (
+          <button key={index} onClick={() => handleColorFilter(color)}  className={selectedColor === color ? 'activeCategory' : ''}
+         style={{ backgroundColor: color, border:"1px solid grey", width: "30px", height: "30px", borderRadius: "10px", marginRight: "10px",marginBottom: "8px", cursor:"pointer"}}>
+          </button>
+        ))}
+     </ul>
+     
     </AccordionPanel>
   </AccordionItem>
   <hr className='divider'/>
   <AccordionItem>
     <h2>
       <AccordionButton className='accordianButton'>
-        <Box as="span" flex='1' textAlign='left' >
-          Ratings
+        <Box as="span" flex='1' textAlign='left'>
+         Popularity
         </Box>
         <AccordionIcon />
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4}>
     <ul className='accordianList'>
-      <li>4.5 and above</li>
-      <li>4 and above</li>
-      <li>3.5 and above</li>
-      <li>3 and above</li>
-      <li>2.5 and above</li>
-      <li>2 and above</li>
-      <li>1.5 and above</li>
-      <li>1 and above</li>
-    </ul>
+     {Array.from(new Set(genderData?.map(item => item?.sellerTag))?.values())?.map((sellerTag, index) => (
+          <li key={index} onClick={() => handlePopularityFilter(sellerTag)}  className={selectedPopularity === sellerTag ? 'activeCategory' : ''}>
+            {sellerTag?.charAt(0).toUpperCase() + sellerTag?.slice(1)}</li>
+        ))}
+     </ul>
     </AccordionPanel>
   </AccordionItem>
   <hr className='divider'/>
+
   <AccordionItem>
     <h2>
-      <AccordionButton className='accordianButton' >
+      <AccordionButton className='accordianButton'>
         <Box as="span" flex='1' textAlign='left'>
-          Sort By
+         Size
         </Box>
         <AccordionIcon />
       </AccordionButton>
     </h2>
     <AccordionPanel pb={4}>
     <ul className='accordianList'>
-      <li>Popular</li>
-      <li>New</li>
-      <li>Price: High to Low</li>
-      <li>Price: Low to High</li>
-    </ul>
+     {uniqueElements?.map((size, index)=>(
+          <li key={index} onClick={() => handleSizeFilter(size)}  className={selectedSize === size ? 'activeCategory' : ''}>
+            {size}</li>
+     ))}
+     </ul>
     </AccordionPanel>
   </AccordionItem>
   <hr className='divider'/>
-</Accordion>
-        </>
-    )
+
+  </Accordion>
+    </>
+  )
 }
-export default Filter;
