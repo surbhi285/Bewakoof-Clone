@@ -212,7 +212,7 @@
           ref={suggestionBoxRef}
           position="absolute"
            top="80"
-            left="770"
+            left="800"
             right="0"
             zIndex="10"
             backgroundColor="white"
